@@ -1,0 +1,22 @@
+#!/bin/bash
+
+get_commit $1 1>/dev/null
+if [ $? -ne 0 ] ; then
+	exit -1
+fi
+
+commits=$(cat /home/riccardoob/git_scripts/commits)
+
+dir=$(realpath $(cat /tmp/temp_dir))
+cd $dir
+
+echo "Retrieved commit hashes for $dir, retrieving tree hashes."
+
+tree_file=/home/riccardoob/git_scripts/trees
+> $tree_file
+while read line ; do
+    commit=$(echo "$line" | cut -d' ' -f2)
+	SHA1=$(git cat-file commit $commit | grep tree | cut -d' ' -f2)
+	echo -e "commit $commit\n\ttree $SHA1" >> $tree_file
+	echo -e "commit $commit\n\ttree $SHA1"
+done <<< $commits

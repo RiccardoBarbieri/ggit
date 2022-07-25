@@ -1,0 +1,13 @@
+#!/bin/bash
+
+SESSIONNAME="git_tmux"
+tmux has-session -t $SESSIONNAME &>/dev/null
+
+if [ $? != 0 ] ; then
+	tmux new-session -s $SESSIONNAME -n main -d
+	tmux split-window -v -t $SESSIONNAME
+	tmux send-keys -t $SESSIONNAME:main.0 "build_git" Enter
+	tmux send-keys -t $SESSIONNAME:main.1 "nano /home/riccardoob/git_scripts/build_git" Enter
+fi
+
+tmux attach -t $SESSIONNAME
