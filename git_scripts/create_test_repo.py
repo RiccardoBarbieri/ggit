@@ -85,5 +85,34 @@ cat_file3_process = subprocess.run(['git', 'cat-file', '-p', write_tree3_process
 print('Third tree content:')
 print(cat_file3_process.stdout.decode('utf-8'))
 
+echo_process = subprocess.Popen(['echo', 'first commit'], stdout=subprocess.PIPE)
+commit1_process = subprocess.run(['git', 'commit-tree', f'{write_tree1_process.stdout.strip().decode("utf-8")[:6]}'], stdin=echo_process.stdout, stdout=subprocess.PIPE)
+print('First commit created, hash:')
+print(commit1_process.stdout.decode('utf-8'))
+
+print('First commit content:')
+cat_file4_process = subprocess.run(['git', 'cat-file', '-p', commit1_process.stdout.strip().decode('utf-8')], stdout=subprocess.PIPE)
+print(cat_file4_process.stdout.decode('utf-8'))
+
+echo_process = subprocess.Popen(['echo', 'second commit'], stdout=subprocess.PIPE)
+commit2_process = subprocess.run(['git', 'commit-tree', write_tree2_process.stdout.strip().decode('utf-8')[:6], '-p', commit1_process.stdout.strip().decode('utf-8')], stdin=echo_process.stdout, stdout=subprocess.PIPE)
+print('Second commit created, hash:')
+print(commit2_process.stdout.decode('utf-8'))
+
+echo_process = subprocess.Popen(['echo', 'third commit'], stdout=subprocess.PIPE)
+commit3_process = subprocess.run(['git', 'commit-tree', write_tree3_process.stdout.strip().decode('utf-8')[:6], '-p', commit2_process.stdout.strip().decode('utf-8')], stdin=echo_process.stdout, stdout=subprocess.PIPE)
+print('Third commit created, hash:')
+print(commit3_process.stdout.decode('utf-8'))
+
+#! add complete git log --stat
+
+print('Current objects:')
+find4_process = subprocess.run(['find', '.git/objects', '-type', 'f'], stdout=subprocess.PIPE)
+print(find4_process.stdout.decode('utf-8'))
+
+
+
+
 # process = subprocess.run('ls -a', shell=True, stdout=subprocess.PIPE)
 # print(process.stdout.decode('utf-8'))
+
