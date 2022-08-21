@@ -95,7 +95,7 @@ class HashIdentifier:
 
     """
     Class used to obtain the hashes of the repository and their type, creating
-    a list of GitHash objects.
+    a list of :class:`GitHash` objects.
 
     Parameters
     ----------
@@ -131,7 +131,7 @@ class HashIdentifier:
     def __get_all_hashes(self) -> List[GitHash]:
         """
         Method that obtains the hashes of the repository and their type,
-        creating a list of GitHash objects.
+        creating a list of :class:`GitHash` objects.
         """
         self.__get_all_objects()
         
@@ -153,12 +153,12 @@ class HashIdentifier:
     def get_hashes(self) -> List[GitHash]:
         """
         Method that calls the __get_all_hashes method and returns the list of
-        GitHash objects.
+        :class:`GitHash` objects.
 
         Returns
         -------
-        List[GitHash]
-            The list of GitHash objects.
+        List[:class:`GitHash`]
+            The list of :class:`GitHash` objects.
         """
         self.__get_all_hashes()
         return self.__hashes

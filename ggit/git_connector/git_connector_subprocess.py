@@ -22,7 +22,7 @@ class GitConnectorSubprocess(GitConnectorInterface):
         from model.hash_type import HashType
         from process_exception import ProcessException
         """
-        Obtain the HashType of the hash provided.
+        Obtain the :class:`HashType` of the hash provided.
         
         Parameters
         ----------

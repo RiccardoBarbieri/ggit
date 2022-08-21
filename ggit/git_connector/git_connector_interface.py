@@ -19,7 +19,7 @@ class GitConnectorInterface(metaclass=abc.ABCMeta):
     @abc.abstractmethod
     def get_hash_type(self, hash: str) -> 'HashType':
         """
-        Obtain the HashType of the hash provided.
+        Obtain the :class:`HashType` of the hash provided.
         
         Parameters
         ----------
