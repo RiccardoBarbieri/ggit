@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>ggit.git_connector &mdash; ggit 1.0.0 documentation</title>
+  <title>ggit.converter.git_connector &mdash; ggit 1.0.0 documentation</title>
   
 
   
@@ -38,8 +38,8 @@
     
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="ggit.utils package" href="utils.html" />
-    <link rel="prev" title="ggit.model package" href="model.html" /> 
+    <link rel="next" title="ggit.converter.utils package" href="utils.html" />
+    <link rel="prev" title="ggit.converter.model package" href="model.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -86,17 +86,17 @@
             
               <p class="caption"><span class="caption-text">Contents:</span></p>
 <ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="model.html">ggit.model package</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="model.html#ggit-model-hash-type">ggit.model.hash_type</a></li>
+<li class="toctree-l1"><a class="reference internal" href="model.html">ggit.converter.model package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="model.html#ggit-converter-model-hash-type">ggit.converter.model.hash_type</a></li>
 </ul>
 </li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">ggit.git_connector</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#ggit-git-connector-git-connector-interface">ggit.git_connector.git_connector_interface</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#ggit-git-connector-git-connector-subprocess">ggit.git_connector.git_connector_subprocess</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">ggit.converter.git_connector</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#ggit-converter-git-connector-git-connector-interface">ggit.converter.git_connector.git_connector_interface</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#ggit-converter-git-connector-git-connector-subprocess">ggit.converter.git_connector.git_connector_subprocess</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="utils.html">ggit.utils package</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="utils.html#ggit-utils-folder-utils">ggit.utils.folder_utils</a></li>
+<li class="toctree-l1"><a class="reference internal" href="utils.html">ggit.converter.utils package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="utils.html#ggit-converter-utils-folder-utils">ggit.converter.utils.folder_utils</a></li>
 </ul>
 </li>
 </ul>
@@ -147,7 +147,7 @@
     
       <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
         
-      <li>ggit.git_connector</li>
+      <li>ggit.converter.git_connector</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -166,20 +166,20 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="ggit-git-connector">
-<h1>ggit.git_connector<a class="headerlink" href="#ggit-git-connector" title="Permalink to this headline">¶</a></h1>
-<div class="section" id="ggit-git-connector-git-connector-interface">
-<h2>ggit.git_connector.git_connector_interface<a class="headerlink" href="#ggit-git-connector-git-connector-interface" title="Permalink to this headline">¶</a></h2>
+  <div class="section" id="ggit-converter-git-connector">
+<h1>ggit.converter.git_connector<a class="headerlink" href="#ggit-converter-git-connector" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="ggit-converter-git-connector-git-connector-interface">
+<h2>ggit.converter.git_connector.git_connector_interface<a class="headerlink" href="#ggit-converter-git-connector-git-connector-interface" title="Permalink to this headline">¶</a></h2>
 <dl class="py class">
-<dt id="ggit.git_connector.git_connector_interface.GitConnectorInterface">
-<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">ggit.git_connector.git_connector_interface.</span></code><code class="sig-name descname"><span class="pre">GitConnectorInterface</span></code><a class="headerlink" href="#ggit.git_connector.git_connector_interface.GitConnectorInterface" title="Permalink to this definition">¶</a></dt>
+<dt id="ggit.converter.git_connector.git_connector_interface.GitConnectorInterface">
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">ggit.converter.git_connector.git_connector_interface.</span></code><code class="sig-name descname"><span class="pre">GitConnectorInterface</span></code><a class="headerlink" href="#ggit.converter.git_connector.git_connector_interface.GitConnectorInterface" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>Interface that defines the methods that a GitConnector must implement.
 A GitConnector is a class that is used to interact with the git repository.</p>
 <dl class="py method">
-<dt id="ggit.git_connector.git_connector_interface.GitConnectorInterface.get_hash_type">
-<em class="property"><span class="pre">abstract</span> </em><code class="sig-name descname"><span class="pre">get_hash_type</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">hash</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">HashType</span><a class="headerlink" href="#ggit.git_connector.git_connector_interface.GitConnectorInterface.get_hash_type" title="Permalink to this definition">¶</a></dt>
-<dd><p>Obtain the HashType of the hash provided.</p>
+<dt id="ggit.converter.git_connector.git_connector_interface.GitConnectorInterface.get_hash_type">
+<em class="property"><span class="pre">abstract</span> </em><code class="sig-name descname"><span class="pre">get_hash_type</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">hash</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">HashType</span><a class="headerlink" href="#ggit.converter.git_connector.git_connector_interface.GitConnectorInterface.get_hash_type" title="Permalink to this definition">¶</a></dt>
+<dd><p>Obtain the <code class="xref py py-class docutils literal notranslate"><span class="pre">HashType</span></code> of the hash provided.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><p><strong>hash</strong> (<em>str</em>) – The hash to obtain the type from.</p>
@@ -190,18 +190,18 @@ A GitConnector is a class that is used to interact with the git repository.</p>
 </dd></dl>
 
 </div>
-<div class="section" id="ggit-git-connector-git-connector-subprocess">
-<h2>ggit.git_connector.git_connector_subprocess<a class="headerlink" href="#ggit-git-connector-git-connector-subprocess" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="ggit-converter-git-connector-git-connector-subprocess">
+<h2>ggit.converter.git_connector.git_connector_subprocess<a class="headerlink" href="#ggit-converter-git-connector-git-connector-subprocess" title="Permalink to this headline">¶</a></h2>
 <dl class="py class">
-<dt id="ggit.git_connector.git_connector_subprocess.GitConnectorSubprocess">
-<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">ggit.git_connector.git_connector_subprocess.</span></code><code class="sig-name descname"><span class="pre">GitConnectorSubprocess</span></code><a class="headerlink" href="#ggit.git_connector.git_connector_subprocess.GitConnectorSubprocess" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">git_connector.git_connector_interface.GitConnectorInterface</span></code></p>
+<dt id="ggit.converter.git_connector.git_connector_subprocess.GitConnectorSubprocess">
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">ggit.converter.git_connector.git_connector_subprocess.</span></code><code class="sig-name descname"><span class="pre">GitConnectorSubprocess</span></code><a class="headerlink" href="#ggit.converter.git_connector.git_connector_subprocess.GitConnectorSubprocess" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">converter.git_connector.git_connector_interface.GitConnectorInterface</span></code></p>
 <p>Class that implements the GitConnectorInterface using the subprocess module
 to interact with git cli directly.</p>
 <dl class="py method">
-<dt id="ggit.git_connector.git_connector_subprocess.GitConnectorSubprocess.get_hash_type">
-<code class="sig-name descname"><span class="pre">get_hash_type</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">hash_</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">HashType</span><a class="headerlink" href="#ggit.git_connector.git_connector_subprocess.GitConnectorSubprocess.get_hash_type" title="Permalink to this definition">¶</a></dt>
-<dd><p>Obtain the HashType of the hash provided.</p>
+<dt id="ggit.converter.git_connector.git_connector_subprocess.GitConnectorSubprocess.get_hash_type">
+<code class="sig-name descname"><span class="pre">get_hash_type</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">hash_</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">HashType</span><a class="headerlink" href="#ggit.converter.git_connector.git_connector_subprocess.GitConnectorSubprocess.get_hash_type" title="Permalink to this definition">¶</a></dt>
+<dd><p>Obtain the <code class="xref py py-class docutils literal notranslate"><span class="pre">HashType</span></code> of the hash provided.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><p><strong>hash</strong> (<em>str</em>) – The hash to obtain the type from.</p>
@@ -220,8 +220,8 @@ to interact with git cli directly.</p>
           </div>
           <footer>
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
-        <a href="utils.html" class="btn btn-neutral float-right" title="ggit.utils package" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
-        <a href="model.html" class="btn btn-neutral float-left" title="ggit.model package" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="utils.html" class="btn btn-neutral float-right" title="ggit.converter.utils package" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="model.html" class="btn btn-neutral float-left" title="ggit.converter.model package" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
     </div>
 
   <hr/>
