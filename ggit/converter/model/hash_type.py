@@ -4,9 +4,9 @@ from enum import Enum
 from pathlib import Path
 from typing import List
 
-sys.path.append(Path(__file__).parent.parent.__str__())
+sys.path.append(Path(__file__).parent.parent.parent.__str__())
 
-from git_connector import GitConnectorInterface, GitConnectorSubprocess
+from converter.git_connector import GitConnectorInterface, GitConnectorSubprocess
 from utils import walk_objects
 
 

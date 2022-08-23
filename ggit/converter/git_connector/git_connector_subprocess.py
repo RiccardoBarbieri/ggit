@@ -3,12 +3,12 @@ import sys
 from pathlib import Path
 from typing import TYPE_CHECKING
 
-sys.path.append(Path(__file__).parent.parent.__str__())
+sys.path.append(Path(__file__).parent.parent.parent.__str__())
 
 if TYPE_CHECKING:
     from model.hash_type import HashType
 
-from git_connector.git_connector_interface import GitConnectorInterface
+from converter.git_connector.git_connector_interface import GitConnectorInterface
 
 
 class GitConnectorSubprocess(GitConnectorInterface):
@@ -19,7 +19,7 @@ class GitConnectorSubprocess(GitConnectorInterface):
 
     
     def get_hash_type(self, hash_: str) -> 'HashType':
-        from model.hash_type import HashType
+        from converter.model.hash_type import HashType
         from process_exception import ProcessException
         """
         Obtain the :class:`HashType` of the hash provided.
