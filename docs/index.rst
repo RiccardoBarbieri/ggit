@@ -13,6 +13,7 @@ Welcome to ggit's documentation!
    model
    git_connector
    utils
+   entities
 
 
 Indices and tables

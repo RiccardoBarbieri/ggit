@@ -27,3 +27,16 @@ class GitConnectorInterface(metaclass=abc.ABCMeta):
             The hash to obtain the type from.
         """
         raise NotImplementedError
+
+    @abc.abstractmethod
+    def get_hash(self, ) -> bytes:
+        """
+        Obtain the bytes of the hash provided.
+        
+        Parameters
+        ----------
+        hash: str
+            The hash to obtain the bytes from.
+        """
+        raise NotImplementedError
+
