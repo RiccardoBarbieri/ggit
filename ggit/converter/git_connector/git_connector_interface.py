@@ -1,4 +1,5 @@
 import abc
+from io import FileIO
 from typing import TYPE_CHECKING
 
 if TYPE_CHECKING:
@@ -14,7 +15,9 @@ class GitConnectorInterface(metaclass=abc.ABCMeta):
     @classmethod
     def __subclasshook__(cls, subclass):
         return (hasattr(subclass, 'get_hash_type') and
-                callable(subclass.get_hash_type))
+                callable(subclass.get_hash_type) and
+                hasattr(subclass, 'hash_object') and 
+                callable(subclass.hash_object))
 
     @abc.abstractmethod
     def get_hash_type(self, hash: str) -> 'HashType':
@@ -29,7 +32,7 @@ class GitConnectorInterface(metaclass=abc.ABCMeta):
         raise NotImplementedError
 
     @abc.abstractmethod
-    def get_hash(self, ) -> bytes:
+    def hash_object(self, file: str) -> str:
         """
         Obtain the bytes of the hash provided.
         

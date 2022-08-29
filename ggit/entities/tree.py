@@ -27,7 +27,7 @@ class Tree:
     __items: List[Tuple['Blob | Tree', str, str]]
     __hash: str
 
-    def __init__(self, __items: List[Tuple['Blob | Tree', str, str]]):
+    def __init__(self, __items: List[Tuple['Blob | Tree', str, str]] = []):
         self.__items = __items
         self.__hash = self.__calculate_hash()
 
@@ -72,12 +72,12 @@ class Tree:
         self.__items = sorted(self.__items, key=lambda item: item[1])
         content = b''
         for item in self.__items:
-            content += item[2].encode()
+            content += item[2].lstrip('0').encode()
             content += b' '
             content += item[1].encode()
             content += b'\0'
             content += bytes.fromhex(item[0].hash)
-        return hashlib.sha1(f"tree {len(content)}\0{content}".encode()).hexdigest()
+        return hashlib.sha1(b"tree " + str(len(content)).encode('ascii') + b"\0" + content).hexdigest()
 
     def __str__(self) -> str:
         return f"Tree: {self.__hash}"

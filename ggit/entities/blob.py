@@ -10,7 +10,7 @@ class Blob:
 
     Attributes
     ----------
-    content : str | bytes
+    content : bytes
         The content of the blob.
     length : int
         The length of the blob.
@@ -19,15 +19,15 @@ class Blob:
 
     Parameters
     ----------
-    content : str | bytes
+    content : bytes
         The content of the blob.
     """
 
-    __content: str | bytes
+    __content: bytes
     __length: int
     __hash: str
 
-    def __init__(self, content: str | bytes):
+    def __init__(self, content: bytes):
         self.__content = content
         self.__length = len(content)
         self.__hash = self.__calculate_hash()
@@ -41,14 +41,14 @@ class Blob:
         str
             The hash of the blob.
         """
-        return hashlib.sha1(f"blob {self.__length}\0{self.__content}".encode()).hexdigest()
+        return hashlib.sha1(b"blob " + str(self.__length).encode('ascii') + b"\0" + self.__content).hexdigest()
 
     @property
-    def content(self) -> str | bytes:
+    def content(self) -> bytes:
         return self.__content
 
     @content.setter
-    def content(self, content: str | bytes):
+    def content(self, content: bytes):
         self.__content = content
         self.__length = len(content)
         self.__hash = self.__calculate_hash()

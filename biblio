@@ -6,5 +6,8 @@ https://realpython.com/python-interface/#using-abcabcmeta
 
 https://github.com/chris3torek/scripts/blob/master/githash.py
 
+https://stackoverflow.com/questions/35430584/how-is-the-git-hash-calculated
+
 https://www.youtube.com/watch?v=MyvyqdQ3OjI -- video su commit hash
 
+https://github.com/milahu/python-fuse-githubfs/blob/bf782670d136ff8a763b147ba615ff55f5f63b8a/githubfs/verify_github_api.py

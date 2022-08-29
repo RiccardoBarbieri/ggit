@@ -104,8 +104,6 @@ commit3_process = subprocess.run(['git', 'commit-tree', write_tree3_process.stdo
 print('Third commit created, hash:')
 print(commit3_process.stdout.decode('utf-8'))
 
-#! add complete git log --stat
-
 print('Current objects:')
 find4_process = subprocess.run(['find', '.git/objects', '-type', 'f'], stdout=subprocess.PIPE)
 print(find4_process.stdout.decode('utf-8'))
