@@ -1,26 +1,26 @@
+import os
 import subprocess
-import sys
 from pathlib import Path
-from typing import TYPE_CHECKING
-
-sys.path.append(Path(__file__).parent.parent.parent.__str__())
+from typing import TYPE_CHECKING, Generator, List, Tuple
 
 if TYPE_CHECKING:
-    from model.hash_type import HashType
+    from ggit.converter.model.hash_type import HashType
 
-from converter.git_connector.git_connector_interface import GitConnectorInterface
+from ggit.converter.git_connector.git_connector_interface import GitConnectorInterface
+from ggit.utils import walk_objects
 
 
 class GitConnectorSubprocess(GitConnectorInterface):
     """
     Class that implements the :class:`GitConnectorInterface` using the subprocess module
-    to interact with git cli directly.
+    to interact with git cli directly. To use the functionality of this class, one must
+    have the git cli installed and be in the correct directory.
     """
 
     
     def get_hash_type(self, hash_: str) -> 'HashType':
-        from converter.model.hash_type import HashType
-        from process_exception import ProcessException
+        from ggit.converter.model.hash_type import HashType
+        from ggit.process_exception import ProcessException
         """
         Obtain the :class:`HashType` of the hash provided.
         
@@ -45,8 +45,33 @@ class GitConnectorSubprocess(GitConnectorInterface):
             
         return HashType[hash_type_process.stdout.strip().decode('utf-8').upper()]
 
+    def get_all_objects(self) -> Generator[Tuple[str, 'HashType'], None, None]:
+        from ggit.process_exception import ProcessException
+        """
+        Obtain all the objects in the repository as a list of tuples that
+        associates the object hash with the object type.
+
+        Returns
+        -------
+        Generator[Tuple[str,:class:`HashType`], None, None]
+            A generator that yields tuples that associates the object hash with the object type.
+        
+        Raises
+        ------
+        :class:`ProcessException`
+            If any process exits with errors.
+        """
+        objects = walk_objects(os.getcwd())
+        for obj in objects:
+            hash_ = ''.join(str(obj).split('/')[-2:])
+            hash_type = self.get_hash_type(hash_)
+            yield (hash_, hash_type)
+
+        
+
+
     def hash_object(self, path: Path) -> str:
-        from process_exception import ProcessException
+        from ggit.process_exception import ProcessException
         """
         Obtain the hash of the object at the path provided.
         

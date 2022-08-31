@@ -34,12 +34,13 @@ class GitConnectorInterface(metaclass=abc.ABCMeta):
     @abc.abstractmethod
     def hash_object(self, file: str) -> str:
         """
-        Obtain the bytes of the hash provided.
+        Obtain the hash of the object at the path provided.
         
         Parameters
         ----------
-        hash: str
-            The hash to obtain the bytes from.
+        path: str
+            The path of the object to hash.
+
         """
         raise NotImplementedError
 

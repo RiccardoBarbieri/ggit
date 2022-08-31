@@ -1,13 +1,10 @@
 import os
-import sys
 from enum import Enum
 from pathlib import Path
 from typing import List
 
-sys.path.append(Path(__file__).parent.parent.parent.__str__())
-
-from converter.git_connector import GitConnectorInterface, GitConnectorSubprocess
-from utils import walk_objects
+from ggit.converter.git_connector import (GitConnectorInterface, GitConnectorSubprocess)
+from ggit.utils import walk_objects
 
 
 class HashType(Enum):
@@ -163,7 +160,7 @@ class HashIdentifier:
         self.__get_all_hashes()
         return self.__hashes
 
-if __name__ == '__main__':
-    hash_identifier = HashIdentifier()
-    hashes = hash_identifier.get_hashes()
+# if __name__ == '__main__':
+#     hash_identifier = HashIdentifier()
+#     hashes = hash_identifier.get_hashes()
 
