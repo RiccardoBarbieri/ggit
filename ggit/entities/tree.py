@@ -89,3 +89,6 @@ class Tree:
         if isinstance(other, Tree):
             return self.__hash == other.hash
         return False
+
+    def __hash__(self) -> int:
+        return self.__hash
