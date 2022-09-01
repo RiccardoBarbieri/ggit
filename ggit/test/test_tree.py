@@ -70,7 +70,4 @@ else:
 assert sub_tree.hash == sub_tree_hash_real
 
 
-
-
-
-subprocess.run(['rm', '-rf', '.git'])
+# subprocess.run(['rm', '-rf', '.git'])
