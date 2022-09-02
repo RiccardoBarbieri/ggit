@@ -1,14 +1,11 @@
 import hashlib
-import os
 from datetime import datetime
-from pathlib import Path
 from typing import TYPE_CHECKING
 
 if TYPE_CHECKING:
     from ggit.entities import User
 
-from ggit.entities import Blob, Tree
-from ggit.utils import walk_folder_flat
+from ggit.entities import Tree
 
 
 class Commit:
@@ -123,41 +120,3 @@ class Commit:
         return hashlib.sha1(b"commit " + str(len(self.__body)).encode('ascii') + b"\0" + self.__body).hexdigest()
 
 
-if __name__ == "__main__":
-    from ggit.entities import User
-    repo = Path(__file__).parent.parent.joinpath('test', 'assets', 'tree_tester')
-
-    items_sub = []
-    for i in walk_folder_flat(repo.joinpath('sub')):
-        if os.access(i, os.X_OK):
-            mode = '100755'
-        elif i.is_symlink():
-            mode = '120000'
-        else:
-            mode = '100644'
-        items_sub.append((Blob(i.read_bytes()), i.name, mode))
-
-    sub_tree = Tree(items_sub)
-    items_main = []
-    for i in walk_folder_flat(repo):
-        if os.access(i, os.X_OK):
-            mode = '100755'
-        elif i.is_symlink():
-            mode = '120000'
-        else:
-            mode = '100644'
-        items_main.append((Blob(i.read_bytes()), i.name, mode))
-    items_main.append((sub_tree, 'sub', '040000'))
-    main_tree = Tree(items_main)
-
-    commit = Commit()
-
-    commit.tree = main_tree
-    commit.parent = None
-    date_time = datetime.fromtimestamp(1662113769)
-    commit.date_time = date_time
-    commit.author = User('RiccardoBarbieri', 'riccardo_barbieri@outlook.it')
-    commit.committer = User('RiccardoBarbieri', 'riccardo_barbieri@outlook.it')
-    commit.message = 'test'
-
-    print(commit.hash)
