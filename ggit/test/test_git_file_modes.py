@@ -1,8 +1,31 @@
 from genericpath import isfile
+from pprint import pprint
 import subprocess
 import shutil
 import os
 from pathlib import Path
+from typing import Dict, List
+
+def octal_to_string(octal):
+    result = ""
+    conv = {
+        '0': '---',
+        '1': '--x',
+        '2': '-w-',
+        '3': '-wx',
+        '4': 'r--',
+        '5': 'r-x',
+        '6': 'rw-',
+        '7': 'rwx',
+    }
+    # Iterate over each of the digits in octal
+    num = str(oct(octal))[2:]
+    num = num.zfill(3)
+    if len(num) > 3:
+        raise ValueError("Invalid permission number")
+    for digit in num:
+        result += conv[str(digit)]
+    return result
 
 modes_folder = Path(__file__).parent.joinpath('modes')
 if not modes_folder.exists():
@@ -49,13 +72,31 @@ subprocess.run(['git', 'add', 'link'], stdout=subprocess.PIPE, stderr=subprocess
 
 subprocess.run(['git', 'commit', '-m', 'test'], stdout=subprocess.PIPE)
 
-print(len(faulty_files))
+print(len(faulty_files)) 
+# if user does not have read permission on file, git will not add it
+# for i in faulty_files:
+#     print(octal_to_string(int(i, 8)))
 print(len(faulty_folders))
 
+log_process = subprocess.run(['git', 'cat-file', '-p', 'HEAD'], stdout=subprocess.PIPE)
+tree_hash = log_process.stdout.decode('utf-8').split(' ')[1].split('\n')[0].strip()
+tree_process = subprocess.run(['git', 'cat-file', '-p', tree_hash], stdout=subprocess.PIPE)
 
-# for i in os.listdir(modes_folder):
-#     if os.path.isfile(modes_folder.joinpath(i)):
-#         os.remove(modes_folder.joinpath(i))
-#     else:
-#         shutil.rmtree(modes_folder.joinpath(i))
+modes: Dict[str, List[str]] = {}
+for i in tree_process.stdout.decode('utf-8').splitlines():
+    git_mode = i.split(' ')[0]
+    file_name = i.split(' ')[-1].split('\t')[-1]
+    try:
+        modes[git_mode].append(file_name)
+    except KeyError:
+        modes[git_mode] = [file_name]
+print('All git modes:')
+pprint(modes.keys())
 
+
+os.remove(modes_folder.joinpath('link'))
+for i in os.listdir(modes_folder):
+    if os.path.isfile(modes_folder.joinpath(i)):
+        os.remove(modes_folder.joinpath(i))
+    else:
+        shutil.rmtree(modes_folder.joinpath(i))
