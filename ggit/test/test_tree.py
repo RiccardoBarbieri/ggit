@@ -1,5 +1,6 @@
 import os
 import subprocess
+import shutil
 from pathlib import Path
 
 from ggit.converter.model.hash_type import HashType
@@ -9,7 +10,20 @@ from ggit.utils import walk_objects, walk_folder_flat
 from rich.console import Console
 
 repo = Path(__file__).parent.joinpath('assets', 'tree_tester')
+
+process = subprocess.run(['rm', '-rf', repo])
+process = subprocess.run(['mkdir', repo])
 os.chdir(repo)
+
+os.mkdir('sub')
+with open('sub/asd.t', 'w+') as f:
+    f.write('asdacas')
+with open('filetest.txt', 'w+') as f:
+    f.write('testo importante da hashare')
+with open('new_file.txt', 'w+') as f:
+    f.write('asdavcasc')
+shutil.copy(repo.parent.parent.parent.parent.joinpath('get_objects'), 'bin')
+
 subprocess.run(['git', 'init'], stdout=subprocess.PIPE)
 subprocess.run(['git', 'add', '.'], stdout=subprocess.PIPE)
 subprocess.run(['git', 'commit', '-m', 'test'], stdout=subprocess.PIPE)

@@ -1,13 +1,11 @@
 class User:
     """
-    This class represents a user, it contains the name, surname and email of the user.
+    This class represents a user, it contains the name and email of the user.
 
     Attributes
     ----------
     name : str
         The name of the user.
-    surname : str
-        The surname of the user.
     email : str
         The email of the user.
 
@@ -15,19 +13,15 @@ class User:
     ----------
     name : str
         The name of the user.
-    surname : str   
-        The surname of the user.
     email : str
         The email of the user.
     """
 
     __name: str
-    __surname: str
     __email: str
 
-    def __init__(self, name: str, surname: str, email: str):
+    def __init__(self, name: str, email: str):
         self.__name = name
-        self.__surname = surname
         self.__email = email
     
     @property
@@ -39,14 +33,6 @@ class User:
         self.__name = name
 
     @property
-    def surname(self) -> str:
-        return self.__surname
-
-    @surname.setter
-    def surname(self, surname: str):
-        self.__surname = surname
-
-    @property
     def email(self) -> str:
         return self.__email
 
@@ -55,14 +41,14 @@ class User:
         self.__email = email
 
     def __str__(self) -> str:
-        return f'{self.name} {self.surname} <{self.email}>'
+        return f'{self.name} <{self.email}>'
 
     def __repr__(self) -> str:
-        return f'{self.name} {self.surname} <{self.email}>'
+        return f'{self.name} <{self.email}>'
 
     def __eq__(self, other: object) -> bool:
-        return self.name == other.name and self.surname == other.surname and self.email == other.email
+        return self.name == other.name and self.email == other.email
 
     def __hash__(self) -> int:
-        return hash((self.name, self.surname, self.email))
+        return hash((self.name, self.email))
 
