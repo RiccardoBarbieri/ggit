@@ -20,7 +20,7 @@ class GitConnectorSubprocess(GitConnectorInterface):
     
     def get_hash_type(self, hash_: str) -> 'HashType':
         from ggit.converter.model.hash_type import HashType
-        from ggit.process_exception import ProcessException
+        from ggit.exceptions.process_exception import ProcessException
         """
         Obtain the :class:`HashType` of the hash provided.
         
@@ -46,7 +46,7 @@ class GitConnectorSubprocess(GitConnectorInterface):
         return HashType[hash_type_process.stdout.strip().decode('utf-8').upper()]
 
     def get_all_objects(self) -> Generator[Tuple[str, 'HashType'], None, None]:
-        from ggit.process_exception import ProcessException
+        from ggit.exceptions.process_exception import ProcessException
         """
         Obtain all the objects in the repository as a list of tuples that
         associates the object hash with the object type.
@@ -71,7 +71,7 @@ class GitConnectorSubprocess(GitConnectorInterface):
 
 
     def hash_object(self, path: Path) -> str:
-        from ggit.process_exception import ProcessException
+        from ggit.exceptions.process_exception import ProcessException
         """
         Obtain the hash of the object at the path provided.
         
