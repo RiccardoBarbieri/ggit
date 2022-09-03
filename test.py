@@ -21,13 +21,8 @@ test
 
 
 import zlib
+main_content = zlib.compress(body)
+sub_content = zlib.compress(body[15:50])
 
-with open('/home/riccardoob/thesys/asdasd.txt', 'rb') as f:
-    read = f.read()
-    print(len(zlib.compress(read)))
-    print(len(read))
-
-with open('/home/riccardoob/thesys/.git/objects/49/8e26ea23c2f427e95af5d267256a0fe0537259', 'rb') as f:
-    read = f.read()
-    print(len(zlib.decompress(read)))
-    print(len(read))
+print(sub_content)
+print(main_content)
