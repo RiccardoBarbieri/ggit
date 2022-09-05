@@ -19,10 +19,3 @@ class DataSource(metaclass=SingletonMeta):
     def close(self):
         self.driver.close()
 
-data_source = DataSource()
-# driver = data_source.get_driver()
-
-with data_source.new_session() as session:
-    result = session.run("MATCH (n) RETURN n LIMIT 25")
-    for record in result:
-        print(record)
