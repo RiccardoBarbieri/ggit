@@ -22,10 +22,18 @@ class Tree:
         The items of the tree, a list of tuples containing the item, its name and the mode.
     hash : str
         The hash of the tree.
+    content : bytes
+        The content of the tree, the actual string of bytes that will be hashed.
+    length : int
+        The length of the tree content.
+    item_count : int
+        The number of items in the tree, recursively, counting the tree itself
     """
 
     __items: List[Tuple['Blob | Tree', str, str]]
     __hash: str
+    __content: bytes
+    __length: int
 
     def __init__(self, __items: List[Tuple['Blob | Tree', str, str]] = []):
         self.__items = __items
@@ -57,8 +65,26 @@ class Tree:
         self.__hash = self.__calculate_hash()
 
     @property
+    def content(self) -> str:
+        return self.__content
+    
+    @property
+    def length(self) -> int:
+        return self.__length
+
+    @property
     def hash(self) -> str:
         return self.__hash
+    
+    @property
+    def item_count(self) -> int:
+        count = 1
+        for i in self.__items:
+            if isinstance(i[0], Tree):
+                count += i[0].item_count
+            elif isinstance(i[0], Blob):
+                count += 1
+        return count
 
     def __calculate_hash(self) -> str:
         """
@@ -77,6 +103,8 @@ class Tree:
             content += item[1].encode()
             content += b'\0'
             content += bytes.fromhex(item[0].hash)
+        self.__content = content
+        self.__length = len(content)
         return hashlib.sha1(b"tree " + str(len(content)).encode('ascii') + b"\0" + content).hexdigest()
 
     def __str__(self) -> str:
