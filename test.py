@@ -5,6 +5,7 @@ import sys
 from pathlib import Path
 import hashlib
 from datetime import datetime, timezone
+import traceback
 
 from ggit.utils.folder_utils import walk_folder_rec_flat
 
@@ -20,9 +21,12 @@ test
 # print(hashlib.sha1(b"commit " + str(len(body)).encode("ascii") + b"\0" + body).hexdigest())
 
 
-import zlib
-main_content = zlib.compress(body)
-sub_content = zlib.compress(body[15:50])
+# import zlib
+# main_content = zlib.compress(body)
+# sub_content = zlib.compress(body[15:50])
 
-print(sub_content)
-print(main_content)
+
+try:
+    raise Exception("test")
+except Exception as e:
+    print(traceback.format_exc(), end='')
