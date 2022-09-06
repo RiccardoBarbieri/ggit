@@ -6,7 +6,7 @@ from pathlib import Path
 from ggit.converter.model.hash_type import HashType
 from ggit.converter.git_connector import GitConnectorSubprocess
 from ggit.entities import Blob, Tree
-from ggit.utils import walk_folder_flat
+from ggit.utils.folder_utils import walk_folder_flat
 from rich.console import Console
 
 repo = Path(__file__).parent.joinpath('assets', 'tree_tester')

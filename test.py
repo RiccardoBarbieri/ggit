@@ -6,7 +6,7 @@ from pathlib import Path
 import hashlib
 from datetime import datetime, timezone
 
-from ggit.utils import walk_folder_rec_flat
+from ggit.utils.folder_utils import walk_folder_rec_flat
 
 os.chdir(Path(__file__).parent.joinpath('ggit', 'test', 'assets', 'tree_tester'))
 

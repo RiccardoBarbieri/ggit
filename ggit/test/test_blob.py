@@ -4,7 +4,7 @@ from rich.console import Console
 
 from ggit.converter.git_connector import GitConnectorSubprocess
 from ggit.entities.blob import Blob
-from ggit.utils import walk_folder_rec_flat
+from ggit.utils.folder_utils import walk_folder_rec_flat
 
 console = Console()
 git_connector = GitConnectorSubprocess()

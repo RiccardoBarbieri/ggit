@@ -6,7 +6,7 @@ from pathlib import Path
 from time import sleep
 
 from ggit.entities import Blob, Commit, Tree, User
-from ggit.utils import walk_folder_flat
+from ggit.utils.folder_utils import walk_folder_flat
 from rich.console import Console
 
 repo = Path(__file__).parent.joinpath('assets', 'tree_tester')

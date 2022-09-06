@@ -7,7 +7,7 @@ if TYPE_CHECKING:
     from ggit.converter.model.hash_type import HashType
 
 from ggit.converter.git_connector.git_connector_interface import GitConnectorInterface
-from ggit.utils import walk_objects
+from ggit.utils.folder_utils import walk_objects
 
 
 class GitConnectorSubprocess(GitConnectorInterface):
