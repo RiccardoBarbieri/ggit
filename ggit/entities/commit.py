@@ -12,7 +12,7 @@ class Commit:
     """
     This class represents a commit, it contains the main tree that
     mirrors the staging area, the author, the committer and the message of the commit.
-    The commit class also stores the parent of the commit, if the commit is the first 
+    The commit class also stores the parent of the commit, if the commit is the first
     commit of the repository the parent is None.
     The hash of the commit is calculated in a similar way as the tree hash, hashing a string
     containing the word "commit " followed by the size of the body terminated by a NUL character,
@@ -21,22 +21,30 @@ class Commit:
 
     tree ff7ae585339f04217663bdb7f54df531c6fb8217
     author NameOfAuthor <email@example.com> 1662040308 +0200
-    committer name <email@example.com> 1662040308 +0200
+    committer NameOfCommitter <email@example.com> 1662040308 +0200
 
     commit message
 
     """
 
     __tree: Tree
-    __parent: 'Commit | None'
+    __parent: "Commit | None"
     __date_time: datetime
-    __author: 'User'
-    __committer: 'User'
+    __author: "User"
+    __committer: "User"
     __message: str
     __hash: str
     __body: bytes
 
-    def __init__(self, tree: Tree = None, parent: 'Commit | None' = None, __date_time: datetime = None, author: 'User' = None, committer: 'User' = None, message: str = None):
+    def __init__(
+        self,
+        tree: Tree = None,
+        parent: "Commit | None" = None,
+        __date_time: datetime = None,
+        author: "User" = None,
+        committer: "User" = None,
+        message: str = None,
+    ):
         self.__tree = tree
         self.__parent = parent
         self.__date_time = __date_time
@@ -53,11 +61,11 @@ class Commit:
         self.__tree = tree
 
     @property
-    def parent(self) -> 'Commit | None':
+    def parent(self) -> "Commit | None":
         return self.__parent
 
     @parent.setter
-    def parent(self, parent: 'Commit | None'):
+    def parent(self, parent: "Commit | None"):
         self.__parent = parent
 
     @property
@@ -69,19 +77,19 @@ class Commit:
         self.__date_time = date_time
 
     @property
-    def author(self) -> 'User':
+    def author(self) -> "User":
         return self.__author
 
     @author.setter
-    def author(self, author: 'User'):
+    def author(self, author: "User"):
         self.__author = author
 
     @property
-    def committer(self) -> 'User':
+    def committer(self) -> "User":
         return self.__committer
 
     @committer.setter
-    def committer(self, committer: 'User'):
+    def committer(self, committer: "User"):
         self.__committer = committer
 
     @property
@@ -97,26 +105,51 @@ class Commit:
         self.__hash = self.__calculate_hash()
         return self.__hash
 
+    @property
+    def content(self) -> bytes:
+        self.__compose_body()
+        return self.__body
+
+    @property
+    def length(self) -> int:
+        return len(self.content)
+
     def __compose_body(self) -> str:
         self.__body = b""
         try:
-            self.__body = b"tree " + self.tree.hash.encode('ascii') + b"\n"
+            self.__body = b"tree " + self.tree.hash.encode("ascii") + b"\n"
         except AttributeError:
             raise AttributeError("The commit must have a parent tree")
         if self.parent is not None:
-            self.__body += b"parent " + self.parent.hash.encode('ascii') + b"\n"
+            self.__body += b"parent " + self.parent.hash.encode("ascii") + b"\n"
         try:
-            self.__body += b"author " + str(self.author).encode('ascii') + b" " + str(int(self.date_time.timestamp())).encode('ascii') + b" " + str(self.date_time.astimezone())[-6:].replace(':', '').encode('ascii') + b"\n"
+            self.__body += (
+                b"author "
+                + str(self.author).encode("ascii")
+                + b" "
+                + str(int(self.date_time.timestamp())).encode("ascii")
+                + b" "
+                + str(self.date_time.astimezone())[-6:].replace(":", "").encode("ascii")
+                + b"\n"
+            )
         except AttributeError:
             raise AttributeError("The commit must have an author")
         try:
-            self.__body += b"committer " + str(self.committer).encode('ascii') + b" " + str(int(self.date_time.timestamp())).encode('ascii') + b" " + str(self.date_time.astimezone())[-6:].replace(':', '').encode('ascii') + b"\n"
+            self.__body += (
+                b"committer "
+                + str(self.committer).encode("ascii")
+                + b" "
+                + str(int(self.date_time.timestamp())).encode("ascii")
+                + b" "
+                + str(self.date_time.astimezone())[-6:].replace(":", "").encode("ascii")
+                + b"\n"
+            )
         except AttributeError:
             raise AttributeError("The commit must have an author")
-        self.__body += b"\n" + self.message.encode('ascii') + b"\n"
+        self.__body += b"\n" + self.message.encode("ascii") + b"\n"
 
     def __calculate_hash(self) -> str:
         self.__compose_body()
-        return hashlib.sha1(b"commit " + str(len(self.__body)).encode('ascii') + b"\0" + self.__body).hexdigest()
-
-
+        return hashlib.sha1(
+            b"commit " + str(len(self.__body)).encode("ascii") + b"\0" + self.__body
+        ).hexdigest()
