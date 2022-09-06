@@ -4,7 +4,7 @@ if TYPE_CHECKING:
     from ggit.database import DataSource
 
 from ggit.entities import Blob
-from neo4j import Query, Record, Result
+from neo4j import Result
 
 
 class BlobRepository:
@@ -17,7 +17,7 @@ class BlobRepository:
     def add_blob(self, blob: Blob) -> bool:
         with self.data_source.new_session() as session:
             result = session.run(
-                "CREATE (b:Blob {hash: $hash, content: $content, length: $length}) RETURN b", hash=blob.hash, content=blob.content, length=blob.length)
+                "MERGE (b:Blob {hash: $hash, content: $content, length: $length}) RETURN b", hash=blob.hash, content=blob.content, length=blob.length)
             return result.consume().counters.nodes_created == 1
 
     def get_blob(self, hash: str) -> Blob:
