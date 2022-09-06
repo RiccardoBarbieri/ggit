@@ -1,11 +1,11 @@
-from typing import TYPE_CHECKING
 import traceback
+from typing import TYPE_CHECKING
 
 if TYPE_CHECKING:
     from ggit.database import DataSource
 
+from ggit.database import TreeRepository, UserRepository
 from ggit.entities import Commit
-from ggit.database import TreeRepository
 
 
 class CommitRepository:
@@ -19,17 +19,10 @@ class CommitRepository:
         with self.data_source.new_session() as session:
             tx = session.begin_transaction()
             try:
-
-                tx.run(
-                    "MERGE (user:User {name: $name, email: $email})",
-                    name=commit.author.name,
-                    email=commit.author.email,
-                )
-                tx.run(
-                    "MERGE (user:User {name: $name, email: $email})",
-                    name=commit.committer.name,
-                    email=commit.committer.email,
-                )
+                user_repo = UserRepository()
+                
+                user_repo.add_user(commit.author)
+                user_repo.add_user(commit.committer)
 
                 tx.run(
                     """MATCH (author:User {name: $author_name, email: $author_email})
