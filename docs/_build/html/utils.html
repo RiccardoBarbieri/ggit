@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>ggit.utils package &mdash; ggit 1.0.0 documentation</title>
+  <title>ggit.utils module &mdash; ggit 1.0.0 documentation</title>
       <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <!--[if lt IE 9]>
@@ -19,7 +19,7 @@
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="ggit.entities package" href="entities.html" />
+    <link rel="next" title="ggit.entities module" href="entities.html" />
     <link rel="prev" title="ggit.converter.git_connector" href="git_connector.html" /> 
 </head>
 
@@ -49,16 +49,27 @@
 <li class="toctree-l2"><a class="reference internal" href="git_connector.html#ggit-converter-git-connector-git-connector-subprocess">ggit.converter.git_connector.git_connector_subprocess</a></li>
 </ul>
 </li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">ggit.utils package</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#ggit-utils-folder-utils">ggit.utils.folder_utils</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">ggit.utils module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#folder-utils">folder_utils</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#node-utils">node_utils</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#singleton">singleton</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="entities.html">ggit.entities package</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="entities.html#ggit-entities-blob">ggit.entities.blob</a></li>
-<li class="toctree-l2"><a class="reference internal" href="entities.html#ggit-entities-tree">ggit.entities.tree</a></li>
-<li class="toctree-l2"><a class="reference internal" href="entities.html#ggit-entities-commit">ggit.entities.commit</a></li>
+<li class="toctree-l1"><a class="reference internal" href="entities.html">ggit.entities module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="entities.html#blob">Blob</a></li>
+<li class="toctree-l2"><a class="reference internal" href="entities.html#tree">Tree</a></li>
+<li class="toctree-l2"><a class="reference internal" href="entities.html#commit">Commit</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="database.html">ggit.database module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="database.html#datasource">DataSource</a></li>
+<li class="toctree-l2"><a class="reference internal" href="database.html#blobrepository">BlobRepository</a></li>
+<li class="toctree-l2"><a class="reference internal" href="database.html#commitrepository">CommitRepository</a></li>
+<li class="toctree-l2"><a class="reference internal" href="database.html#treerepository">TreeRepository</a></li>
+<li class="toctree-l2"><a class="reference internal" href="database.html#userrepository">UserRepository</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="config.html">ggit.config module</a></li>
 </ul>
 
         </div>
@@ -75,7 +86,7 @@
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
       <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
-      <li>ggit.utils package</li>
+      <li>ggit.utils module</li>
       <li class="wy-breadcrumbs-aside">
             <a href="_sources/utils.rst.txt" rel="nofollow"> View page source</a>
       </li>
@@ -85,10 +96,10 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section id="ggit-utils-package">
-<h1>ggit.utils package<a class="headerlink" href="#ggit-utils-package" title="Permalink to this heading"></a></h1>
-<section id="ggit-utils-folder-utils">
-<h2>ggit.utils.folder_utils<a class="headerlink" href="#ggit-utils-folder-utils" title="Permalink to this heading"></a></h2>
+  <section id="ggit-utils-module">
+<h1>ggit.utils module<a class="headerlink" href="#ggit-utils-module" title="Permalink to this heading"></a></h1>
+<section id="folder-utils">
+<h2>folder_utils<a class="headerlink" href="#folder-utils" title="Permalink to this heading"></a></h2>
 <dl class="py function">
 <dt class="sig sig-object py" id="ggit.utils.folder_utils.walk_objects">
 <span class="sig-prename descclassname"><span class="pre">ggit.utils.folder_utils.</span></span><span class="sig-name descname"><span class="pre">walk_objects</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">repository</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">Path</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#ggit.utils.folder_utils.walk_objects" title="Permalink to this definition"></a></dt>
@@ -107,6 +118,97 @@ The objects are returned as a list of Path objects.</p>
 </dl>
 </dd></dl>
 
+<dl class="py function">
+<dt class="sig sig-object py" id="ggit.utils.folder_utils.walk_folder_rec_flat">
+<span class="sig-prename descclassname"><span class="pre">ggit.utils.folder_utils.</span></span><span class="sig-name descname"><span class="pre">walk_folder_rec_flat</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">folder</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Path</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Generator</span><span class="p"><span class="pre">[</span></span><span class="pre">Path</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">None</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">None</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#ggit.utils.folder_utils.walk_folder_rec_flat" title="Permalink to this definition"></a></dt>
+<dd><p>Walk a folder and returns all files found.
+The files are returned as a list of Path objects.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>folder</strong> (<em>Path</em>) – The folder to walk.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The list of Path objects of the files found.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>List[Path]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="ggit.utils.folder_utils.walk_folder_flat">
+<span class="sig-prename descclassname"><span class="pre">ggit.utils.folder_utils.</span></span><span class="sig-name descname"><span class="pre">walk_folder_flat</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">folder</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Path</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Generator</span><span class="p"><span class="pre">[</span></span><span class="pre">Path</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">None</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">None</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#ggit.utils.folder_utils.walk_folder_flat" title="Permalink to this definition"></a></dt>
+<dd><p>Walk a folder and returns all files found at the first level.
+The files are returned as a list of Path objects.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>folder</strong> (<em>Path</em>) – The folder to walk.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The list of Path objects of the files found.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>List[Path]</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="node-utils">
+<h2>node_utils<a class="headerlink" href="#node-utils" title="Permalink to this heading"></a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="ggit.utils.nodes_utils.get_node">
+<span class="sig-prename descclassname"><span class="pre">ggit.utils.nodes_utils.</span></span><span class="sig-name descname"><span class="pre">get_node</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">hash</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nodes</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">Node</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Node</span></span></span><a class="headerlink" href="#ggit.utils.nodes_utils.get_node" title="Permalink to this definition"></a></dt>
+<dd><p>Obtains a node from a list of nodes given its hash.
+May be used only with nodes that have a hash property.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>hash</strong> (<em>str</em>) – The hash of the node to obtain.</p></li>
+<li><p><strong>nodes</strong> (<em>List</em><em>[</em><em>Node</em><em>]</em>) – The list of nodes to search in.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The node with the given hash.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>Node</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="ggit.utils.nodes_utils.parse_tree">
+<span class="sig-prename descclassname"><span class="pre">ggit.utils.nodes_utils.</span></span><span class="sig-name descname"><span class="pre">parse_tree</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">hash</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nodes</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">Node</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">relations</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">Relationship</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="entities.html#ggit.entities.tree.Tree" title="ggit.entities.tree.Tree"><span class="pre">Tree</span></a></span></span><a class="headerlink" href="#ggit.utils.nodes_utils.parse_tree" title="Permalink to this definition"></a></dt>
+<dd><p>Parses a tree given the nodes and relations obtained from a query
+created to get the tree, its relationships and its items.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>hash</strong> (<em>str</em>) – The hash of the top tree in the relations.</p></li>
+<li><p><strong>nodes</strong> (<em>List</em><em>[</em><em>Node</em><em>]</em>) – The list of nodes obtained from the query.</p></li>
+<li><p><strong>relations</strong> (<em>List</em><em>[</em><em>Relationship</em><em>]</em>) – The list of relations obtained from the query.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The tree parsed from the nodes and relations.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="entities.html#ggit.entities.tree.Tree" title="ggit.entities.tree.Tree">Tree</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="singleton">
+<h2>singleton<a class="headerlink" href="#singleton" title="Permalink to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="ggit.utils.singleton.SingletonMeta">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">ggit.utils.singleton.</span></span><span class="sig-name descname"><span class="pre">SingletonMeta</span></span><a class="headerlink" href="#ggit.utils.singleton.SingletonMeta" title="Permalink to this definition"></a></dt>
+<dd><p>Metaclass to manage a singleton instance of a class.</p>
+</dd></dl>
+
 </section>
 </section>
 
@@ -115,7 +217,7 @@ The objects are returned as a list of Path objects.</p>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
         <a href="git_connector.html" class="btn btn-neutral float-left" title="ggit.converter.git_connector" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="entities.html" class="btn btn-neutral float-right" title="ggit.entities package" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="entities.html" class="btn btn-neutral float-right" title="ggit.entities module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>

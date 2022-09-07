@@ -14,6 +14,8 @@ Welcome to ggit's documentation!
    git_connector
    utils
    entities
+   database
+   config
 
 
 Indices and tables

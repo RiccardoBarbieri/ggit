@@ -1,25 +1,18 @@
-*********************
-ggit.entities package
-*********************
+********************
+ggit.entities module
+********************
 
-ggit.entities.blob
-==================
+Blob
+====
 .. autoclass:: ggit.entities.blob.Blob
    :members:
-..    :undoc-members:
-   :show-inheritance:
 
-ggit.entities.tree
-==================
+Tree
+====
 .. autoclass:: ggit.entities.tree.Tree
    :members:
-..    :undoc-members:
-   :show-inheritance:
 
-ggit.entities.commit
-====================
+Commit
+======
 .. autoclass:: ggit.entities.commit.Commit
    :members:
-..    :undoc-members:
-   :show-inheritance:
-

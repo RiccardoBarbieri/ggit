@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ggit.database module &mdash; ggit 1.0.0 documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="_static/doctools.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="ggit.config module" href="config.html" />
+    <link rel="prev" title="ggit.entities module" href="entities.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="index.html" class="icon icon-home"> ggit
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="model.html">ggit.converter.model package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="model.html#ggit-converter-model-hash-type">ggit.converter.model.hash_type</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="git_connector.html">ggit.converter.git_connector</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="git_connector.html#ggit-converter-git-connector-git-connector-interface">ggit.converter.git_connector.git_connector_interface</a></li>
+<li class="toctree-l2"><a class="reference internal" href="git_connector.html#ggit-converter-git-connector-git-connector-subprocess">ggit.converter.git_connector.git_connector_subprocess</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="utils.html">ggit.utils module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="utils.html#folder-utils">folder_utils</a></li>
+<li class="toctree-l2"><a class="reference internal" href="utils.html#node-utils">node_utils</a></li>
+<li class="toctree-l2"><a class="reference internal" href="utils.html#singleton">singleton</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="entities.html">ggit.entities module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="entities.html#blob">Blob</a></li>
+<li class="toctree-l2"><a class="reference internal" href="entities.html#tree">Tree</a></li>
+<li class="toctree-l2"><a class="reference internal" href="entities.html#commit">Commit</a></li>
+</ul>
+</li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">ggit.database module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#datasource">DataSource</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#blobrepository">BlobRepository</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#commitrepository">CommitRepository</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#treerepository">TreeRepository</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#userrepository">UserRepository</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="config.html">ggit.config module</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">ggit</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+      <li>ggit.database module</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/database.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="ggit-database-module">
+<h1>ggit.database module<a class="headerlink" href="#ggit-database-module" title="Permalink to this heading"></a></h1>
+<section id="datasource">
+<h2>DataSource<a class="headerlink" href="#datasource" title="Permalink to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="ggit.database.data_source.DataSource">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">ggit.database.data_source.</span></span><span class="sig-name descname"><span class="pre">DataSource</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#ggit.database.data_source.DataSource" title="Permalink to this definition"></a></dt>
+<dd><p>This class is a simple wrapper for the neo4j driver, which is used to
+create a session with the database.</p>
+<p>It is a singleton class, so it can be accessed from anywhere in the application and
+the instance will be the same.</p>
+<p>The credentials for the database are retrieved using the <code class="xref py py-class docutils literal notranslate"><span class="pre">ggit.config.ConfigManager</span></code> class.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ggit.database.data_source.DataSource.driver">
+<span class="sig-name descname"><span class="pre">driver</span></span><a class="headerlink" href="#ggit.database.data_source.DataSource.driver" title="Permalink to this definition"></a></dt>
+<dd><p>The neo4j driver used to create a session with the database.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">neo4j.Driver</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>uri</strong> (<em>str</em>) – The uri of the database.</p>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="ggit.database.data_source.DataSource.close">
+<span class="sig-name descname"><span class="pre">close</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#ggit.database.data_source.DataSource.close" title="Permalink to this definition"></a></dt>
+<dd><p>Method used to close the connection with the database.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ggit.database.data_source.DataSource.get_driver">
+<span class="sig-name descname"><span class="pre">get_driver</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Driver</span></span></span><a class="headerlink" href="#ggit.database.data_source.DataSource.get_driver" title="Permalink to this definition"></a></dt>
+<dd><p>Method to obtain the instance of the neo4j driver.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>The neo4j driver.</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">neo4j.Driver</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ggit.database.data_source.DataSource.new_session">
+<span class="sig-name descname"><span class="pre">new_session</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Session</span></span></span><a class="headerlink" href="#ggit.database.data_source.DataSource.new_session" title="Permalink to this definition"></a></dt>
+<dd><p>Method used to create a new session with the database.
+It is used as a context manager, so it can be used with the <code class="docutils literal notranslate"><span class="pre">with</span></code> statement.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>The neo4j session.</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">neo4j.Session</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="blobrepository">
+<h2>BlobRepository<a class="headerlink" href="#blobrepository" title="Permalink to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="ggit.database.blob_repository.BlobRepository">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">ggit.database.blob_repository.</span></span><span class="sig-name descname"><span class="pre">BlobRepository</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data_source</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#ggit.database.data_source.DataSource" title="ggit.database.data_source.DataSource"><span class="pre">DataSource</span></a></span></em><span class="sig-paren">)</span><a class="headerlink" href="#ggit.database.blob_repository.BlobRepository" title="Permalink to this definition"></a></dt>
+<dd><p>This repository class implements methods to add, get and delete blobs from the database.
+It uses the DataSource class to create a session with the database and execute queries.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ggit.database.blob_repository.BlobRepository.data_source">
+<span class="sig-name descname"><span class="pre">data_source</span></span><a class="headerlink" href="#ggit.database.blob_repository.BlobRepository.data_source" title="Permalink to this definition"></a></dt>
+<dd><p>The DataSource object used to create a session with the database.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">ggit.database.DataSource</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ggit.database.blob_repository.BlobRepository.add_blob">
+<span class="sig-name descname"><span class="pre">add_blob</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">blob</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="entities.html#ggit.entities.blob.Blob" title="ggit.entities.blob.Blob"><span class="pre">Blob</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#ggit.database.blob_repository.BlobRepository.add_blob" title="Permalink to this definition"></a></dt>
+<dd><p>This method adds a blob to the database, creating a node with the hash,
+length and content properties.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>blob</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">ggit.entities.Blob</span></code>) – The blob to be added to the database.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>True if the blob was added successfully, False otherwise.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ggit.database.blob_repository.BlobRepository.delete_blob">
+<span class="sig-name descname"><span class="pre">delete_blob</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">hash</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#ggit.database.blob_repository.BlobRepository.delete_blob" title="Permalink to this definition"></a></dt>
+<dd><p>This method deletes a blob from the database, given its hash.
+All relationships on the found blob are detached.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>hash</strong> (<em>str</em>) – The hash of the blob to be deleted.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>True if the blob was deleted successfully, False otherwise.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ggit.database.blob_repository.BlobRepository.get_all_blobs">
+<span class="sig-name descname"><span class="pre">get_all_blobs</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="entities.html#ggit.entities.blob.Blob" title="ggit.entities.blob.Blob"><span class="pre">Blob</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#ggit.database.blob_repository.BlobRepository.get_all_blobs" title="Permalink to this definition"></a></dt>
+<dd><p>This method gets all the blobs from the database.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>The list of blobs retrieved from the database.</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>List[<code class="xref py py-class docutils literal notranslate"><span class="pre">ggit.entities.Blob</span></code>]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ggit.database.blob_repository.BlobRepository.get_blob">
+<span class="sig-name descname"><span class="pre">get_blob</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">hash</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="entities.html#ggit.entities.blob.Blob" title="ggit.entities.blob.Blob"><span class="pre">Blob</span></a></span></span><a class="headerlink" href="#ggit.database.blob_repository.BlobRepository.get_blob" title="Permalink to this definition"></a></dt>
+<dd><p>This method gets a blob from the database, given its hash.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>hash</strong> (<em>str</em>) – The hash of the blob to be retrieved.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The blob retrieved from the database.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">ggit.entities.Blob</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="commitrepository">
+<h2>CommitRepository<a class="headerlink" href="#commitrepository" title="Permalink to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="ggit.database.commit_repository.CommitRepository">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">ggit.database.commit_repository.</span></span><span class="sig-name descname"><span class="pre">CommitRepository</span></span><a class="headerlink" href="#ggit.database.commit_repository.CommitRepository" title="Permalink to this definition"></a></dt>
+<dd><p>This repository class implements methods to add, get and delete commits from the database.
+It uses the DataSource class to create a sessione with the database and execute queries.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ggit.database.commit_repository.CommitRepository.data_source">
+<span class="sig-name descname"><span class="pre">data_source</span></span><a class="headerlink" href="#ggit.database.commit_repository.CommitRepository.data_source" title="Permalink to this definition"></a></dt>
+<dd><p>The data source used to create a session with the database.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#ggit.database.data_source.DataSource" title="ggit.database.data_source.DataSource">DataSource</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ggit.database.commit_repository.CommitRepository.delete_commit">
+<span class="sig-name descname"><span class="pre">delete_commit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">hash</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#ggit.database.commit_repository.CommitRepository.delete_commit" title="Permalink to this definition"></a></dt>
+<dd><p>This method deletes a commit from the database given its hash, and all the relationships
+that it has with other nodes.
+The tree contained in the commit is not deleted, as it may be contained in other commits,
+mereover, the author and committer of the commit are not deleted, as they may have authored
+or committed other commits.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>hash</strong> (<em>str</em>) – The hash of the commit to delete.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>True if the commit was deleted, False otherwise.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ggit.database.commit_repository.CommitRepository.get_all_commits">
+<span class="sig-name descname"><span class="pre">get_all_commits</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="entities.html#ggit.entities.commit.Commit" title="ggit.entities.commit.Commit"><span class="pre">Commit</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#ggit.database.commit_repository.CommitRepository.get_all_commits" title="Permalink to this definition"></a></dt>
+<dd><p>This method gets all the commits from the database.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>A list of all the commits in the database.</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>List[<a class="reference internal" href="entities.html#ggit.entities.commit.Commit" title="ggit.entities.commit.Commit">Commit</a>]</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="treerepository">
+<h2>TreeRepository<a class="headerlink" href="#treerepository" title="Permalink to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="ggit.database.tree_repository.TreeRepository">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">ggit.database.tree_repository.</span></span><span class="sig-name descname"><span class="pre">TreeRepository</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data_source</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#ggit.database.data_source.DataSource" title="ggit.database.data_source.DataSource"><span class="pre">DataSource</span></a></span></em><span class="sig-paren">)</span><a class="headerlink" href="#ggit.database.tree_repository.TreeRepository" title="Permalink to this definition"></a></dt>
+<dd><p>This repository class implements methods to add, get and delete trees from the database.
+It uses the DataSource class to create a session with the database and execute queries.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ggit.database.tree_repository.TreeRepository.data_source">
+<span class="sig-name descname"><span class="pre">data_source</span></span><a class="headerlink" href="#ggit.database.tree_repository.TreeRepository.data_source" title="Permalink to this definition"></a></dt>
+<dd><p>The data source used to create a session with the database.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">ggit.database.DataSource</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ggit.database.tree_repository.TreeRepository.add_tree">
+<span class="sig-name descname"><span class="pre">add_tree</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tree</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="entities.html#ggit.entities.tree.Tree" title="ggit.entities.tree.Tree"><span class="pre">Tree</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">bool</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#ggit.database.tree_repository.TreeRepository.add_tree" title="Permalink to this definition"></a></dt>
+<dd><p>This method adds a tree to the database, managing all the nodes and relationships
+that are part of the tree. It uses an instance of the <code class="xref py py-class docutils literal notranslate"><span class="pre">ggit.database.BlobRepository</span></code>
+class to add the blobs to the database.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>tree</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">ggit.entities.Tree</span></code>) – The tree to be added to the database.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>A tuple containing a boolean value that indicates if the tree was added successfully
+and the number of nodes created, useful information given that the method is used
+recursively.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>Tuple[bool, int]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ggit.database.tree_repository.TreeRepository.delete_tree">
+<span class="sig-name descname"><span class="pre">delete_tree</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">hash</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#ggit.database.tree_repository.TreeRepository.delete_tree" title="Permalink to this definition"></a></dt>
+<dd><p>This method deletes a tree from the database given its hash.
+All relationships and nodes that are related to the tree are deleted.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>hash</strong> (<em>str</em>) – The hash of the tree to be deleted.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>A boolean value that indicates if the tree was deleted successfully.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ggit.database.tree_repository.TreeRepository.get_all_trees">
+<span class="sig-name descname"><span class="pre">get_all_trees</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="entities.html#ggit.entities.tree.Tree" title="ggit.entities.tree.Tree"><span class="pre">Tree</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#ggit.database.tree_repository.TreeRepository.get_all_trees" title="Permalink to this definition"></a></dt>
+<dd><p>This method gets all the trees from the database.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>A list containing all the trees in the database.</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>List[<code class="xref py py-class docutils literal notranslate"><span class="pre">ggit.entities.Tree</span></code>]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ggit.database.tree_repository.TreeRepository.get_tree">
+<span class="sig-name descname"><span class="pre">get_tree</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">hash</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="entities.html#ggit.entities.tree.Tree" title="ggit.entities.tree.Tree"><span class="pre">Tree</span></a></span></span><a class="headerlink" href="#ggit.database.tree_repository.TreeRepository.get_tree" title="Permalink to this definition"></a></dt>
+<dd><p>This method gets a tree from the database given its hash.
+It makes use of the <a class="reference internal" href="utils.html#ggit.utils.nodes_utils.parse_tree" title="ggit.utils.nodes_utils.parse_tree"><code class="xref py py-func docutils literal notranslate"><span class="pre">ggit.utils.nodes_utils.parse_tree()</span></code></a> function to parse the tree
+given the nodes obtained from the database and the hash of the top tree in the relations.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>hash</strong> (<em>str</em>) – The hash of the tree to be retrieved.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The tree retrieved from the database.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">ggit.entities.Tree</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="userrepository">
+<h2>UserRepository<a class="headerlink" href="#userrepository" title="Permalink to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="ggit.database.user_repository.UserRepository">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">ggit.database.user_repository.</span></span><span class="sig-name descname"><span class="pre">UserRepository</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data_source</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#ggit.database.data_source.DataSource" title="ggit.database.data_source.DataSource"><span class="pre">DataSource</span></a></span></em><span class="sig-paren">)</span><a class="headerlink" href="#ggit.database.user_repository.UserRepository" title="Permalink to this definition"></a></dt>
+<dd><p>This repository is used to store and retrieve users from the database.
+It uses the DataSource class to create a session with the database and execute queries.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ggit.database.user_repository.UserRepository.data_source">
+<span class="sig-name descname"><span class="pre">data_source</span></span><a class="headerlink" href="#ggit.database.user_repository.UserRepository.data_source" title="Permalink to this definition"></a></dt>
+<dd><p>The DataSource object used to create a session with the database.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">ggit.database.DataSource</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ggit.database.user_repository.UserRepository.add_user">
+<span class="sig-name descname"><span class="pre">add_user</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">user</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">User</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#ggit.database.user_repository.UserRepository.add_user" title="Permalink to this definition"></a></dt>
+<dd><p>This method adds a user to the database, creating a node with the name and email properties.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>user</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">ggit.entities.User</span></code>) – The user to be added to the database.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>True if the user was added successfully, False otherwise.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ggit.database.user_repository.UserRepository.delete_user">
+<span class="sig-name descname"><span class="pre">delete_user</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">email</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#ggit.database.user_repository.UserRepository.delete_user" title="Permalink to this definition"></a></dt>
+<dd><p>This method deletes a user from the database, given its name and email.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>name</strong> (<em>str</em>) – The name of the user to be deleted.</p></li>
+<li><p><strong>email</strong> (<em>str</em>) – The email of the user to be deleted.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>True if the user was deleted successfully, False otherwise.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ggit.database.user_repository.UserRepository.get_all_users">
+<span class="sig-name descname"><span class="pre">get_all_users</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">User</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#ggit.database.user_repository.UserRepository.get_all_users" title="Permalink to this definition"></a></dt>
+<dd><p>This method gets all the users from the database.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>The list of users retrieved from the database.</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>List[<code class="xref py py-class docutils literal notranslate"><span class="pre">ggit.entities.User</span></code>]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ggit.database.user_repository.UserRepository.get_user">
+<span class="sig-name descname"><span class="pre">get_user</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">email</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">User</span></span></span><a class="headerlink" href="#ggit.database.user_repository.UserRepository.get_user" title="Permalink to this definition"></a></dt>
+<dd><p>This method gets a user from the database, given its name and email.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>name</strong> (<em>str</em>) – The name of the user to be retrieved.</p></li>
+<li><p><strong>email</strong> (<em>str</em>) – The email of the user to be retrieved.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The user retrieved from the database.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">ggit.entities.User</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="entities.html" class="btn btn-neutral float-left" title="ggit.entities module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="config.html" class="btn btn-neutral float-right" title="ggit.config module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, Riccardo Barbieri.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

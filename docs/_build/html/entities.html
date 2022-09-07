@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>ggit.entities package &mdash; ggit 1.0.0 documentation</title>
+  <title>ggit.entities module &mdash; ggit 1.0.0 documentation</title>
       <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <!--[if lt IE 9]>
@@ -19,7 +19,8 @@
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="prev" title="ggit.utils package" href="utils.html" /> 
+    <link rel="next" title="ggit.database module" href="database.html" />
+    <link rel="prev" title="ggit.utils module" href="utils.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -48,16 +49,27 @@
 <li class="toctree-l2"><a class="reference internal" href="git_connector.html#ggit-converter-git-connector-git-connector-subprocess">ggit.converter.git_connector.git_connector_subprocess</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="utils.html">ggit.utils package</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="utils.html#ggit-utils-folder-utils">ggit.utils.folder_utils</a></li>
+<li class="toctree-l1"><a class="reference internal" href="utils.html">ggit.utils module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="utils.html#folder-utils">folder_utils</a></li>
+<li class="toctree-l2"><a class="reference internal" href="utils.html#node-utils">node_utils</a></li>
+<li class="toctree-l2"><a class="reference internal" href="utils.html#singleton">singleton</a></li>
 </ul>
 </li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">ggit.entities package</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#ggit-entities-blob">ggit.entities.blob</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#ggit-entities-tree">ggit.entities.tree</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#ggit-entities-commit">ggit.entities.commit</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">ggit.entities module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#blob">Blob</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#tree">Tree</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#commit">Commit</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="database.html">ggit.database module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="database.html#datasource">DataSource</a></li>
+<li class="toctree-l2"><a class="reference internal" href="database.html#blobrepository">BlobRepository</a></li>
+<li class="toctree-l2"><a class="reference internal" href="database.html#commitrepository">CommitRepository</a></li>
+<li class="toctree-l2"><a class="reference internal" href="database.html#treerepository">TreeRepository</a></li>
+<li class="toctree-l2"><a class="reference internal" href="database.html#userrepository">UserRepository</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="config.html">ggit.config module</a></li>
 </ul>
 
         </div>
@@ -74,7 +86,7 @@
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
       <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
-      <li>ggit.entities package</li>
+      <li>ggit.entities module</li>
       <li class="wy-breadcrumbs-aside">
             <a href="_sources/entities.rst.txt" rel="nofollow"> View page source</a>
       </li>
@@ -84,10 +96,10 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section id="ggit-entities-package">
-<h1>ggit.entities package<a class="headerlink" href="#ggit-entities-package" title="Permalink to this heading"></a></h1>
-<section id="ggit-entities-blob">
-<h2>ggit.entities.blob<a class="headerlink" href="#ggit-entities-blob" title="Permalink to this heading"></a></h2>
+  <section id="ggit-entities-module">
+<h1>ggit.entities module<a class="headerlink" href="#ggit-entities-module" title="Permalink to this heading"></a></h1>
+<section id="blob">
+<h2>Blob<a class="headerlink" href="#blob" title="Permalink to this heading"></a></h2>
 <dl class="py class">
 <dt class="sig sig-object py" id="ggit.entities.blob.Blob">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">ggit.entities.blob.</span></span><span class="sig-name descname"><span class="pre">Blob</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">content</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bytes</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#ggit.entities.blob.Blob" title="Permalink to this definition"></a></dt>
@@ -137,8 +149,8 @@ followed by a NUL character, ending with the actual content of the file.</p>
 </dd></dl>
 
 </section>
-<section id="ggit-entities-tree">
-<h2>ggit.entities.tree<a class="headerlink" href="#ggit-entities-tree" title="Permalink to this heading"></a></h2>
+<section id="tree">
+<h2>Tree<a class="headerlink" href="#tree" title="Permalink to this heading"></a></h2>
 <dl class="py class">
 <dt class="sig sig-object py" id="ggit.entities.tree.Tree">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">ggit.entities.tree.</span></span><span class="sig-name descname"><span class="pre">Tree</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">_Tree__items</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#ggit.entities.blob.Blob" title="ggit.entities.blob.Blob"><span class="pre">ggit.entities.blob.Blob</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#ggit.entities.tree.Tree" title="ggit.entities.tree.Tree"><span class="pre">ggit.entities.tree.Tree</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">[]</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#ggit.entities.tree.Tree" title="Permalink to this definition"></a></dt>
@@ -175,6 +187,39 @@ flexible, the only available modes are:</p>
 </dl>
 </dd></dl>
 
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ggit.entities.tree.Tree.content">
+<span class="sig-name descname"><span class="pre">content</span></span><a class="headerlink" href="#ggit.entities.tree.Tree.content" title="Permalink to this definition"></a></dt>
+<dd><p>The content of the tree, the actual string of bytes that will be hashed.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>bytes</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ggit.entities.tree.Tree.length">
+<span class="sig-name descname"><span class="pre">length</span></span><a class="headerlink" href="#ggit.entities.tree.Tree.length" title="Permalink to this definition"></a></dt>
+<dd><p>The length of the tree content.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ggit.entities.tree.Tree.item_count">
+<span class="sig-name descname"><span class="pre">item_count</span></span><a class="headerlink" href="#ggit.entities.tree.Tree.item_count" title="Permalink to this definition"></a></dt>
+<dd><p>The number of items in the tree, recursively, counting the tree itself</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
 <dl class="py method">
 <dt class="sig sig-object py" id="ggit.entities.tree.Tree.append_item">
 <span class="sig-name descname"><span class="pre">append_item</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">item</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#ggit.entities.blob.Blob" title="ggit.entities.blob.Blob"><span class="pre">ggit.entities.blob.Blob</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#ggit.entities.tree.Tree" title="ggit.entities.tree.Tree"><span class="pre">ggit.entities.tree.Tree</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mode</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#ggit.entities.tree.Tree.append_item" title="Permalink to this definition"></a></dt>
@@ -193,11 +238,11 @@ flexible, the only available modes are:</p>
 </dd></dl>
 
 </section>
-<section id="ggit-entities-commit">
-<h2>ggit.entities.commit<a class="headerlink" href="#ggit-entities-commit" title="Permalink to this heading"></a></h2>
+<section id="commit">
+<h2>Commit<a class="headerlink" href="#commit" title="Permalink to this heading"></a></h2>
 <dl class="py class">
 <dt class="sig sig-object py" id="ggit.entities.commit.Commit">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">ggit.entities.commit.</span></span><span class="sig-name descname"><span class="pre">Commit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tree</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#ggit.entities.tree.Tree" title="ggit.entities.tree.Tree"><span class="pre">Tree</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">parent</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#ggit.entities.commit.Commit" title="ggit.entities.commit.Commit"><span class="pre">Commit</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">timestamp</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">author</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">User</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">committer</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">User</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">message</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#ggit.entities.commit.Commit" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">ggit.entities.commit.</span></span><span class="sig-name descname"><span class="pre">Commit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tree</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#ggit.entities.tree.Tree" title="ggit.entities.tree.Tree"><span class="pre">Tree</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">parent</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#ggit.entities.commit.Commit" title="ggit.entities.commit.Commit"><span class="pre">Commit</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">date_time</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">datetime</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">author</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">User</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">committer</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">User</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">message</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#ggit.entities.commit.Commit" title="Permalink to this definition"></a></dt>
 <dd><p>This class represents a commit, it contains the main tree that
 mirrors the staging area, the author, the committer and the message of the commit.
 The commit class also stores the parent of the commit, if the commit is the first
@@ -207,9 +252,121 @@ containing the word “commit ” followed by the size of the body terminated by
 followed by the body of the commit.
 The body of the commit is a string containing information about the commit, the format is:</p>
 <p>tree ff7ae585339f04217663bdb7f54df531c6fb8217
-author RiccardoBarbieri &lt;<a class="reference external" href="mailto:riccardo_barbieri&#37;&#52;&#48;outlook&#46;it">riccardo_barbieri<span>&#64;</span>outlook<span>&#46;</span>it</a>&gt; 1662040308 +0200
-committer RiccardoBarbieri &lt;<a class="reference external" href="mailto:riccardo_barbieri&#37;&#52;&#48;outlook&#46;it">riccardo_barbieri<span>&#64;</span>outlook<span>&#46;</span>it</a>&gt; 1662040308 +0200</p>
-<p>test</p>
+author NameOfAuthor &lt;<a class="reference external" href="mailto:email&#37;&#52;&#48;example&#46;com">email<span>&#64;</span>example<span>&#46;</span>com</a>&gt; 1662040308 +0200
+committer NameOfCommitter &lt;<a class="reference external" href="mailto:email&#37;&#52;&#48;example&#46;com">email<span>&#64;</span>example<span>&#46;</span>com</a>&gt; 1662040308 +0200</p>
+<p>commit message</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ggit.entities.commit.Commit.tree">
+<span class="sig-name descname"><span class="pre">tree</span></span><a class="headerlink" href="#ggit.entities.commit.Commit.tree" title="Permalink to this definition"></a></dt>
+<dd><p>The main tree of the commit.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#ggit.entities.tree.Tree" title="ggit.entities.tree.Tree">Tree</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ggit.entities.commit.Commit.parent">
+<span class="sig-name descname"><span class="pre">parent</span></span><a class="headerlink" href="#ggit.entities.commit.Commit.parent" title="Permalink to this definition"></a></dt>
+<dd><p>The parent of the commit, if the commit is the first commit of the repository
+the parent is None.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#ggit.entities.commit.Commit" title="ggit.entities.commit.Commit">Commit</a> | None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ggit.entities.commit.Commit.date_time">
+<span class="sig-name descname"><span class="pre">date_time</span></span><a class="headerlink" href="#ggit.entities.commit.Commit.date_time" title="Permalink to this definition"></a></dt>
+<dd><p>The date and time of the commit.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>datetime</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ggit.entities.commit.Commit.str_date_time">
+<span class="sig-name descname"><span class="pre">str_date_time</span></span><a class="headerlink" href="#ggit.entities.commit.Commit.str_date_time" title="Permalink to this definition"></a></dt>
+<dd><p>The date and time of the commit in a string format.
+Format: UNIX-timestamp +0000</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ggit.entities.commit.Commit.author">
+<span class="sig-name descname"><span class="pre">author</span></span><a class="headerlink" href="#ggit.entities.commit.Commit.author" title="Permalink to this definition"></a></dt>
+<dd><p>The author of the commit.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>User</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ggit.entities.commit.Commit.committer">
+<span class="sig-name descname"><span class="pre">committer</span></span><a class="headerlink" href="#ggit.entities.commit.Commit.committer" title="Permalink to this definition"></a></dt>
+<dd><p>The committer of the commit.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>User</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ggit.entities.commit.Commit.message">
+<span class="sig-name descname"><span class="pre">message</span></span><a class="headerlink" href="#ggit.entities.commit.Commit.message" title="Permalink to this definition"></a></dt>
+<dd><p>The message of the commit.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ggit.entities.commit.Commit.hash">
+<span class="sig-name descname"><span class="pre">hash</span></span><a class="headerlink" href="#ggit.entities.commit.Commit.hash" title="Permalink to this definition"></a></dt>
+<dd><p>The hash of the commit.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ggit.entities.commit.Commit.content">
+<span class="sig-name descname"><span class="pre">content</span></span><a class="headerlink" href="#ggit.entities.commit.Commit.content" title="Permalink to this definition"></a></dt>
+<dd><p>The content of the commit, the content is the body of the commit.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ggit.entities.commit.Commit.length">
+<span class="sig-name descname"><span class="pre">length</span></span><a class="headerlink" href="#ggit.entities.commit.Commit.length" title="Permalink to this definition"></a></dt>
+<dd><p>The length of the content of the commit.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
 </dd></dl>
 
 </section>
@@ -219,7 +376,8 @@ committer RiccardoBarbieri &lt;<a class="reference external" href="mailto:riccar
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="utils.html" class="btn btn-neutral float-left" title="ggit.utils package" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="utils.html" class="btn btn-neutral float-left" title="ggit.utils module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="database.html" class="btn btn-neutral float-right" title="ggit.database module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>
