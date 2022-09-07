@@ -13,6 +13,15 @@ from neo4j import Result
 
 
 class TreeRepository:
+    """
+    This repository class implements methods to add, get and delete trees from the database.
+    It uses the DataSource class to create a session with the database and execute queries.
+
+    Attributes
+    ----------
+    data_source: :class:`ggit.database.DataSource`
+        The data source used to create a session with the database.
+    """
 
     data_source: "DataSource"
 
@@ -20,6 +29,23 @@ class TreeRepository:
         self.data_source = data_source
 
     def add_tree(self, tree: Tree) -> Tuple[bool, int]:
+        """
+        This method adds a tree to the database, managing all the nodes and relationships
+        that are part of the tree. It uses an instance of the :class:`ggit.database.BlobRepository`
+        class to add the blobs to the database.
+
+        Parameters
+        ----------
+        tree: :class:`ggit.entities.Tree`
+            The tree to be added to the database.
+
+        Returns
+        -------
+        Tuple[bool, int]
+            A tuple containing a boolean value that indicates if the tree was added successfully
+            and the number of nodes created, useful information given that the method is used
+            recursively.
+        """
         nodes_created = 0
         with self.data_source.new_session() as session:
             tx = session.begin_transaction()
@@ -67,20 +93,57 @@ class TreeRepository:
             return (nodes_created == tree.item_count, nodes_created)
 
     def get_tree(self, hash: str) -> Tree:
+        """
+        This method gets a tree from the database given its hash.
+        It makes use of the :func:`ggit.utils.nodes_utils.parse_tree` function to parse the tree
+        given the nodes obtained from the database and the hash of the top tree in the relations.
+
+        Parameters
+        ----------
+        hash: str
+            The hash of the tree to be retrieved.
+
+        Returns
+        -------
+        :class:`ggit.entities.Tree`
+            The tree retrieved from the database.
+        """
         with self.data_source.new_session() as session:
             result = session.run(
-                "MATCH relation = (tree:Tree {hash: $hash})-[INCLUDES*1..]->(item) RETURN tree, relation, item",
+                "MATCH relation = (tree:Tree {hash: $hash})-[:INCLUDES*1..]->(item) RETURN tree, relation, item",
                 hash=hash,
             )
 
             return parse_tree(hash, result.graph().nodes, result.graph().relationships)
 
     def get_all_trees(self) -> List[Tree]:
+        """
+        This method gets all the trees from the database.
+
+        Returns
+        -------
+        List[:class:`ggit.entities.Tree`]
+            A list containing all the trees in the database.
+        """
         with self.data_source.new_session() as session:
             result: Result = session.run("MATCH (tree:Tree) RETURN tree")
             return [self.get_tree(record["tree"]["hash"]) for record in result]
 
     def delete_tree(self, hash: str) -> bool:
+        """
+        This method deletes a tree from the database given its hash.
+        All relationships and nodes that are related to the tree are deleted.
+
+        Parameters
+        ----------
+        hash: str
+            The hash of the tree to be deleted.
+
+        Returns
+        -------
+        bool
+            A boolean value that indicates if the tree was deleted successfully.
+        """
         with self.data_source.new_session() as session:
             result = session.run(
                 "MATCH (tree:Tree {hash: $hash}) DETACH DELETE tree", hash=hash
