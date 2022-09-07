@@ -1,9 +1,9 @@
-****************************
-ggit.converter.model package
-****************************
+***************************
+ggit.converter.model module
+***************************
    
-ggit.converter.model.hash_type
-==============================
+Hash Type
+=========
 .. autoclass:: ggit.converter.model.hash_type.GitHash
    :members:
    :private-members:

@@ -40,19 +40,19 @@
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="model.html">ggit.converter.model package</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="model.html#ggit-converter-model-hash-type">ggit.converter.model.hash_type</a></li>
+<li class="toctree-l1"><a class="reference internal" href="model.html">ggit.converter.model module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="model.html#hash-type">Hash Type</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="git_connector.html">ggit.converter.git_connector</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="git_connector.html#ggit-converter-git-connector-git-connector-interface">ggit.converter.git_connector.git_connector_interface</a></li>
-<li class="toctree-l2"><a class="reference internal" href="git_connector.html#ggit-converter-git-connector-git-connector-subprocess">ggit.converter.git_connector.git_connector_subprocess</a></li>
+<li class="toctree-l2"><a class="reference internal" href="git_connector.html#git-connector-interface">Git connector interface</a></li>
+<li class="toctree-l2"><a class="reference internal" href="git_connector.html#git-connector-subprocess">Git connector subprocess</a></li>
 </ul>
 </li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">ggit.utils module</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#folder-utils">folder_utils</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#node-utils">node_utils</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#singleton">singleton</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#folder-utils">Folder utils</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#node-utils">Node utils</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#singleton">Singleton</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="entities.html">ggit.entities module</a><ul>
@@ -69,7 +69,10 @@
 <li class="toctree-l2"><a class="reference internal" href="database.html#userrepository">UserRepository</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="config.html">ggit.config module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="config.html">ggit.config module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="config.html#configmanager">ConfigManager</a></li>
+</ul>
+</li>
 </ul>
 
         </div>
@@ -99,7 +102,7 @@
   <section id="ggit-utils-module">
 <h1>ggit.utils module<a class="headerlink" href="#ggit-utils-module" title="Permalink to this heading"></a></h1>
 <section id="folder-utils">
-<h2>folder_utils<a class="headerlink" href="#folder-utils" title="Permalink to this heading"></a></h2>
+<h2>Folder utils<a class="headerlink" href="#folder-utils" title="Permalink to this heading"></a></h2>
 <dl class="py function">
 <dt class="sig sig-object py" id="ggit.utils.folder_utils.walk_objects">
 <span class="sig-prename descclassname"><span class="pre">ggit.utils.folder_utils.</span></span><span class="sig-name descname"><span class="pre">walk_objects</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">repository</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">Path</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#ggit.utils.folder_utils.walk_objects" title="Permalink to this definition"></a></dt>
@@ -156,7 +159,7 @@ The files are returned as a list of Path objects.</p>
 
 </section>
 <section id="node-utils">
-<h2>node_utils<a class="headerlink" href="#node-utils" title="Permalink to this heading"></a></h2>
+<h2>Node utils<a class="headerlink" href="#node-utils" title="Permalink to this heading"></a></h2>
 <dl class="py function">
 <dt class="sig sig-object py" id="ggit.utils.nodes_utils.get_node">
 <span class="sig-prename descclassname"><span class="pre">ggit.utils.nodes_utils.</span></span><span class="sig-name descname"><span class="pre">get_node</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">hash</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nodes</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">Node</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Node</span></span></span><a class="headerlink" href="#ggit.utils.nodes_utils.get_node" title="Permalink to this definition"></a></dt>
@@ -202,7 +205,7 @@ created to get the tree, its relationships and its items.</p>
 
 </section>
 <section id="singleton">
-<h2>singleton<a class="headerlink" href="#singleton" title="Permalink to this heading"></a></h2>
+<h2>Singleton<a class="headerlink" href="#singleton" title="Permalink to this heading"></a></h2>
 <dl class="py class">
 <dt class="sig sig-object py" id="ggit.utils.singleton.SingletonMeta">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">ggit.utils.singleton.</span></span><span class="sig-name descname"><span class="pre">SingletonMeta</span></span><a class="headerlink" href="#ggit.utils.singleton.SingletonMeta" title="Permalink to this definition"></a></dt>

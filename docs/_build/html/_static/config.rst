@@ -2,5 +2,7 @@
 ggit.config module
 ******************
 
-.. automodule:: ggit.config
+ConfigManager
+=============
+.. autoclass:: ggit.config.ConfigManager
    :members:

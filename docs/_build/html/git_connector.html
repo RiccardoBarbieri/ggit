@@ -20,7 +20,7 @@
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="ggit.utils module" href="utils.html" />
-    <link rel="prev" title="ggit.converter.model package" href="model.html" /> 
+    <link rel="prev" title="ggit.converter.model module" href="model.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -40,19 +40,19 @@
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="model.html">ggit.converter.model package</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="model.html#ggit-converter-model-hash-type">ggit.converter.model.hash_type</a></li>
+<li class="toctree-l1"><a class="reference internal" href="model.html">ggit.converter.model module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="model.html#hash-type">Hash Type</a></li>
 </ul>
 </li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">ggit.converter.git_connector</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#ggit-converter-git-connector-git-connector-interface">ggit.converter.git_connector.git_connector_interface</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#ggit-converter-git-connector-git-connector-subprocess">ggit.converter.git_connector.git_connector_subprocess</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#git-connector-interface">Git connector interface</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#git-connector-subprocess">Git connector subprocess</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="utils.html">ggit.utils module</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="utils.html#folder-utils">folder_utils</a></li>
-<li class="toctree-l2"><a class="reference internal" href="utils.html#node-utils">node_utils</a></li>
-<li class="toctree-l2"><a class="reference internal" href="utils.html#singleton">singleton</a></li>
+<li class="toctree-l2"><a class="reference internal" href="utils.html#folder-utils">Folder utils</a></li>
+<li class="toctree-l2"><a class="reference internal" href="utils.html#node-utils">Node utils</a></li>
+<li class="toctree-l2"><a class="reference internal" href="utils.html#singleton">Singleton</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="entities.html">ggit.entities module</a><ul>
@@ -69,7 +69,10 @@
 <li class="toctree-l2"><a class="reference internal" href="database.html#userrepository">UserRepository</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="config.html">ggit.config module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="config.html">ggit.config module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="config.html#configmanager">ConfigManager</a></li>
+</ul>
+</li>
 </ul>
 
         </div>
@@ -98,8 +101,8 @@
              
   <section id="ggit-converter-git-connector">
 <h1>ggit.converter.git_connector<a class="headerlink" href="#ggit-converter-git-connector" title="Permalink to this heading"></a></h1>
-<section id="ggit-converter-git-connector-git-connector-interface">
-<h2>ggit.converter.git_connector.git_connector_interface<a class="headerlink" href="#ggit-converter-git-connector-git-connector-interface" title="Permalink to this heading"></a></h2>
+<section id="git-connector-interface">
+<h2>Git connector interface<a class="headerlink" href="#git-connector-interface" title="Permalink to this heading"></a></h2>
 <dl class="py class">
 <dt class="sig sig-object py" id="ggit.converter.git_connector.git_connector_interface.GitConnectorInterface">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">ggit.converter.git_connector.git_connector_interface.</span></span><span class="sig-name descname"><span class="pre">GitConnectorInterface</span></span><a class="headerlink" href="#ggit.converter.git_connector.git_connector_interface.GitConnectorInterface" title="Permalink to this definition"></a></dt>
@@ -131,8 +134,8 @@ A GitConnector is a class that is used to interact with the git repository.</p>
 </dd></dl>
 
 </section>
-<section id="ggit-converter-git-connector-git-connector-subprocess">
-<h2>ggit.converter.git_connector.git_connector_subprocess<a class="headerlink" href="#ggit-converter-git-connector-git-connector-subprocess" title="Permalink to this heading"></a></h2>
+<section id="git-connector-subprocess">
+<h2>Git connector subprocess<a class="headerlink" href="#git-connector-subprocess" title="Permalink to this heading"></a></h2>
 <dl class="py class">
 <dt class="sig sig-object py" id="ggit.converter.git_connector.git_connector_subprocess.GitConnectorSubprocess">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">ggit.converter.git_connector.git_connector_subprocess.</span></span><span class="sig-name descname"><span class="pre">GitConnectorSubprocess</span></span><a class="headerlink" href="#ggit.converter.git_connector.git_connector_subprocess.GitConnectorSubprocess" title="Permalink to this definition"></a></dt>
@@ -176,7 +179,7 @@ have the git cli installed and be in the correct directory.</p>
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="model.html" class="btn btn-neutral float-left" title="ggit.converter.model package" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="model.html" class="btn btn-neutral float-left" title="ggit.converter.model module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
         <a href="utils.html" class="btn btn-neutral float-right" title="ggit.utils module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 

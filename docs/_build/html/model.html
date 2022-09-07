@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>ggit.converter.model package &mdash; ggit 1.0.0 documentation</title>
+  <title>ggit.converter.model module &mdash; ggit 1.0.0 documentation</title>
       <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <!--[if lt IE 9]>
@@ -40,19 +40,19 @@
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul class="current">
-<li class="toctree-l1 current"><a class="current reference internal" href="#">ggit.converter.model package</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#ggit-converter-model-hash-type">ggit.converter.model.hash_type</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">ggit.converter.model module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#hash-type">Hash Type</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="git_connector.html">ggit.converter.git_connector</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="git_connector.html#ggit-converter-git-connector-git-connector-interface">ggit.converter.git_connector.git_connector_interface</a></li>
-<li class="toctree-l2"><a class="reference internal" href="git_connector.html#ggit-converter-git-connector-git-connector-subprocess">ggit.converter.git_connector.git_connector_subprocess</a></li>
+<li class="toctree-l2"><a class="reference internal" href="git_connector.html#git-connector-interface">Git connector interface</a></li>
+<li class="toctree-l2"><a class="reference internal" href="git_connector.html#git-connector-subprocess">Git connector subprocess</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="utils.html">ggit.utils module</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="utils.html#folder-utils">folder_utils</a></li>
-<li class="toctree-l2"><a class="reference internal" href="utils.html#node-utils">node_utils</a></li>
-<li class="toctree-l2"><a class="reference internal" href="utils.html#singleton">singleton</a></li>
+<li class="toctree-l2"><a class="reference internal" href="utils.html#folder-utils">Folder utils</a></li>
+<li class="toctree-l2"><a class="reference internal" href="utils.html#node-utils">Node utils</a></li>
+<li class="toctree-l2"><a class="reference internal" href="utils.html#singleton">Singleton</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="entities.html">ggit.entities module</a><ul>
@@ -69,7 +69,10 @@
 <li class="toctree-l2"><a class="reference internal" href="database.html#userrepository">UserRepository</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="config.html">ggit.config module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="config.html">ggit.config module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="config.html#configmanager">ConfigManager</a></li>
+</ul>
+</li>
 </ul>
 
         </div>
@@ -86,7 +89,7 @@
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
       <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
-      <li>ggit.converter.model package</li>
+      <li>ggit.converter.model module</li>
       <li class="wy-breadcrumbs-aside">
             <a href="_sources/model.rst.txt" rel="nofollow"> View page source</a>
       </li>
@@ -96,10 +99,10 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section id="ggit-converter-model-package">
-<h1>ggit.converter.model package<a class="headerlink" href="#ggit-converter-model-package" title="Permalink to this heading"></a></h1>
-<section id="ggit-converter-model-hash-type">
-<h2>ggit.converter.model.hash_type<a class="headerlink" href="#ggit-converter-model-hash-type" title="Permalink to this heading"></a></h2>
+  <section id="ggit-converter-model-module">
+<h1>ggit.converter.model module<a class="headerlink" href="#ggit-converter-model-module" title="Permalink to this heading"></a></h1>
+<section id="hash-type">
+<h2>Hash Type<a class="headerlink" href="#hash-type" title="Permalink to this heading"></a></h2>
 <dl class="py class">
 <dt class="sig sig-object py" id="ggit.converter.model.hash_type.GitHash">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">ggit.converter.model.hash_type.</span></span><span class="sig-name descname"><span class="pre">GitHash</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">hash</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">type</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#ggit.converter.model.hash_type.HashType" title="ggit.converter.model.hash_type.HashType"><span class="pre">HashType</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">repo</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#ggit.converter.model.hash_type.GitHash" title="Permalink to this definition"></a></dt>
