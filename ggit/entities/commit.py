@@ -1,5 +1,5 @@
 import hashlib
-from datetime import datetime
+from datetime import datetime, timedelta, timezone
 from typing import TYPE_CHECKING
 
 if TYPE_CHECKING:
@@ -25,6 +25,30 @@ class Commit:
 
     commit message
 
+    Attributes
+    ----------
+    tree : Tree
+        The main tree of the commit.
+    parent : Commit | None
+        The parent of the commit, if the commit is the first commit of the repository
+        the parent is None.
+    date_time : datetime
+        The date and time of the commit.
+    str_date_time : str
+        The date and time of the commit in a string format.
+        Format: UNIX-timestamp +0000
+    author : User
+        The author of the commit.
+    committer : User
+        The committer of the commit.
+    message : str
+        The message of the commit.
+    hash : str
+        The hash of the commit.
+    content : str
+        The content of the commit, the content is the body of the commit.
+    length : int
+        The length of the content of the commit.
     """
 
     __tree: Tree
@@ -40,14 +64,14 @@ class Commit:
         self,
         tree: Tree = None,
         parent: "Commit | None" = None,
-        __date_time: datetime = None,
+        date_time: datetime = None,
         author: "User" = None,
         committer: "User" = None,
         message: str = None,
     ):
         self.__tree = tree
         self.__parent = parent
-        self.__date_time = __date_time
+        self.__date_time = date_time
         self.__author = author
         self.__committer = committer
         self.__message = message
@@ -69,7 +93,19 @@ class Commit:
         self.__parent = parent
 
     @property
-    def date_time(self) -> datetime:
+    def str_date_time(self) -> str:
+        string = str(int(self.__date_time.timestamp())) + " " + self.__date_time.astimezone().strftime("%z")
+        return string
+
+    @str_date_time.setter
+    def str_date_time(self, str_date_time: str):
+        offset = timedelta(hours=int(str_date_time[-4:-2]))
+        tz = timezone(offset=offset)
+
+        self.__date_time = datetime.fromtimestamp(int(str_date_time.split(" ")[0]), tz=tz)
+
+    @property
+    def date_time(self) -> str:
         return self.__date_time
 
     @date_time.setter
@@ -114,7 +150,12 @@ class Commit:
     def length(self) -> int:
         return len(self.content)
 
-    def __compose_body(self) -> str:
+    def __compose_body(self):
+        """
+        Method that creates the body of the commit.
+        The body of the commit is a string containing information about the commit,
+        the format is as described above.
+        """
         self.__body = b""
         try:
             self.__body = b"tree " + self.tree.hash.encode("ascii") + b"\n"
@@ -149,7 +190,32 @@ class Commit:
         self.__body += b"\n" + self.message.encode("ascii") + b"\n"
 
     def __calculate_hash(self) -> str:
+        """
+        Method that calculates the hash of the commit.
+        The hash of the commit is calculated in a similar way as the tree hash,
+        hashing a string containing the word "commit " followed by the size of the body
+        terminated by a NUL character, followed by the body of the commit.
+
+        Returns
+        -------
+        str
+            The hash of the commit.
+        """
         self.__compose_body()
         return hashlib.sha1(
             b"commit " + str(len(self.__body)).encode("ascii") + b"\0" + self.__body
         ).hexdigest()
+
+    def __str__(self) -> str:
+        return f"Commit: {self.hash}"
+
+    def __repr__(self) -> str:
+        return f"Commit: {self.hash}"
+
+    def __eq__(self, other: "Commit") -> bool:
+        if isinstance(other, Commit):
+            return self.__hash == other.hash
+        return False
+
+    def __hash__(self) -> int:
+        return self.hash
