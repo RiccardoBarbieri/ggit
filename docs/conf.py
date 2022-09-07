@@ -24,6 +24,7 @@ extensions = [
     'sphinx.ext.coverage', 
     'sphinx.ext.napoleon', 
     'sphinx_rtd_theme',
+    'sphinx_rtd_dark_mode',
     'sphinx.ext.autosummary'
 ]
 
@@ -38,6 +39,7 @@ master_doc = 'index'
 
 
 html_theme = 'sphinx_rtd_theme'
+default_dark_mode = True
 # -- Options for HTML output -------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#options-for-html-output
 
