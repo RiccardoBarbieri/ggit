@@ -4,7 +4,7 @@ import subprocess
 import sys
 from pathlib import Path
 import hashlib
-from datetime import datetime, timezone
+from datetime import datetime, timedelta, timezone
 import traceback
 
 from ggit.utils.folder_utils import walk_folder_rec_flat
@@ -25,8 +25,15 @@ test
 # main_content = zlib.compress(body)
 # sub_content = zlib.compress(body[15:50])
 
+date = datetime.now()
 
-try:
-    raise Exception("test")
-except Exception as e:
-    print(traceback.format_exc(), end='')
+# print(datetime.fromtimestamp(date))
+string = str(int(date.timestamp())) + " " + date.astimezone().strftime("%z")
+
+offset = timedelta(hours=int(string[-4:-2]))
+tz = timezone(offset=offset)
+
+test_date = datetime.fromtimestamp(int(string[:-5]), tz=tz)
+
+print(test_date)
+print(date)
