@@ -37,7 +37,7 @@ exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store']
 master_doc = 'index'
 
 
-html_theme = 'sphinx_rtd_dark_mode'
+html_theme = 'sphinx_rtd_theme'
 default_dark_mode = True
 # -- Options for HTML output -------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#options-for-html-output
