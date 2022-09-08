@@ -103,7 +103,7 @@ class HashIdentifier:
     __files: List[Path] = []
     __hashes: List[GitHash] = []
     
-    def __init__(self, repository = '/home/riccardoob/thesys/git_test'):
+    def __init__(self, repository = '/home/riccardoob/thesis/git_test'):
         self.repository = repository
         try:
             os.chdir(repository)

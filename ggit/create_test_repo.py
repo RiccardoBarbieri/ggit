@@ -1,7 +1,7 @@
 import subprocess
 import os
 
-def remove_repo(repo_dir = '/home/riccardoob/thesys/git_test'):
+def remove_repo(repo_dir = '/home/riccardoob/thesis/git_test'):
     process = subprocess.run(['rm', '-rf', repo_dir])
     if process.returncode != 0:
         return False
@@ -12,10 +12,10 @@ if not remove_repo():
     exit(1)
 
 try:
-    os.mkdir('/home/riccardoob/thesys/git_test')
+    os.mkdir('/home/riccardoob/thesis/git_test')
 except FileExistsError:
     pass
-os.chdir('/home/riccardoob/thesys/git_test')
+os.chdir('/home/riccardoob/thesis/git_test')
 
 subprocess.run(['git', 'init'])
 
