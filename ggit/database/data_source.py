@@ -1,4 +1,4 @@
-from ggit.config import ConfigManager
+from ggit.managers import ConfigManager
 from ggit.utils import SingletonMeta
 from neo4j import Driver, GraphDatabase, Session
 
@@ -12,7 +12,7 @@ class DataSource(metaclass=SingletonMeta):
     It is a singleton class, so it can be accessed from anywhere in the application and
     the instance will be the same.
 
-    The credentials for the database are retrieved using the :class:`ggit.config.ConfigManager` class.
+    The credentials for the database are retrieved using the :class:`ggit.managers.ConfigManager` class.
 
     Attributes
     ----------
