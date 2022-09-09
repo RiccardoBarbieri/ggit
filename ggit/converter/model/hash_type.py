@@ -4,7 +4,7 @@ from pathlib import Path
 from typing import List
 
 from ggit.converter.git_connector import (GitConnectorInterface, GitConnectorSubprocess)
-from ggit.utils import walk_objects
+from ggit.utils.folder_utils import walk_objects
 
 
 class HashType(Enum):
