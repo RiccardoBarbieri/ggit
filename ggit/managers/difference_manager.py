@@ -1,23 +1,30 @@
-import os
-from pathlib import Path
-from pprint import pprint
-from typing import Dict
-from ggit.utils import SingletonMeta, Folder
-from ggit.utils.folder_utils import walk_folder_rec_flat
-from ggit.entities import Blob
 import json
+from pathlib import Path
+from typing import Dict
+
+from ggit.entities import Blob
+from ggit.exceptions import ConfigException
+from ggit.utils import Folder, SingletonMeta
+from ggit.utils.constants import repo_folder
 
 
 class DifferenceManager(metaclass=SingletonMeta):
 
-    __folder: Folder = Folder(Path(os.getcwd()))
-    __root: Path = Path(os.getcwd())
+    __folder: Folder
+    __root: Path
     __files: Dict[str, str] = {}
     __diff_files: Dict[Path, str] = {}
 
-    def __init__(self) -> None:
+    def __init__(self, repo_path: Path) -> None:
+
+        self.__folder = Folder(repo_path)
+        self.__root = repo_path
+
+        if not (self.__root / repo_folder).exists():
+            raise ConfigException("Not a ggit repository")
+
         self.__files = json.load(
-            open(self.__root / ".ggit" / "current_state.json", "r")
+            open(self.__root / repo_folder / "current_state.json", "r")
         )
 
     def __get_difference(self) -> Dict[Path, str]:
@@ -41,7 +48,7 @@ class DifferenceManager(metaclass=SingletonMeta):
             self.__files[str(i)] = Blob(i.read_bytes()).hash
         json.dump(
             self.__files,
-            open(self.__root / ".ggit" / "current_state.json", "w"),
+            open(self.__root / repo_folder / "current_state.json", "w"),
             indent=4,
         )
 
@@ -53,7 +60,3 @@ class DifferenceManager(metaclass=SingletonMeta):
 
     def __delitem__(self, key: Path) -> None:
         del self.__files[key]
-
-
-
-
