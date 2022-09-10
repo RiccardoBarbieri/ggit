@@ -1,9 +1,10 @@
-
-from pathlib import Path
-from typing import Dict, List, Tuple
-from pprint import pprint
 import fnmatch
-import re
+from pathlib import Path
+from pprint import pprint
+from typing import Dict, List, Tuple
+
+from ggit.utils.constants import repo_folder
+
 
 class Folder:
 
@@ -11,17 +12,17 @@ class Folder:
     __folder: Dict[str, Dict] = {}
     __ignore_file: Path
     __ignore_list: Tuple[str] = ()
-    
+
     def __init__(self, root: Path) -> None:
         if not root.is_dir():
             raise NotADirectoryError(f"{root} is not a directory")
         self.__root = root
 
-        self.__ignore_file = self.__root / '.ggitignore'
+        self.__ignore_file = self.__root / ".ggitignore"
         if self.__ignore_file.exists():
             self.__ignore_list = tuple(self.__ignore_file.read_text().splitlines())
-        self.__ignore_list += ('.ggit',)
-        
+        self.__ignore_list += (repo_folder,)
+
         self.__folder = self.__load_folder(self.__root)
 
     def __load_folder(self, path: Path) -> Dict[str, Dict]:
@@ -33,16 +34,22 @@ class Folder:
                 else:
                     temp_dict[i.name] = None
         return temp_dict
-    
+
     @property
     def folder(self) -> Dict[str, Dict]:
         self.__folder = self.__load_folder(self.__root)
         return self.__folder
-    
+
+    @property
+    def root(self) -> Path:
+        return self.__root
+
     def get_all_files(self) -> List[Path]:
         return self.__get_all_files(self.__folder, self.__root)
 
-    def __get_all_files(self, folder: Dict[str, Dict], current_root: Path) -> List[Path]:
+    def __get_all_files(
+        self, folder: Dict[str, Dict], current_root: Path
+    ) -> List[Path]:
         temp_list: List[Path] = []
         for i in folder:
             if folder[i] is None:
