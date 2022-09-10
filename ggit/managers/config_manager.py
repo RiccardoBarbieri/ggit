@@ -5,6 +5,7 @@ from typing import Dict
 
 from ggit.exceptions import ConfigException
 from ggit.utils import SingletonMeta
+from ggit.utils.constants import repo_folder
 
 
 class ConfigManager(metaclass=SingletonMeta):
@@ -30,7 +31,7 @@ class ConfigManager(metaclass=SingletonMeta):
         config['user.name'] = 'John Doe'
         print(config['user.name'])
         del config['user.name']
-    
+
     Attributes
     ----------
     config_file : Path
@@ -39,35 +40,48 @@ class ConfigManager(metaclass=SingletonMeta):
         The configuration dictionary.
     """
 
-    __repo_path: Path = Path(os.getcwd())
-    config_file: Path = __repo_path / '.ggit' / 'config.json'
-    config: Dict[str, str] = {}
+    __repo_path: Path
+    __config_file: Path
+    __config: Dict[str, str] = {}
 
-    def __init__(self):
-        if not self.config_file.exists():
-            self.config_file.parent.mkdir(parents=True, exist_ok=True)
-            self.config_file.touch()
+    def __init__(self, repo_path: Path = None):
+        self.__repo_path = repo_path if repo_path else Path(os.getcwd())
+        self.__config_file = self.__repo_path / repo_folder / "config.json"
+
+        if not self.__config_file.parent.exists():
+            raise ConfigException("Not a ggit repository")
+
+        if not self.__config_file.exists():
+            self.__config_file.touch()
             self.__save_config()
         else:
             self.__load_config()
 
+    @property
+    def config(self):
+        return self.__config
+
+    @property
+    def repo_path(self):
+        return self.__repo_path
+
     def __load_config(self):
-        with open(self.config_file, 'r') as f:
-            self.config = json.load(f)
+        with open(self.__config_file, "r") as f:
+            self.__config = json.load(f)
 
     def __save_config(self):
-        with open(self.config_file, 'w') as f:
-            json.dump(self.config, f, indent=4)
+        with open(self.__config_file, "w") as f:
+            json.dump(self.__config, f, indent=4)
 
     def __getitem__(self, key):
-        if key not in self.config:
+        if key not in self.__config:
             raise ConfigException(f'Configuration parameter "{key}" not set')
-        return self.config[key]
-    
+        return self.__config[key]
+
     def __setitem__(self, key, value):
-        self.config[key] = value
+        self.__config[key] = value
         self.__save_config()
-    
+
     def __delitem__(self, key):
-        del self.config[key]
+        del self.__config[key]
         self.__save_config()
