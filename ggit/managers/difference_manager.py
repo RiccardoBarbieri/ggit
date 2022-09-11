@@ -52,11 +52,11 @@ class DifferenceManager(metaclass=SingletonMeta):
             indent=4,
         )
 
-    def __getitem__(self, key: Path) -> str:
-        return self.__files[key]
+    # def __getitem__(self, key: Path) -> str:
+    #     return self.__files[str(key)]
 
-    def __setitem__(self, key: Path, value: str) -> None:
-        self.__files[key] = value
+    # def __setitem__(self, key: Path, value: str) -> None:
+    #     self.__files[str(key)] = value
 
-    def __delitem__(self, key: Path) -> None:
-        del self.__files[key]
+    # def __delitem__(self, key: Path) -> None:
+    #     del self.__files[str(key)]
