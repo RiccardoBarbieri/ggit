@@ -64,3 +64,21 @@ def walk_folder_flat(folder: Path) -> typing.Generator[Path, None, None]:
     for i in os.listdir(folder):
         if os.path.isfile(Path.joinpath(folder, i)):
             yield Path.joinpath(folder, i)
+
+def is_subpath(path: Path, parent: Path) -> bool:
+    """
+    Check if a path is a subpath of another path.
+
+    Parameters
+    ----------
+    path: Path
+        The path to check.
+    parent: Path
+        The parent path.
+
+    Returns
+    -------
+    bool
+        True if the path is a subpath of the parent path.
+    """
+    return str(path.resolve()).startswith(str(parent.resolve()))
