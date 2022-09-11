@@ -1,4 +1,5 @@
 {
     "database_username": "neo4j",
-    "database_password": "riccardo00"
+    "database_password": "neo4j",
+    "repository.path": "/home/riccardoob/thesis"
 }
