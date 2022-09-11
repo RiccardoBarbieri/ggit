@@ -1,10 +1,12 @@
 #!/home/riccardoob/thesis/venv/bin/python3
 
 import argparse
+import logging
+import logging.config
+from pathlib import Path
 from typing import List
 
 from ggit.utils.date_utils import date_iso_8601
-
 
 main_parser = argparse.ArgumentParser(
     prog="ggit",
@@ -27,16 +29,25 @@ init_subparser = subparsers.add_parser(
 )
 subparsers_list.append(init_subparser)
 
+init_subparser.add_argument(
+    "path",
+    nargs="?",
+    default=".",
+    help="The path where the repository will be created",
+    metavar="<path>",
+)
+
 add_subparser = subparsers.add_parser(
     "add", help="Add files and directories to the index."
 )
 subparsers_list.append(add_subparser)
 
 add_subparser.add_argument(
-    "paths",
+    "path",
     action="extend",
     nargs="+",
     help="The files and directories to add.",
+    metavar="<path>",
 )
 
 mv_subparser = subparsers.add_parser(
@@ -57,6 +68,19 @@ mv_subparser.add_argument(
     action="store",
     nargs=1,
     metavar="<destination>",
+)
+
+rm_subparser = subparsers.add_parser(
+    "rm", help="Remove files from the working tree and from the index."
+)
+subparsers_list.append(rm_subparser)
+
+rm_subparser.add_argument(
+    "path",
+    action="extend",
+    nargs="+",
+    help="The files and directories to remove.",
+    metavar="<path>",
 )
 
 commit_subparser = subparsers.add_parser(
@@ -104,6 +128,7 @@ log_subparser.add_argument(
     type=int,
     default=5,
     help="Limit the number of commits to output",
+    metavar="<depth>",
 )
 
 status_subparsers = subparsers.add_parser(
@@ -112,17 +137,22 @@ status_subparsers = subparsers.add_parser(
 )
 subparsers_list.append(status_subparsers)
 
-# for i in subparsers_list:
+config_subparsers = subparsers.add_parser(
+    "config",
+    help="Get and set repository options",
+)
+subparsers_list.append(config_subparsers)
 
-#     verbosity_group = i.add_mutually_exclusive_group()
-#     verbosity_group.add_argument(
-#         "-v", "--verbose", action="count", default=0, help="Increase verbosity."
-#     )
+for i in subparsers_list:
+    i.add_argument(
+        "-v", "--verbose", action="store_true", default=0, help="Verbose output"
+    )
 
-# input = "commit -m message -f test.py".split()
-# input = "add test.py".split()
-# input = "commit -m message --date 2020-06-20T00:00:00+00:00".split()
-# input = "mv asd asd".split()
-input = "--help".split()
+input = "log -h".split()
 
 print(main_parser.parse_args(input))
+
+# set logging level
+logging.config.fileConfig(Path(__file__).parent.parent / "utils" / "logging.conf")
+
+logging.getLogger()
