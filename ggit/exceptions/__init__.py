@@ -1,2 +1,3 @@
 from .process_exception import ProcessException
 from .config_exception import ConfigException
+from .repo_exception import RepositoryException
