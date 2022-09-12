@@ -1,6 +1,5 @@
 import logging
 from logging import Logger
-import os
 from pathlib import Path
 from typing import List
 
@@ -12,9 +11,32 @@ from ggit.exceptions import RepositoryException
 def paths_parser(
     arguments: List[str], root: Path, logger: Logger = logging.getLogger("message")
 ) -> List[Path]:
+    """
+    This function provides a way to test if a list of strings, interpreted as paths, are valid.
+    A valid path is a path that is inside the repository and that exists.
+
+    Parameters
+    ----------
+    arguments : List[str]
+        List of paths to test.
+    root : Path
+        Path to the repository root.
+    logger : Logger
+        Logger used to print messages.
+
+    Returns
+    -------
+    List[Path]
+        List of valid paths.
+
+    Raises
+    ------
+    RepositoryException
+        If a path is not valid.
+    """
     paths: List[Path] = []
     for i in arguments:
-        paths.append(Path(i).resolve())
+        paths.append(root / Path(i).resolve())
         if not paths[-1].exists():
             logger.error(f"Path {paths[-1]} does not match any file or directory")
             raise RepositoryException(f"Path {paths[-1]} does not match any file or directory")
@@ -24,8 +46,24 @@ def paths_parser(
     return paths
 
 
-def add(arguments: List[str], logger: Logger = logging.getLogger("message")) -> None:
-    
+def add_handler(arguments: List[str], logger: Logger = logging.getLogger("message")) -> None:
+    """
+    This handler is used to add files to the repository stashing area.
+    The files that are stashed are the ones that are ready for commit and that will be 
+    considered tracked by the repository.
+
+    Parameters
+    ----------
+    arguments : List[str]
+        List of paths to add.
+    logger : Logger
+        Logger used to print messages.
+
+    Raises
+    ------
+    RepositoryException
+        If a path is not valid.
+    """
     config_manager = ConfigManager()
     root = Path(config_manager["repository.path"]).resolve()
     stash_manager = StashManager(root)
@@ -40,7 +78,23 @@ def add(arguments: List[str], logger: Logger = logging.getLogger("message")) -> 
 
 
 def rm_handler(arguments: List[str], logger: Logger = logging.getLogger("message")) -> None:
+    """
+    This handler is used to remove files from the repository stashing area.
+    The files that are removed will be eliminated both from the repository and from the
+    file system, they will be considered untracked by the repository.
 
+    Parameters
+    ----------
+    arguments : List[str]
+        List of paths to remove.
+    logger : Logger
+        Logger used to print messages.
+
+    Raises
+    ------
+    RepositoryException
+        If a path is not valid.
+    """
     config_manager = ConfigManager()
     root = Path(config_manager["repository.path"]).resolve()
     stash_manager = StashManager(root)
@@ -55,12 +109,32 @@ def rm_handler(arguments: List[str], logger: Logger = logging.getLogger("message
 
 
 def mv_handler(source: str, dest: str, logger: Logger = logging.getLogger("message")) -> None:
+    """
+    This handler is used to move files and directories in the repository stashing area.
+    The files or directories that are moved will be moved in the file system and in the
+    repository tracking system.
 
+    Parameters
+    ----------
+    source : str
+        Path to the file or directory to move.
+    dest : str
+        Path to the destination of the file or directory.
+    logger : Logger
+        Logger used to print messages.
+
+    Raises
+    ------
+    RepositoryException
+        If a path is not valid.
+    """
     config_manager = ConfigManager()
     root = Path(config_manager["repository.path"]).resolve()
     stash_manager = StashManager(root)
 
     source = paths_parser([source], root, logger)[0]
+    dest = Path(dest).resolve()
+    
     if not is_subpath(dest, root):
         logger.error(f"Path {dest} is not in the repository")
         exit(1)

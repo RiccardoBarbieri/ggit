@@ -1,15 +1,16 @@
 import json
 import os
-from pathlib import Path
 import shutil
+from pathlib import Path
 from typing import Dict, List
 
 from ggit.entities import Blob
 from ggit.exceptions import ConfigException
+from ggit.utils import SingletonMeta
 from ggit.utils.constants import repo_folder
 
 
-class StashManager:
+class StashManager(metaclass=SingletonMeta):
 
     __root: Path
     __stashed_files: Dict[str, str] = {}
@@ -118,7 +119,7 @@ class StashManager:
         shutil.rmtree(old_path)
 
     @property
-    def stashed_files(self) -> Dict[Path, str]:
+    def stashed_files(self) -> Dict[str, str]:
         return self.__stashed_files
 
     @property

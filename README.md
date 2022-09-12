@@ -38,4 +38,6 @@ The main script that drives the whole application is app.py, located under ggit/
 
 Documentation about this project can be found [here](https://thesys.readthedocs.io/en/latest/).
 
+The repository also contains a neo4j community server distribution, it will be copied insied every repository that is created.
+
 This project is still under development.
