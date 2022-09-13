@@ -4,9 +4,9 @@ from pathlib import Path
 from typing import TYPE_CHECKING, Generator, List, Tuple
 
 if TYPE_CHECKING:
-    from ggit.converter.model.hash_type import HashType
+    from ggit.git_utils.model.hash_type import HashType
 
-from ggit.converter.git_connector.git_connector_interface import GitConnectorInterface
+from ggit.git_utils.git_connector.git_connector_interface import GitConnectorInterface
 from ggit.utils.folder_utils import walk_objects
 
 
@@ -19,7 +19,7 @@ class GitConnectorSubprocess(GitConnectorInterface):
 
     
     def get_hash_type(self, hash_: str) -> 'HashType':
-        from ggit.converter.model.hash_type import HashType
+        from ggit.git_utils.model.hash_type import HashType
         from ggit.exceptions.process_exception import ProcessException
         """
         Obtain the :class:`HashType` of the hash provided.

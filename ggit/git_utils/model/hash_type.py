@@ -3,7 +3,7 @@ from enum import Enum
 from pathlib import Path
 from typing import List
 
-from ggit.converter.git_connector import (GitConnectorInterface, GitConnectorSubprocess)
+from ggit.git_utils.git_connector import (GitConnectorInterface, GitConnectorSubprocess)
 from ggit.utils.folder_utils import walk_objects
 
 
