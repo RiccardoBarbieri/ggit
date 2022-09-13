@@ -20,7 +20,7 @@
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="ggit.git_utils.git_connector module" href="git_connector.html" />
-    <link rel="prev" title="&lt;no title&gt;" href="introduction.html" /> 
+    <link rel="prev" title="ggit.exceptions module" href="exceptions.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -40,19 +40,20 @@
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul class="current">
-<li class="toctree-l1 current"><a class="current reference internal" href="#">ggit.git_utils.model module</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#hashtype">HashType</a></li>
+<li class="toctree-l1"><a class="reference internal" href="app.html">ggit.app module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="app.html#ggitappparser">GGitAppParser</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="git_connector.html">ggit.git_utils.git_connector module</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="git_connector.html#gitconnectorinterface">GitConnectorInterface</a></li>
-<li class="toctree-l2"><a class="reference internal" href="git_connector.html#gitconnectorsubprocess">GitConnectorSubprocess</a></li>
+<li class="toctree-l1"><a class="reference internal" href="managers.html">ggit.managers module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="managers.html#configmanager">ConfigManager</a></li>
+<li class="toctree-l2"><a class="reference internal" href="managers.html#differencemanager">DifferenceManager</a></li>
+<li class="toctree-l2"><a class="reference internal" href="managers.html#stashmanager">StashManager</a></li>
+<li class="toctree-l2"><a class="reference internal" href="managers.html#neo4j-manager">Neo4j Manager</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="utils.html">ggit.utils module</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="utils.html#folder-utils">Folder utils</a></li>
-<li class="toctree-l2"><a class="reference internal" href="utils.html#node-utils">Node utils</a></li>
-<li class="toctree-l2"><a class="reference internal" href="utils.html#singleton">Singleton</a></li>
+<li class="toctree-l1"><a class="reference internal" href="handlers.html">ggit.handlers module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="handlers.html#init-handler">Init handler</a></li>
+<li class="toctree-l2"><a class="reference internal" href="handlers.html#file-handlers">File handlers</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="entities.html">ggit.entities module</a><ul>
@@ -67,6 +68,27 @@
 <li class="toctree-l2"><a class="reference internal" href="database.html#commitrepository">CommitRepository</a></li>
 <li class="toctree-l2"><a class="reference internal" href="database.html#treerepository">TreeRepository</a></li>
 <li class="toctree-l2"><a class="reference internal" href="database.html#userrepository">UserRepository</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="utils.html">ggit.utils module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="utils.html#folder-utils">Folder utils</a></li>
+<li class="toctree-l2"><a class="reference internal" href="utils.html#node-utils">Node utils</a></li>
+<li class="toctree-l2"><a class="reference internal" href="utils.html#singleton">Singleton</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="exceptions.html">ggit.exceptions module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="exceptions.html#configexception">ConfigException</a></li>
+<li class="toctree-l2"><a class="reference internal" href="exceptions.html#processexception">ProcessException</a></li>
+<li class="toctree-l2"><a class="reference internal" href="exceptions.html#repositoryexception">RepositoryException</a></li>
+</ul>
+</li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">ggit.git_utils.model module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#hashtype">HashType</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="git_connector.html">ggit.git_utils.git_connector module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="git_connector.html#gitconnectorinterface">GitConnectorInterface</a></li>
+<li class="toctree-l2"><a class="reference internal" href="git_connector.html#gitconnectorsubprocess">GitConnectorSubprocess</a></li>
 </ul>
 </li>
 </ul>
@@ -255,7 +277,7 @@ Path objects, containing the paths of all the objects found.</p>
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="introduction.html" class="btn btn-neutral float-left" title="&lt;no title&gt;" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="exceptions.html" class="btn btn-neutral float-left" title="ggit.exceptions module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
         <a href="git_connector.html" class="btn btn-neutral float-right" title="ggit.git_utils.git_connector module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
