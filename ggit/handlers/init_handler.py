@@ -6,7 +6,7 @@ from pathlib import Path
 import shutil
 
 from ggit.managers import ConfigManager, DifferenceManager
-from ggit.app.neo4j_manager import start_neo4j_instance
+from ggit.managers.neo4j_manager import start_neo4j_instance
 
 
 def init_repository(path: Path, logger: Logger = logging.getLogger("message")) -> None:
