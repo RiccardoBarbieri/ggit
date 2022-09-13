@@ -6,8 +6,6 @@
   <title>Index &mdash; ggit 1.0.0 documentation</title>
       <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
-      <link rel="stylesheet" href="_static/dark_mode_css/general.css" type="text/css" />
-      <link rel="stylesheet" href="_static/dark_mode_css/dark.css" type="text/css" />
   <!--[if lt IE 9]>
     <script src="_static/js/html5shiv.min.js"></script>
   <![endif]-->
@@ -17,8 +15,6 @@
         <script src="_static/underscore.js"></script>
         <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="_static/doctools.js"></script>
-        <script src="_static/dark_mode_js/default_dark.js"></script>
-        <script src="_static/dark_mode_js/theme_switcher.js"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="#" />
     <link rel="search" title="Search" href="search.html" /> 
@@ -41,19 +37,20 @@
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="model.html">ggit.converter.model module</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="model.html#hash-type">Hash Type</a></li>
+<li class="toctree-l1"><a class="reference internal" href="app.html">ggit.app module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="app.html#ggitappparser">GGitAppParser</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="git_connector.html">ggit.converter.git_connector</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="git_connector.html#git-connector-interface">Git connector interface</a></li>
-<li class="toctree-l2"><a class="reference internal" href="git_connector.html#git-connector-subprocess">Git connector subprocess</a></li>
+<li class="toctree-l1"><a class="reference internal" href="managers.html">ggit.managers module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="managers.html#configmanager">ConfigManager</a></li>
+<li class="toctree-l2"><a class="reference internal" href="managers.html#differencemanager">DifferenceManager</a></li>
+<li class="toctree-l2"><a class="reference internal" href="managers.html#stashmanager">StashManager</a></li>
+<li class="toctree-l2"><a class="reference internal" href="managers.html#neo4j-manager">Neo4j Manager</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="utils.html">ggit.utils module</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="utils.html#folder-utils">Folder utils</a></li>
-<li class="toctree-l2"><a class="reference internal" href="utils.html#node-utils">Node utils</a></li>
-<li class="toctree-l2"><a class="reference internal" href="utils.html#singleton">Singleton</a></li>
+<li class="toctree-l1"><a class="reference internal" href="handlers.html">ggit.handlers module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="handlers.html#init-handler">Init handler</a></li>
+<li class="toctree-l2"><a class="reference internal" href="handlers.html#file-handlers">File handlers</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="entities.html">ggit.entities module</a><ul>
@@ -70,8 +67,25 @@
 <li class="toctree-l2"><a class="reference internal" href="database.html#userrepository">UserRepository</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="config.html">ggit.config module</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="config.html#configmanager">ConfigManager</a></li>
+<li class="toctree-l1"><a class="reference internal" href="utils.html">ggit.utils module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="utils.html#folder-utils">Folder utils</a></li>
+<li class="toctree-l2"><a class="reference internal" href="utils.html#node-utils">Node utils</a></li>
+<li class="toctree-l2"><a class="reference internal" href="utils.html#singleton">Singleton</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="exceptions.html">ggit.exceptions module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="exceptions.html#configexception">ConfigException</a></li>
+<li class="toctree-l2"><a class="reference internal" href="exceptions.html#processexception">ProcessException</a></li>
+<li class="toctree-l2"><a class="reference internal" href="exceptions.html#repositoryexception">RepositoryException</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="model.html">ggit.git_utils.model module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="model.html#hashtype">HashType</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="git_connector.html">ggit.git_utils.git_connector module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="git_connector.html#gitconnectorinterface">GitConnectorInterface</a></li>
+<li class="toctree-l2"><a class="reference internal" href="git_connector.html#gitconnectorsubprocess">GitConnectorSubprocess</a></li>
 </ul>
 </li>
 </ul>
@@ -115,6 +129,7 @@
  | <a href="#M"><strong>M</strong></a>
  | <a href="#N"><strong>N</strong></a>
  | <a href="#P"><strong>P</strong></a>
+ | <a href="#R"><strong>R</strong></a>
  | <a href="#S"><strong>S</strong></a>
  | <a href="#T"><strong>T</strong></a>
  | <a href="#U"><strong>U</strong></a>
@@ -124,19 +139,19 @@
 <h2 id="_">_</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="model.html#ggit.converter.model.hash_type.HashIdentifier.__get_all_hashes">__get_all_hashes() (ggit.converter.model.hash_type.HashIdentifier method)</a>
+      <li><a href="model.html#ggit.git_utils.model.HashIdentifier.__get_all_hashes">__get_all_hashes() (ggit.git_utils.model.HashIdentifier method)</a>
 </li>
-      <li><a href="model.html#ggit.converter.model.hash_type.HashIdentifier.__get_all_objects">__get_all_objects() (ggit.converter.model.hash_type.HashIdentifier method)</a>
+      <li><a href="model.html#ggit.git_utils.model.HashIdentifier.__get_all_objects">__get_all_objects() (ggit.git_utils.model.HashIdentifier method)</a>
 </li>
-      <li><a href="model.html#ggit.converter.model.hash_type.GitHash.__hash">__hash (ggit.converter.model.hash_type.GitHash attribute)</a>
+      <li><a href="model.html#ggit.git_utils.model.GitHash.__hash">__hash (ggit.git_utils.model.GitHash attribute)</a>
 </li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="model.html#ggit.converter.model.hash_type.GitHash.__path">__path (ggit.converter.model.hash_type.GitHash attribute)</a>
+      <li><a href="model.html#ggit.git_utils.model.GitHash.__path">__path (ggit.git_utils.model.GitHash attribute)</a>
 </li>
-      <li><a href="model.html#ggit.converter.model.hash_type.GitHash.__repo">__repo (ggit.converter.model.hash_type.GitHash attribute)</a>
+      <li><a href="model.html#ggit.git_utils.model.GitHash.__repo">__repo (ggit.git_utils.model.GitHash attribute)</a>
 </li>
-      <li><a href="model.html#ggit.converter.model.hash_type.GitHash.__type">__type (ggit.converter.model.hash_type.GitHash attribute)</a>
+      <li><a href="model.html#ggit.git_utils.model.GitHash.__type">__type (ggit.git_utils.model.GitHash attribute)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -145,6 +160,8 @@
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="database.html#ggit.database.blob_repository.BlobRepository.add_blob">add_blob() (ggit.database.blob_repository.BlobRepository method)</a>
+</li>
+      <li><a href="handlers.html#ggit.handlers.file_handler.add_handler">add_handler() (in module ggit.handlers.file_handler)</a>
 </li>
       <li><a href="database.html#ggit.database.tree_repository.TreeRepository.add_tree">add_tree() (ggit.database.tree_repository.TreeRepository method)</a>
 </li>
@@ -166,7 +183,7 @@
 </li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="model.html#ggit.converter.model.hash_type.HashType.BLOB">BLOB (ggit.converter.model.hash_type.HashType attribute)</a>
+      <li><a href="model.html#ggit.git_utils.model.HashType.BLOB">BLOB (ggit.git_utils.model.HashType attribute)</a>
 </li>
       <li><a href="database.html#ggit.database.blob_repository.BlobRepository">BlobRepository (class in ggit.database.blob_repository)</a>
 </li>
@@ -180,19 +197,21 @@
 </li>
       <li><a href="entities.html#ggit.entities.commit.Commit">Commit (class in ggit.entities.commit)</a>
 </li>
-      <li><a href="model.html#ggit.converter.model.hash_type.HashType.COMMIT">COMMIT (ggit.converter.model.hash_type.HashType attribute)</a>
+      <li><a href="model.html#ggit.git_utils.model.HashType.COMMIT">COMMIT (ggit.git_utils.model.HashType attribute)</a>
 </li>
       <li><a href="database.html#ggit.database.commit_repository.CommitRepository">CommitRepository (class in ggit.database.commit_repository)</a>
 </li>
       <li><a href="entities.html#ggit.entities.commit.Commit.committer">committer (ggit.entities.commit.Commit attribute)</a>
 </li>
+      <li><a href="managers.html#ggit.managers.ConfigManager.config">config (ggit.managers.ConfigManager attribute)</a>
+</li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="config.html#ggit.config.ConfigManager.config">config (ggit.config.ConfigManager attribute)</a>
+      <li><a href="managers.html#ggit.managers.ConfigManager.config_file">config_file (ggit.managers.ConfigManager attribute)</a>
 </li>
-      <li><a href="config.html#ggit.config.ConfigManager.config_file">config_file (ggit.config.ConfigManager attribute)</a>
+      <li><a href="exceptions.html#ggit.exceptions.ConfigException">ConfigException (class in ggit.exceptions)</a>
 </li>
-      <li><a href="config.html#ggit.config.ConfigManager">ConfigManager (class in ggit.config)</a>
+      <li><a href="managers.html#ggit.managers.ConfigManager">ConfigManager (class in ggit.managers)</a>
 </li>
       <li><a href="entities.html#ggit.entities.blob.Blob.content">content (ggit.entities.blob.Blob attribute)</a>
 
@@ -220,10 +239,10 @@
       </ul></li>
       <li><a href="database.html#ggit.database.data_source.DataSource">DataSource (class in ggit.database.data_source)</a>
 </li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="entities.html#ggit.entities.commit.Commit.date_time">date_time (ggit.entities.commit.Commit attribute)</a>
 </li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="database.html#ggit.database.blob_repository.BlobRepository.delete_blob">delete_blob() (ggit.database.blob_repository.BlobRepository method)</a>
 </li>
       <li><a href="database.html#ggit.database.commit_repository.CommitRepository.delete_commit">delete_commit() (ggit.database.commit_repository.CommitRepository method)</a>
@@ -231,6 +250,8 @@
       <li><a href="database.html#ggit.database.tree_repository.TreeRepository.delete_tree">delete_tree() (ggit.database.tree_repository.TreeRepository method)</a>
 </li>
       <li><a href="database.html#ggit.database.user_repository.UserRepository.delete_user">delete_user() (ggit.database.user_repository.UserRepository method)</a>
+</li>
+      <li><a href="managers.html#ggit.managers.DifferenceManager">DifferenceManager (class in ggit.managers)</a>
 </li>
       <li><a href="database.html#ggit.database.data_source.DataSource.driver">driver (ggit.database.data_source.DataSource attribute)</a>
 </li>
@@ -244,7 +265,7 @@
 </li>
       <li><a href="database.html#ggit.database.commit_repository.CommitRepository.get_all_commits">get_all_commits() (ggit.database.commit_repository.CommitRepository method)</a>
 </li>
-      <li><a href="git_connector.html#ggit.converter.git_connector.git_connector_subprocess.GitConnectorSubprocess.get_all_objects">get_all_objects() (ggit.converter.git_connector.git_connector_subprocess.GitConnectorSubprocess method)</a>
+      <li><a href="git_connector.html#ggit.git_utils.git_connector.GitConnectorSubprocess.get_all_objects">get_all_objects() (ggit.git_utils.git_connector.GitConnectorSubprocess method)</a>
 </li>
       <li><a href="database.html#ggit.database.tree_repository.TreeRepository.get_all_trees">get_all_trees() (ggit.database.tree_repository.TreeRepository method)</a>
 </li>
@@ -254,15 +275,15 @@
 </li>
       <li><a href="database.html#ggit.database.data_source.DataSource.get_driver">get_driver() (ggit.database.data_source.DataSource method)</a>
 </li>
-      <li><a href="git_connector.html#ggit.converter.git_connector.git_connector_interface.GitConnectorInterface.get_hash_type">get_hash_type() (ggit.converter.git_connector.git_connector_interface.GitConnectorInterface method)</a>
+      <li><a href="git_connector.html#ggit.git_utils.git_connector.GitConnectorInterface.get_hash_type">get_hash_type() (ggit.git_utils.git_connector.GitConnectorInterface method)</a>
 
       <ul>
-        <li><a href="git_connector.html#ggit.converter.git_connector.git_connector_subprocess.GitConnectorSubprocess.get_hash_type">(ggit.converter.git_connector.git_connector_subprocess.GitConnectorSubprocess method)</a>
+        <li><a href="git_connector.html#ggit.git_utils.git_connector.GitConnectorSubprocess.get_hash_type">(ggit.git_utils.git_connector.GitConnectorSubprocess method)</a>
 </li>
       </ul></li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="model.html#ggit.converter.model.hash_type.HashIdentifier.get_hashes">get_hashes() (ggit.converter.model.hash_type.HashIdentifier method)</a>
+      <li><a href="model.html#ggit.git_utils.model.HashIdentifier.get_hashes">get_hashes() (ggit.git_utils.model.HashIdentifier method)</a>
 </li>
       <li><a href="utils.html#ggit.utils.nodes_utils.get_node">get_node() (in module ggit.utils.nodes_utils)</a>
 </li>
@@ -270,11 +291,13 @@
 </li>
       <li><a href="database.html#ggit.database.user_repository.UserRepository.get_user">get_user() (ggit.database.user_repository.UserRepository method)</a>
 </li>
-      <li><a href="git_connector.html#ggit.converter.git_connector.git_connector_interface.GitConnectorInterface">GitConnectorInterface (class in ggit.converter.git_connector.git_connector_interface)</a>
+      <li><a href="app.html#ggit.app.app.GGitAppParser">GGitAppParser (class in ggit.app.app)</a>
 </li>
-      <li><a href="git_connector.html#ggit.converter.git_connector.git_connector_subprocess.GitConnectorSubprocess">GitConnectorSubprocess (class in ggit.converter.git_connector.git_connector_subprocess)</a>
+      <li><a href="git_connector.html#ggit.git_utils.git_connector.GitConnectorInterface">GitConnectorInterface (class in ggit.git_utils.git_connector)</a>
 </li>
-      <li><a href="model.html#ggit.converter.model.hash_type.GitHash">GitHash (class in ggit.converter.model.hash_type)</a>
+      <li><a href="git_connector.html#ggit.git_utils.git_connector.GitConnectorSubprocess">GitConnectorSubprocess (class in ggit.git_utils.git_connector)</a>
+</li>
+      <li><a href="model.html#ggit.git_utils.model.GitHash">GitHash (class in ggit.git_utils.model)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -292,15 +315,15 @@
       </ul></li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="git_connector.html#ggit.converter.git_connector.git_connector_interface.GitConnectorInterface.hash_object">hash_object() (ggit.converter.git_connector.git_connector_interface.GitConnectorInterface method)</a>
+      <li><a href="git_connector.html#ggit.git_utils.git_connector.GitConnectorInterface.hash_object">hash_object() (ggit.git_utils.git_connector.GitConnectorInterface method)</a>
 
       <ul>
-        <li><a href="git_connector.html#ggit.converter.git_connector.git_connector_subprocess.GitConnectorSubprocess.hash_object">(ggit.converter.git_connector.git_connector_subprocess.GitConnectorSubprocess method)</a>
+        <li><a href="git_connector.html#ggit.git_utils.git_connector.GitConnectorSubprocess.hash_object">(ggit.git_utils.git_connector.GitConnectorSubprocess method)</a>
 </li>
       </ul></li>
-      <li><a href="model.html#ggit.converter.model.hash_type.HashIdentifier">HashIdentifier (class in ggit.converter.model.hash_type)</a>
+      <li><a href="model.html#ggit.git_utils.model.HashIdentifier">HashIdentifier (class in ggit.git_utils.model)</a>
 </li>
-      <li><a href="model.html#ggit.converter.model.hash_type.HashType">HashType (class in ggit.converter.model.hash_type)</a>
+      <li><a href="model.html#ggit.git_utils.model.HashType">HashType (class in ggit.git_utils.model)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -308,10 +331,12 @@
 <h2 id="I">I</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="entities.html#ggit.entities.tree.Tree.item_count">item_count (ggit.entities.tree.Tree attribute)</a>
+      <li><a href="handlers.html#ggit.handlers.init_handler.init_repository">init_repository() (in module ggit.handlers.init_handler)</a>
 </li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="entities.html#ggit.entities.tree.Tree.item_count">item_count (ggit.entities.tree.Tree attribute)</a>
+</li>
       <li><a href="entities.html#ggit.entities.tree.Tree.items">items (ggit.entities.tree.Tree attribute)</a>
 </li>
   </ul></td>
@@ -334,7 +359,13 @@
 <h2 id="M">M</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="app.html#ggit.app.app.main">main() (in module ggit.app.app)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="entities.html#ggit.entities.commit.Commit.message">message (ggit.entities.commit.Commit attribute)</a>
+</li>
+      <li><a href="handlers.html#ggit.handlers.file_handler.mv_handler">mv_handler() (in module ggit.handlers.file_handler)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -352,9 +383,25 @@
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="entities.html#ggit.entities.commit.Commit.parent">parent (ggit.entities.commit.Commit attribute)</a>
 </li>
+      <li><a href="utils.html#ggit.utils.nodes_utils.parse_tree">parse_tree() (in module ggit.utils.nodes_utils)</a>
+</li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="utils.html#ggit.utils.nodes_utils.parse_tree">parse_tree() (in module ggit.utils.nodes_utils)</a>
+      <li><a href="handlers.html#ggit.handlers.file_handler.paths_parser">paths_parser() (in module ggit.handlers.file_handler)</a>
+</li>
+      <li><a href="exceptions.html#ggit.exceptions.ProcessException">ProcessException (class in ggit.exceptions)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="R">R</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="exceptions.html#ggit.exceptions.RepositoryException">RepositoryException (class in ggit.exceptions)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="handlers.html#ggit.handlers.file_handler.rm_handler">rm_handler() (in module ggit.handlers.file_handler)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -362,11 +409,19 @@
 <h2 id="S">S</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="app.html#ggit.app.app.GGitAppParser.set_up">set_up() (ggit.app.app.GGitAppParser method)</a>
+</li>
       <li><a href="utils.html#ggit.utils.singleton.SingletonMeta">SingletonMeta (class in ggit.utils.singleton)</a>
+</li>
+      <li><a href="managers.html#ggit.managers.neo4j_manager.start_neo4j_instance">start_neo4j_instance() (in module ggit.managers.neo4j_manager)</a>
 </li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="managers.html#ggit.managers.StashManager">StashManager (class in ggit.managers)</a>
+</li>
       <li><a href="entities.html#ggit.entities.commit.Commit.str_date_time">str_date_time (ggit.entities.commit.Commit attribute)</a>
+</li>
+      <li><a href="app.html#ggit.app.app.GGitAppParser.subparsers">subparsers (ggit.app.app.GGitAppParser attribute)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -376,11 +431,11 @@
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="entities.html#ggit.entities.tree.Tree">Tree (class in ggit.entities.tree)</a>
 </li>
-      <li><a href="model.html#ggit.converter.model.hash_type.HashType.TREE">TREE (ggit.converter.model.hash_type.HashType attribute)</a>
+      <li><a href="entities.html#ggit.entities.commit.Commit.tree">tree (ggit.entities.commit.Commit attribute)</a>
 </li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="entities.html#ggit.entities.commit.Commit.tree">tree (ggit.entities.commit.Commit attribute)</a>
+      <li><a href="model.html#ggit.git_utils.model.HashType.TREE">TREE (ggit.git_utils.model.HashType attribute)</a>
 </li>
       <li><a href="database.html#ggit.database.tree_repository.TreeRepository">TreeRepository (class in ggit.database.tree_repository)</a>
 </li>

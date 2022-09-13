@@ -10,12 +10,15 @@ Welcome to ggit's documentation!
    :maxdepth: 2
    :caption: Contents:
 
-   model
-   git_connector
-   utils
+   app
+   managers
+   handlers
    entities
    database
-   config
+   utils
+   exceptions
+   model
+   git_connector
 
 
 Indices and tables

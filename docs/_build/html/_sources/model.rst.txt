@@ -1,15 +1,15 @@
 ***************************
-ggit.converter.model module
+ggit.git_utils.model module
 ***************************
    
-Hash Type
-=========
-.. autoclass:: ggit.converter.model.hash_type.GitHash
+HashType
+========
+.. autoclass:: ggit.git_utils.model.GitHash
    :members:
    :private-members:
-.. autoclass:: ggit.converter.model.hash_type.HashType
+.. autoclass:: ggit.git_utils.model.HashType
    :members:
    :private-members:
-.. autoclass:: ggit.converter.model.hash_type.HashIdentifier
+.. autoclass:: ggit.git_utils.model.HashIdentifier
    :members:
    :private-members:

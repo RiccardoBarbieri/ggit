@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" />
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Search &mdash; ggit 1.0.0 documentation</title>
+  <title>ggit.exceptions module &mdash; ggit 1.0.0 documentation</title>
       <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
-    
   <!--[if lt IE 9]>
     <script src="_static/js/html5shiv.min.js"></script>
   <![endif]-->
@@ -17,10 +17,10 @@
         <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="_static/doctools.js"></script>
     <script src="_static/js/theme.js"></script>
-    <script src="_static/searchtools.js"></script>
-    <script src="_static/language_data.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
-    <link rel="search" title="Search" href="#" /> 
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="ggit.git_utils.model module" href="model.html" />
+    <link rel="prev" title="ggit.utils module" href="utils.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -31,7 +31,7 @@
             <a href="index.html" class="icon icon-home"> ggit
           </a>
 <div role="search">
-  <form id="rtd-search-form" class="wy-form" action="#" method="get">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
     <input type="text" name="q" placeholder="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
@@ -39,7 +39,7 @@
 </div>
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
-<ul>
+<ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="app.html">ggit.app module</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="app.html#ggitappparser">GGitAppParser</a></li>
 </ul>
@@ -49,11 +49,6 @@
 <li class="toctree-l2"><a class="reference internal" href="managers.html#differencemanager">DifferenceManager</a></li>
 <li class="toctree-l2"><a class="reference internal" href="managers.html#stashmanager">StashManager</a></li>
 <li class="toctree-l2"><a class="reference internal" href="managers.html#neo4j-manager">Neo4j Manager</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="handlers.html">ggit.handlers module</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="handlers.html#init-handler">Init handler</a></li>
-<li class="toctree-l2"><a class="reference internal" href="handlers.html#file-handlers">File handlers</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="entities.html">ggit.entities module</a><ul>
@@ -76,10 +71,10 @@
 <li class="toctree-l2"><a class="reference internal" href="utils.html#singleton">Singleton</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="exceptions.html">ggit.exceptions module</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="exceptions.html#configexception">ConfigException</a></li>
-<li class="toctree-l2"><a class="reference internal" href="exceptions.html#processexception">ProcessException</a></li>
-<li class="toctree-l2"><a class="reference internal" href="exceptions.html#repositoryexception">RepositoryException</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">ggit.exceptions module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#configexception">ConfigException</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#processexception">ProcessException</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#repositoryexception">RepositoryException</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="model.html">ggit.git_utils.model module</a><ul>
@@ -107,8 +102,9 @@
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
       <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
-      <li>Search</li>
+      <li>ggit.exceptions module</li>
       <li class="wy-breadcrumbs-aside">
+            <a href="_sources/exceptions.rst.txt" rel="nofollow"> View page source</a>
       </li>
   </ul>
   <hr/>
@@ -116,22 +112,50 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <noscript>
-  <div id="fallback" class="admonition warning">
-    <p class="last">
-      Please activate JavaScript to enable the search functionality.
-    </p>
-  </div>
-  </noscript>
+  <section id="ggit-exceptions-module">
+<h1>ggit.exceptions module<a class="headerlink" href="#ggit-exceptions-module" title="Permalink to this heading"></a></h1>
+<section id="configexception">
+<h2>ConfigException<a class="headerlink" href="#configexception" title="Permalink to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="ggit.exceptions.ConfigException">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">ggit.exceptions.</span></span><span class="sig-name descname"><span class="pre">ConfigException</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">message</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#ggit.exceptions.ConfigException" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Exception</span></code></p>
+<p>Custom exception raised when there are problems related to the
+configuration settings of the database.</p>
+</dd></dl>
 
-  
-  <div id="search-results">
-  
-  </div>
+</section>
+<section id="processexception">
+<h2>ProcessException<a class="headerlink" href="#processexception" title="Permalink to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="ggit.exceptions.ProcessException">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">ggit.exceptions.</span></span><span class="sig-name descname"><span class="pre">ProcessException</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">message</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#ggit.exceptions.ProcessException" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Exception</span></code></p>
+<p>Custom exception raised when there are problems related to execution
+of a process.</p>
+</dd></dl>
+
+</section>
+<section id="repositoryexception">
+<h2>RepositoryException<a class="headerlink" href="#repositoryexception" title="Permalink to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="ggit.exceptions.RepositoryException">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">ggit.exceptions.</span></span><span class="sig-name descname"><span class="pre">RepositoryException</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">message</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#ggit.exceptions.RepositoryException" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Exception</span></code></p>
+<p>Custom exception raised when there are problems related to the
+repository.</p>
+</dd></dl>
+
+</section>
+</section>
+
 
            </div>
           </div>
-          <footer>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="utils.html" class="btn btn-neutral float-left" title="ggit.utils module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="model.html" class="btn btn-neutral float-right" title="ggit.git_utils.model module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
 
   <hr/>
 
@@ -153,14 +177,7 @@
       jQuery(function () {
           SphinxRtdTheme.Navigation.enable(true);
       });
-  </script>
-  <script>
-    jQuery(function() { Search.loadIndex("searchindex.js"); });
-  </script>
-  
-  <script id="searchindexloader"></script>
-   
-
+  </script> 
 
 </body>
 </html>

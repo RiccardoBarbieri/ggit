@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ggit.handlers module &mdash; ggit 1.0.0 documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="_static/doctools.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="index.html" class="icon icon-home"> ggit
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="app.html">ggit.app module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="app.html#ggitappparser">GGitAppParser</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="managers.html">ggit.managers module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="managers.html#configmanager">ConfigManager</a></li>
+<li class="toctree-l2"><a class="reference internal" href="managers.html#differencemanager">DifferenceManager</a></li>
+<li class="toctree-l2"><a class="reference internal" href="managers.html#stashmanager">StashManager</a></li>
+<li class="toctree-l2"><a class="reference internal" href="managers.html#neo4j-manager">Neo4j Manager</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="entities.html">ggit.entities module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="entities.html#blob">Blob</a></li>
+<li class="toctree-l2"><a class="reference internal" href="entities.html#tree">Tree</a></li>
+<li class="toctree-l2"><a class="reference internal" href="entities.html#commit">Commit</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="database.html">ggit.database module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="database.html#datasource">DataSource</a></li>
+<li class="toctree-l2"><a class="reference internal" href="database.html#blobrepository">BlobRepository</a></li>
+<li class="toctree-l2"><a class="reference internal" href="database.html#commitrepository">CommitRepository</a></li>
+<li class="toctree-l2"><a class="reference internal" href="database.html#treerepository">TreeRepository</a></li>
+<li class="toctree-l2"><a class="reference internal" href="database.html#userrepository">UserRepository</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="utils.html">ggit.utils module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="utils.html#folder-utils">Folder utils</a></li>
+<li class="toctree-l2"><a class="reference internal" href="utils.html#node-utils">Node utils</a></li>
+<li class="toctree-l2"><a class="reference internal" href="utils.html#singleton">Singleton</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="exceptions.html">ggit.exceptions module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="exceptions.html#configexception">ConfigException</a></li>
+<li class="toctree-l2"><a class="reference internal" href="exceptions.html#processexception">ProcessException</a></li>
+<li class="toctree-l2"><a class="reference internal" href="exceptions.html#repositoryexception">RepositoryException</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="model.html">ggit.git_utils.model module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="model.html#hashtype">HashType</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="git_connector.html">ggit.git_utils.git_connector module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="git_connector.html#gitconnectorinterface">GitConnectorInterface</a></li>
+<li class="toctree-l2"><a class="reference internal" href="git_connector.html#gitconnectorsubprocess">GitConnectorSubprocess</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">ggit</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+      <li>ggit.handlers module</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/handlers.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="ggit-handlers-module">
+<h1>ggit.handlers module<a class="headerlink" href="#ggit-handlers-module" title="Permalink to this heading"></a></h1>
+<section id="init-handler">
+<h2>Init handler<a class="headerlink" href="#init-handler" title="Permalink to this heading"></a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="ggit.handlers.init_handler.init_repository">
+<span class="sig-prename descclassname"><span class="pre">ggit.handlers.init_handler.</span></span><span class="sig-name descname"><span class="pre">init_repository</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path:</span> <span class="pre">~pathlib.Path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">logger:</span> <span class="pre">~logging.Logger</span> <span class="pre">=</span> <span class="pre">&lt;Logger</span> <span class="pre">message</span> <span class="pre">(WARNING)&gt;</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#ggit.handlers.init_handler.init_repository" title="Permalink to this definition"></a></dt>
+<dd><p>Function used to initialize a new repository.
+The repository will be initialized in the directory passed as parameter.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>path</strong> (<em>Path</em>) – Path to the directory where the repository will be initialized.</p></li>
+<li><p><strong>logger</strong> (<em>Logger</em>) – Logger used to print messages.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="file-handlers">
+<h2>File handlers<a class="headerlink" href="#file-handlers" title="Permalink to this heading"></a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="ggit.handlers.file_handler.paths_parser">
+<span class="sig-prename descclassname"><span class="pre">ggit.handlers.file_handler.</span></span><span class="sig-name descname"><span class="pre">paths_parser</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">arguments:</span> <span class="pre">~typing.List[str],</span> <span class="pre">root:</span> <span class="pre">~pathlib.Path,</span> <span class="pre">logger:</span> <span class="pre">~logging.Logger</span> <span class="pre">=</span> <span class="pre">&lt;Logger</span> <span class="pre">message</span> <span class="pre">(WARNING)&gt;</span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">Path</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#ggit.handlers.file_handler.paths_parser" title="Permalink to this definition"></a></dt>
+<dd><p>This function provides a way to test if a list of strings, interpreted as paths, are valid.
+A valid path is a path that is inside the repository and that exists.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>arguments</strong> (<em>List</em><em>[</em><em>str</em><em>]</em>) – List of paths to test.</p></li>
+<li><p><strong>root</strong> (<em>Path</em>) – Path to the repository root.</p></li>
+<li><p><strong>logger</strong> (<em>Logger</em>) – Logger used to print messages.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>List of valid paths.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>List[Path]</p>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><p><a class="reference internal" href="exceptions.html#ggit.exceptions.RepositoryException" title="ggit.exceptions.RepositoryException"><strong>RepositoryException</strong></a> – If a path is not valid.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="ggit.handlers.file_handler.add_handler">
+<span class="sig-prename descclassname"><span class="pre">ggit.handlers.file_handler.</span></span><span class="sig-name descname"><span class="pre">add_handler</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">arguments:</span> <span class="pre">~typing.List[str],</span> <span class="pre">logger:</span> <span class="pre">~logging.Logger</span> <span class="pre">=</span> <span class="pre">&lt;Logger</span> <span class="pre">message</span> <span class="pre">(WARNING)&gt;</span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#ggit.handlers.file_handler.add_handler" title="Permalink to this definition"></a></dt>
+<dd><p>This handler is used to add files to the repository stashing area.
+The files that are stashed are the ones that are ready for commit and that will be
+considered tracked by the repository.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>arguments</strong> (<em>List</em><em>[</em><em>str</em><em>]</em>) – List of paths to add.</p></li>
+<li><p><strong>logger</strong> (<em>Logger</em>) – Logger used to print messages.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><p><a class="reference internal" href="exceptions.html#ggit.exceptions.RepositoryException" title="ggit.exceptions.RepositoryException"><strong>RepositoryException</strong></a> – If a path is not valid.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="ggit.handlers.file_handler.rm_handler">
+<span class="sig-prename descclassname"><span class="pre">ggit.handlers.file_handler.</span></span><span class="sig-name descname"><span class="pre">rm_handler</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">arguments:</span> <span class="pre">~typing.List[str],</span> <span class="pre">logger:</span> <span class="pre">~logging.Logger</span> <span class="pre">=</span> <span class="pre">&lt;Logger</span> <span class="pre">message</span> <span class="pre">(WARNING)&gt;</span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#ggit.handlers.file_handler.rm_handler" title="Permalink to this definition"></a></dt>
+<dd><p>This handler is used to remove files from the repository stashing area.
+The files that are removed will be eliminated both from the repository and from the
+file system, they will be considered untracked by the repository.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>arguments</strong> (<em>List</em><em>[</em><em>str</em><em>]</em>) – List of paths to remove.</p></li>
+<li><p><strong>logger</strong> (<em>Logger</em>) – Logger used to print messages.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><p><a class="reference internal" href="exceptions.html#ggit.exceptions.RepositoryException" title="ggit.exceptions.RepositoryException"><strong>RepositoryException</strong></a> – If a path is not valid.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="ggit.handlers.file_handler.mv_handler">
+<span class="sig-prename descclassname"><span class="pre">ggit.handlers.file_handler.</span></span><span class="sig-name descname"><span class="pre">mv_handler</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">source:</span> <span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dest:</span> <span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">logger:</span> <span class="pre">~logging.Logger</span> <span class="pre">=</span> <span class="pre">&lt;Logger</span> <span class="pre">message</span> <span class="pre">(WARNING)&gt;</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#ggit.handlers.file_handler.mv_handler" title="Permalink to this definition"></a></dt>
+<dd><p>This handler is used to move files and directories in the repository stashing area.
+The files or directories that are moved will be moved in the file system and in the
+repository tracking system.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>source</strong> (<em>str</em>) – Path to the file or directory to move.</p></li>
+<li><p><strong>dest</strong> (<em>str</em>) – Path to the destination of the file or directory.</p></li>
+<li><p><strong>logger</strong> (<em>Logger</em>) – Logger used to print messages.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><p><a class="reference internal" href="exceptions.html#ggit.exceptions.RepositoryException" title="ggit.exceptions.RepositoryException"><strong>RepositoryException</strong></a> – If a path is not valid.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, Riccardo Barbieri.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

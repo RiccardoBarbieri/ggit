@@ -1,17 +1,17 @@
-****************************
-ggit.converter.git_connector
-****************************
+***********************************
+ggit.git_utils.git_connector module
+***********************************
 
-Git connector interface
-=======================
-.. autoclass:: ggit.converter.git_connector.git_connector_interface.GitConnectorInterface
+GitConnectorInterface
+=====================
+.. autoclass:: ggit.git_utils.git_connector.GitConnectorInterface
    :members:
    :undoc-members:
    :show-inheritance:
 
-Git connector subprocess
-========================
-.. autoclass:: ggit.converter.git_connector.git_connector_subprocess.GitConnectorSubprocess
+GitConnectorSubprocess
+======================
+.. autoclass:: ggit.git_utils.git_connector.GitConnectorSubprocess
    :members:
    :undoc-members:
    :show-inheritance:
