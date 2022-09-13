@@ -10,6 +10,9 @@ python:
     - method: pip
       path: .
 
+build:
+  image: testing
+
 sphinx:
   builder: html
   configuration: docs/conf.py
