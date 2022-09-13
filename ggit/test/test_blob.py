@@ -2,7 +2,7 @@ from pathlib import Path
 
 from rich.console import Console
 
-from ggit.converter.git_connector import GitConnectorSubprocess
+from ggit.git_utils.git_connector import GitConnectorSubprocess
 from ggit.entities.blob import Blob
 from ggit.utils.folder_utils import walk_folder_rec_flat
 

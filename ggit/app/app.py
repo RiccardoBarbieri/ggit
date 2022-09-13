@@ -3,18 +3,18 @@
 import argparse
 import logging
 import logging.config
-from pathlib import Path
 import sys
+from pathlib import Path
 from typing import Any, List, Sequence
 
+from ggit.handlers.file_handler import add_handler, mv_handler, rm_handler
+from ggit.handlers.init_handler import init_repository
 from ggit.utils.date_utils import date_iso_8601
 
-from ggit.app.file_handler import add_handler, rm_handler, mv_handler
-from ggit.app.init_handler import init_repository
 
 class GGitAppParser(argparse.ArgumentParser):
     """
-    This class extends the argparse.ArgumentParser class to provide a custom parser for 
+    This class extends the argparse.ArgumentParser class to provide a custom parser for
     the GGit application.
 
     The class exposes a method to create all the subparsers and arguments needed to
@@ -25,6 +25,7 @@ class GGitAppParser(argparse.ArgumentParser):
     subparsers : List[argparse.ArgumentParser]
         Subparsers object used to create the subparsers.
     """
+
     def __init__(
         self,
         *args,
@@ -210,7 +211,15 @@ class GGitAppParser(argparse.ArgumentParser):
             )
 
 
-if __name__ == "__main__":
+def main() -> None:
+    """
+    The main function of the application.
+    Inside this function, that is called in the main block of code, the command line arguments are parsed using
+    the :class:`GGitAppParser` class, the logger is configured and loaded
+    and the corresponding handler is called depending on the subcommand
+    passed as argument.
+    """
+
     parser = GGitAppParser(
         prog="ggit",
         description="GGit, a simple VCS base on a graph database and inspired by git.",
@@ -254,3 +263,7 @@ if __name__ == "__main__":
             pass
         case "config":
             pass
+
+
+if __name__ == "__main__":
+    main()

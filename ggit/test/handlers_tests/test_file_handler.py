@@ -2,9 +2,8 @@ import os
 import unittest
 from pathlib import Path
 
-from ggit.app.file_handler import (add_handler, mv_handler, paths_parser,
-                                   rm_handler)
-from ggit.app.init_handler import init_repository
+from ggit.handlers.file_handler import add_handler, mv_handler, paths_parser, rm_handler
+from ggit.handlers.init_handler import init_repository
 from ggit.managers import StashManager
 
 
@@ -27,11 +26,11 @@ class TestFileHandlers(unittest.TestCase):
         self.assertTrue(len(stash_manager.tracked_files) == 2)
 
         parsed_paths = paths_parser(paths, self.REPO_ROOT)
-        
+
         for i in parsed_paths:
             self.assertTrue(str(i) in stash_manager.stashed_files)
             self.assertTrue(str(i) in stash_manager.tracked_files)
-    
+
     def test_1_mv(self):
         source = "filetest.txt"
         dest = "sub/filetest.txt"
@@ -76,7 +75,6 @@ class TestFileHandlers(unittest.TestCase):
             f.write(filetest_txt)
         with open(self.REPO_ROOT / "sub" / "asd.t", "w+") as f:
             f.write(asd_t)
-
 
     def tearDown(self) -> None:
         open(self.REPO_ROOT / ".ggit" / "stash.json", "w+").close()
