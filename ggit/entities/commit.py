@@ -1,5 +1,6 @@
 import hashlib
 from datetime import datetime, timedelta, timezone
+import re
 from typing import TYPE_CHECKING
 
 if TYPE_CHECKING:
@@ -99,6 +100,8 @@ class Commit:
 
     @str_date_time.setter
     def str_date_time(self, str_date_time: str):
+        if not re.match(r"\d+ \+\d{4}", str_date_time):
+            raise ValueError("The date and time must be in the format UNIX-timestamp +0000")
         offset = timedelta(hours=int(str_date_time[-4:-2]))
         tz = timezone(offset=offset)
 
