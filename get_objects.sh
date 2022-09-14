@@ -1,1 +1,0 @@
-find .git/objects/ -type f | sed 's/\.git\/objects\///g' | sed 's/\///g' | while read i ; do type=$(git cat-file -t $i); echo $i $type ; done
