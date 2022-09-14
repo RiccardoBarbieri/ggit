@@ -5,9 +5,11 @@ from pathlib import Path
 from typing import Dict, List
 
 from ggit.entities import Blob
+from ggit.entities.tree import Tree
 from ggit.exceptions import ConfigException
 from ggit.utils import SingletonMeta
 from ggit.utils.constants import repo_folder
+from ggit.utils.folder import Folder
 
 
 class StashManager(metaclass=SingletonMeta):
@@ -117,6 +119,12 @@ class StashManager(metaclass=SingletonMeta):
             else:
                 self.__move_folder(i, new_path / i.name)
         shutil.rmtree(old_path)
+
+    def clear_stash(self) -> None:
+        for i in self.__tracked_files:
+            if i in self.__stashed_files:
+                del self.__stashed_files[i]
+        self.__dump()
 
     @property
     def stashed_files(self) -> Dict[str, str]:
