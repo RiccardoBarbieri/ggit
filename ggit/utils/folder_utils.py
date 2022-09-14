@@ -82,3 +82,21 @@ def is_subpath(path: Path, parent: Path) -> bool:
         True if the path is a subpath of the parent path.
     """
     return str(path.resolve()).startswith(str(parent.resolve()))
+
+
+def find_repo_root(path: Path) -> Path:
+    """
+    Function used to find the root of the repository.
+
+    Args:
+        path (str): The path to start the search from.
+
+    Returns:
+        str: The path to the root of the repository.
+    """
+    if (path / ".ggit").exists():
+        return path
+    else:
+        if path.parent == Path("/"):
+            return None
+        return find_repo_root(path.parent)
