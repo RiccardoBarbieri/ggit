@@ -3,6 +3,8 @@
 import argparse
 import logging
 import logging.config
+import os
+import re
 import sys
 from pathlib import Path
 from typing import Any, List, Sequence
@@ -10,6 +12,7 @@ from typing import Any, List, Sequence
 from ggit.handlers.file_handler import add_handler, mv_handler, rm_handler
 from ggit.handlers.init_handler import init_repository
 from ggit.utils.date_utils import date_iso_8601
+from ggit.utils.folder_utils import find_repo_root
 
 
 class GGitAppParser(argparse.ArgumentParser):
@@ -113,7 +116,10 @@ class GGitAppParser(argparse.ArgumentParser):
         self.subparsers.append(commit_subparser)
 
         commit_message_options = commit_subparser.add_argument_group()
-        commit_message_options.add_argument(
+        file_excl_group = commit_message_options.add_mutually_exclusive_group(
+            required=True
+        )
+        file_excl_group.add_argument(
             "-f",
             "--file",
             nargs="?",
@@ -122,12 +128,19 @@ class GGitAppParser(argparse.ArgumentParser):
             metavar="file",
             dest="message_file",
         )
+        file_excl_group.add_argument(
+            "-m",
+            "--message",
+            help="The commit message",
+            metavar="message",
+            dest="message",
+        )
         commit_message_options.add_argument(
             "--author",
             nargs="?",
             help="Override author for this commit",
             type=str,
-            metavar="author",
+            metavar="name,email",
             dest="author",
         )
         commit_message_options.add_argument(
@@ -137,14 +150,6 @@ class GGitAppParser(argparse.ArgumentParser):
             type=date_iso_8601,
             metavar="date",
             dest="date",
-        )
-        commit_message_options.add_argument(
-            "-m",
-            "--message",
-            help="The commit message",
-            metavar="message",
-            required=True,
-            dest="message",
         )
 
         log_subparser = subparsers.add_parser(
@@ -226,9 +231,15 @@ def main() -> None:
         allow_abbrev=False,
     )
     parser.set_up()
+    
+    #!_____________________________________
+    args = 'commit -h'
+    pattern = re.compile(r'([^\s"\']+)|"([^"]*)"|(\'([^\']*)\')')
 
-    sys.argv += "rm as qa".split()
-
+    args = [i.group().strip('"\'') for i in pattern.finditer(args)]
+    
+    sys.argv += args
+    #!_____________________________________
     if len(sys.argv) == 1 or sys.argv[1] == "help":
         parser.print_help(sys.stderr)
         sys.exit(0)
@@ -241,6 +252,11 @@ def main() -> None:
         logger = logging.getLogger()
     else:
         logger = logging.getLogger("message")
+
+    repo_root = find_repo_root(Path.cwd())
+    if repo_root is None:
+        logger.error("Not a ggit repository, (or any of the parent directories)")
+        sys.exit(1)
 
     match args["subcommand"]:
         case "init":
@@ -256,7 +272,8 @@ def main() -> None:
             print(args)
             # rm_handler(args["path"], logger)
         case "commit":
-            pass
+            print(args)
+            # commit_handler(args["message"], args["message_file"], args["author"], args["date"], logger)
         case "log":
             pass
         case "status":
