@@ -3,6 +3,7 @@ from logging import Logger
 import logging
 import os
 from pathlib import Path
+import re
 import shutil
 
 from ggit.managers import ConfigManager, DifferenceManager
@@ -29,12 +30,23 @@ def init_repository(path: Path, logger: Logger = logging.getLogger("message")) -
     conf_manager["repository.path"] = str(path)
     conf_manager["database_username"] = "neo4j"
     conf_manager["database_password"] = "neo4j"
+    username = input("Inserisci il tuo username: ")
+    conf_manager["user.name"] = username
+    while True:
+        email = input("Inserisci la tua email: ")
+        if re.match(r"[^@]+@[^@]+\.[^@]+", email):
+            break
+        else:
+            print("Email non valida, riprova")
+    conf_manager["user.email"] = email
+    conf_manager["HEAD"] = "None"
+
 
     with open(path / ".ggit" / "tracked_files.json", "w") as f:
-        json.dump({}, f)
+        json.dump([], f)
     with open(path / ".ggit" / "stash.json", "w") as f:
         json.dump({}, f)
-    with open(path / ".ggit" / "stash.json", "w") as f:
+    with open(path / ".ggit" / "config.json", "w") as f:
         json.dump({}, f)
     with open(path / ".ggit" / "current_state.json", "w") as f:
         json.dump({}, f)
