@@ -3,9 +3,10 @@ import os
 from pathlib import Path
 from typing import Dict
 
-from ggit.exceptions import ConfigException
+from ggit.exceptions import ConfigException, RepositoryException
 from ggit.utils import SingletonMeta
 from ggit.utils.constants import repo_folder
+from ggit.utils.folder_utils import find_repo_root
 
 
 class ConfigManager(metaclass=SingletonMeta):
@@ -45,7 +46,10 @@ class ConfigManager(metaclass=SingletonMeta):
     __config: Dict[str, str] = {}
 
     def __init__(self, repo_path: Path = None):
-        self.__repo_path = repo_path if repo_path else Path(os.getcwd())
+        repo_root = find_repo_root(Path(os.getcwd()))
+        if repo_path is None and repo_root is None:
+            raise RepositoryException("Not a ggit repository, (or any of the parent directories)")
+        self.__repo_path = repo_path if repo_path else repo_root
         self.__config_file = self.__repo_path / repo_folder / "config.json"
 
         if not self.__config_file.parent.exists():
