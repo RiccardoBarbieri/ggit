@@ -21,6 +21,7 @@ class Commit:
     The body of the commit is a string containing information about the commit, the format is:
 
     tree ff7ae585339f04217663bdb7f54df531c6fb8217
+    parent 3b18e512dba79e4c8300dd08aeb37f8e728b8dad
     author NameOfAuthor <email@example.com> 1662040308 +0200
     committer NameOfCommitter <email@example.com> 1662040308 +0200
 
@@ -108,7 +109,7 @@ class Commit:
         self.__date_time = datetime.fromtimestamp(int(str_date_time.split(" ")[0]), tz=tz)
 
     @property
-    def date_time(self) -> str:
+    def date_time(self) -> datetime:
         return self.__date_time
 
     @date_time.setter

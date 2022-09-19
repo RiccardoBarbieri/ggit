@@ -1,0 +1,78 @@
+\documentclass[12pt, twoside]{book}
+\usepackage[a4paper,width=150mm,top=25mm,bottom=25mm,bindingoffset=6mm]{geometry}
+% \usepackage[utf8]{inputenc}
+% \usepackage[T1]{fontenc}
+\usepackage[italian]{babel}
+\usepackage{caption}
+% \usepackage{graphicx}
+\usepackage{fancyhdr}
+\usepackage{float}
+\usepackage{xcolor}
+\usepackage[nottoc]{tocbibind}
+\usepackage{emptypage}
+\usepackage{titlesec}
+\usepackage[T1]{fontenc}
+\usepackage{blindtext, array}
+% \usepackage{amssymb}
+\usepackage[sorting=none,backend=bibtex]{biblatex}
+\usepackage{csquotes}
+\usepackage{pdfpages}
+\usepackage{listings}
+\usepackage{amsmath}
+% \usepackage{placeins}
+% \usepackage{footnote}
+\usepackage[cache=false]{minted}
+\usepackage{setspace}
+% \usepackage{siunitx}
+\usepackage[hidelinks]{hyperref}
+
+% Stile di pagina
+\pagestyle{fancy}
+\usemintedstyle{colorful}
+
+\definecolor{lightgray}{gray}{0.95}
+
+% Stile dei titoli dei capitoli
+\definecolor{gray75}{gray}{0.75}
+\newcommand{\hsp}{\hspace{20pt}}
+\titleformat{\chapter}[hang]
+{\Huge\bfseries}
+{\thechapter\hsp\textcolor{gray75}{|}\hsp}
+{0pt}
+{\Huge\bfseries}
+
+% Bibliografia
+\addbibresource{./biblio/biblio.bib}
+
+\onehalfspacing
+\begin{document}
+
+\includepdf{./frontespizio/frontespizio.pdf}
+
+% \cleardoublepage
+% \begin{flushright}
+% \thispagestyle{empty}
+% \null\vspace{\stretch {1}}
+% \textit{
+%     “Arguing that you don't care about the right to privacy\break because you have nothing to hide is no different than saying\break you don't care about free speech because you have nothing to say.”
+%     \break --- Edward Snowden.}
+% \vspace{\stretch{2}}\null
+% \end{flushright}
+% \cleardoublepage
+
+\phantomsection
+\listoffigures
+
+
+\tableofcontents
+
+\input{intro/intro.tex}
+
+\input{capitoli/1_scelte_progettuali.tex}
+
+
+
+
+\phantomsection
+\printbibliography[heading=bibintoc]
+\end{document}

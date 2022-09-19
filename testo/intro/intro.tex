@@ -1,0 +1,24 @@
+\chapter*{Introduzione}
+\label{chap:intro}
+\addcontentsline{toc}{chapter}{Introduzione}
+Un VCS (Version Control System) è un tipo di sistema utile a gestire le versioni di un progetto.
+Nell'ambito dello sviluppo di progetti software, la funzionalità principale di un sistema di 
+questo tipo è la possibilità di tenere traccia delle modifiche apportate al codice sorgente, ai file
+di documentazione e ad altri contenuti di un progetto.\\
+Senza l'utilizzo di un VCS, gli sviluppatori di un progetto potrebbero semplicemente mantenere diverse 
+copie dei contenuti, classificandole a seconda della versione e delle modifiche apportate da una 
+versione all'altra; un approccio simile tuttavia diventa ingestibile per progetti di grandi dimensioni,
+in quanto si verrebbero a creare molteplici copie di file uguali o molto simili tra di loro.
+
+In questo lavoro di tesi verrà illustrato e discusso il processo di sviluppo di un rudimentale VCS, 
+chiamato GGit (ispirato a Git), basato su un database a grafi e implementato come una applicazione CLI
+in Python 3.10.
+
+I database a grafi sono database che fanno uso di strutture a grafi per immagazzinare informazioni.
+Questo tipo di struttura è composta da due elementi fondamentali, nodi (o vertici) e archi, applicando
+all'ambito dei database, i nodi sono utilizzati per rappresentare le entità, mentre gli archi
+rappresentano le relazioni tra le entità.
+
+Una delle proprietà più vantaggiose dei database a grafi utilizzati per questo progetto, ovvero 
+LPG o labeled-property graph, consiste nel fatto che il tempo di attraversamento di un grafo 
+è costante\cite{traversaltime}.

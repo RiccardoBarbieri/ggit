@@ -74,7 +74,7 @@ class CommitRepository:
                     result = tx.run(
                         """MATCH (parent:Commit {hash: $parent_hash})
                         MATCH (commit:Commit {hash: $hash}) 
-                        MERGE (parent)-[:PARENT]->(commit)""",
+                        MERGE (parent)<-[:PARENT]-(commit)""",
                         parent_hash=commit.parent.hash,
                         hash=commit.hash,
                     )

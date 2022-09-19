@@ -233,7 +233,7 @@ def main() -> None:
     parser.set_up()
     
     #!_____________________________________
-    args = 'commit -h'
+    args = 'add -h'
     pattern = re.compile(r'([^\s"\']+)|"([^"]*)"|(\'([^\']*)\')')
 
     args = [i.group().strip('"\'') for i in pattern.finditer(args)]

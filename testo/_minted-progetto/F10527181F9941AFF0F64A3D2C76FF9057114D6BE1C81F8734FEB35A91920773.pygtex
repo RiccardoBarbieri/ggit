@@ -1,0 +1,4 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{n}{blob} \PYG{o}{\PYGZlt{}}\PYG{n}{file\PYGZus{}length}\PYG{o}{\PYGZgt{}}\PYGZbs{}\PYG{l+m+mi}{0}\PYG{o}{\PYGZlt{}}\PYG{n}{file\PYGZus{}content}\PYG{o}{\PYGZgt{}}
+\PYGZbs{}\PYG{n}{end}\PYG{p}{\PYGZob{}}\PYG{n}{lstlisting}\PYG{p}{\PYGZcb{}}
+\end{Verbatim}
