@@ -2,3 +2,14 @@ old_scripts
 example_docs.py
 venv
 git_test
+# latex files
+*.aux
+*.fdb_latexmk
+*.fls
+*.log
+*.synctex*
+*.blg
+*.out
+*.toc
+*.bbl
+*.run.xml
