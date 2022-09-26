@@ -95,10 +95,3 @@ class BlobRepository:
         with self.data_source.new_session() as session:
             result = session.run("MATCH (blob:Blob {hash: $hash}) DETACH DELETE blob", hash=hash)
             return result.consume().counters.nodes_deleted == 1
-
-
-if __name__ == '__main__':
-    from ggit.database import DataSource
-
-    data = DataSource()
-    a = BlobRepository(data)
