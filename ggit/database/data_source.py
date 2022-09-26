@@ -28,8 +28,8 @@ class DataSource(metaclass=SingletonMeta):
     driver: Driver
 
     def __init__(self, uri = 'bolt://localhost:7687/'):
-        user = ConfigManager()['database_username']
-        password = ConfigManager()['database_password']
+        user = ConfigManager()['database.username']
+        password = ConfigManager()['database.password']
         self.driver = GraphDatabase.driver(uri, auth=(user, password))
 
     def get_driver(self) -> Driver:
