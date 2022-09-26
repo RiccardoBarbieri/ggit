@@ -48,48 +48,52 @@ class TreeRepository:
         """
         nodes_created = 0
         with self.data_source.new_session() as session:
-            tx = session.begin_transaction()
+            try:
+                tx = session.begin_transaction()
 
-            # if tree already exists return false
-            result = tx.run(
-                "MATCH (tree:Tree {hash: $hash}) RETURN tree", hash=tree.hash
-            )
-            if result.single() is not None:
-                return (False, nodes_created)
+                # if tree already exists return false
+                result = tx.run(
+                    "MATCH (tree:Tree {hash: $hash}) RETURN tree", hash=tree.hash
+                )
+                if result.single() is not None:
+                    return (False, nodes_created)
 
-            tx.run(
-                "MERGE (t:Tree {hash: $hash, content: $content, length: $length}) RETURN t",
-                hash=tree.hash,
-                content=tree.content,
-                length=tree.length,
-            )
-            nodes_created += 1
+                tx.run(
+                    "MERGE (t:Tree {hash: $hash, content: $content, length: $length}) RETURN t",
+                    hash=tree.hash,
+                    content=tree.content,
+                    length=tree.length,
+                )
+                nodes_created += 1
 
-            blob_repo = BlobRepository(self.data_source)
+                blob_repo = BlobRepository(self.data_source)
 
-            for item in tree.items:
-                if isinstance(item[0], Tree):
-                    result = self.add_tree(item[0])
-                    tx.run(
-                        "MATCH (t:Tree {hash: $hash}) MATCH (t2:Tree {hash: $hash2}) MERGE (t)-[:INCLUDES {mode: $mode, name: $name}]->(t2)",
-                        hash=tree.hash,
-                        hash2=item[0].hash,
-                        name=item[1],
-                        mode=item[2],
-                    )
-                    nodes_created += result[1]
-                else:
-                    blob_repo.add_blob(item[0])
-                    nodes_created += 1
-                    tx.run(
-                        "MATCH (t:Tree {hash: $tree_hash}), (b:Blob {hash: $blob_hash}) MERGE (t)-[:INCLUDES {mode: $mode, name: $name}]->(b)",
-                        tree_hash=tree.hash,
-                        blob_hash=item[0].hash,
-                        name=item[1],
-                        mode=item[2],
-                    )
+                for item in tree.items:
+                    if isinstance(item[0], Tree):
+                        result = self.add_tree(item[0])
+                        tx.run(
+                            "MATCH (t:Tree {hash: $hash}) MATCH (t2:Tree {hash: $hash2}) MERGE (t)-[:INCLUDES {mode: $mode, name: $name}]->(t2)",
+                            hash=tree.hash,
+                            hash2=item[0].hash,
+                            name=item[1],
+                            mode=item[2],
+                        )
+                        nodes_created += result[1]
+                    else:
+                        blob_repo.add_blob(item[0])
+                        nodes_created += 1
+                        tx.run(
+                            "MATCH (t:Tree {hash: $tree_hash}), (b:Blob {hash: $blob_hash}) MERGE (t)-[:INCLUDES {mode: $mode, name: $name}]->(b)",
+                            tree_hash=tree.hash,
+                            blob_hash=item[0].hash,
+                            name=item[1],
+                            mode=item[2],
+                        )
 
-            tx.commit()
+                tx.commit()
+            except Exception as e:
+                tx.rollback()
+                raise e
             return (nodes_created == tree.item_count, nodes_created)
 
     def get_tree(self, hash: str) -> Tree:
@@ -146,7 +150,7 @@ class TreeRepository:
         """
         with self.data_source.new_session() as session:
             result = session.run(
-                "MATCH (tree:Tree {hash: $hash}) DETACH DELETE tree", hash=hash
+                "MATCH (tree:Tree {hash: $hash})-[r*1..]->(n) DETACH DELETE tree, n", hash=hash
             )
             return result.consume().counters.nodes_deleted >= 1
 
