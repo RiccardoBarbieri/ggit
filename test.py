@@ -23,16 +23,18 @@ test
 """
 
 # print(hashlib.sha1(b"commit " + str(len(body)).encode("ascii") + b"\0" + body).hexdigest())
-def isNewType(obj: Any) -> bool:
-    """Check the if object is a kind of NewType."""
-    if sys.version_info >= (3, 10):
-        return isinstance(obj, typing.NewType)
-    else:
-        __module__ = safe_getattr(obj, '__module__', None)
-        __qualname__ = safe_getattr(obj, '__qualname__', None)
-        if __module__ == 'typing' and __qualname__ == 'NewType.<locals>.new_type':
-            return True
-        else:
-            return False
 
-print(isNewType(body))
+
+
+imports = []
+for i in walk_folder_rec_flat(Path('.')):
+    if 'venv' in str(i):
+        continue
+    if i.suffix == '.py':
+        lines = i.read_text().splitlines()
+        for j in lines:
+            if j.startswith('import'):
+                imports.append(j)
+
+imports = list(set(imports))
+print(imports)

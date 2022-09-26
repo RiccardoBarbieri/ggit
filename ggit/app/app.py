@@ -10,6 +10,7 @@ from pathlib import Path
 from typing import Any, List, Sequence
 
 from ggit.handlers.file_handler import add_handler, mv_handler, rm_handler
+from ggit.handlers.commit_handler import commit_handler
 from ggit.handlers.init_handler import init_repository
 from ggit.utils.date_utils import date_iso_8601
 from ggit.utils.folder_utils import find_repo_root
@@ -61,7 +62,7 @@ class GGitAppParser(argparse.ArgumentParser):
             nargs="?",
             default=".",
             help="The path where the repository will be created",
-            metavar="<path>",
+            metavar="<path>"
         )
 
         add_subparser = subparsers.add_parser(
@@ -146,7 +147,7 @@ class GGitAppParser(argparse.ArgumentParser):
         commit_message_options.add_argument(
             "--date",
             nargs="?",
-            help="Override date for this commit, formatted as 2000-06-20T00:00:00+00:00",
+            help="Override date for this commit, formatted as YYYY-MM-DDTHH:mm:SS+HH:mm",
             type=date_iso_8601,
             metavar="date",
             dest="date",
@@ -233,13 +234,16 @@ def main() -> None:
     parser.set_up()
     
     #!_____________________________________
-    args = 'add -h'
+    args = 'config -h'
     pattern = re.compile(r'([^\s"\']+)|"([^"]*)"|(\'([^\']*)\')')
 
     args = [i.group().strip('"\'') for i in pattern.finditer(args)]
     
     sys.argv += args
     #!_____________________________________
+    if len(sys.argv) == 2 and sys.argv[1] == "init":
+        sys.argv.append(".")
+
     if len(sys.argv) == 1 or sys.argv[1] == "help":
         parser.print_help(sys.stderr)
         sys.exit(0)
@@ -257,23 +261,20 @@ def main() -> None:
     if repo_root is None:
         logger.error("Not a ggit repository, (or any of the parent directories)")
         sys.exit(1)
-
+    
     match args["subcommand"]:
         case "init":
-            print(args)
-            # init_repository(args["path"], logger)
+            init_repository(Path(args["path"]), logger)
         case "add":
-            print(args)
-            # add_handler(args["path"], logger)
+            add_handler(args["path"], logger)
         case "mv":
-            print(args)
-            # mv_handler(args["source"], args["destination"], logger)
+            mv_handler(args["source"], args["destination"], logger)
         case "rm":
-            print(args)
-            # rm_handler(args["path"], logger)
+            rm_handler(args["path"], logger)
         case "commit":
-            print(args)
-            # commit_handler(args["message"], args["message_file"], args["author"], args["date"], logger)
+            commit_handler(args["message"], args["message_file"], args["author"], args["date"], logger)
+        case "pull":
+            print(args)        
         case "log":
             pass
         case "status":
