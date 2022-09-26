@@ -1,11 +1,12 @@
 \documentclass[12pt, twoside]{book}
 \usepackage[a4paper,width=150mm,top=25mm,bottom=25mm,bindingoffset=6mm]{geometry}
-% \usepackage[utf8]{inputenc}
+\usepackage[utf8]{inputenc}
 % \usepackage[T1]{fontenc}
 \usepackage[italian]{babel}
 \usepackage{caption}
-% \usepackage{graphicx}
+\usepackage{forest}
 \usepackage{fancyhdr}
+\usepackage{newlfont}
 \usepackage{float}
 \usepackage{xcolor}
 \usepackage[nottoc]{tocbibind}
@@ -13,21 +14,23 @@
 \usepackage{titlesec}
 \usepackage[T1]{fontenc}
 \usepackage{blindtext, array}
-% \usepackage{amssymb}
 \usepackage[sorting=none,backend=bibtex]{biblatex}
 \usepackage{csquotes}
 \usepackage{pdfpages}
 \usepackage{listings}
 \usepackage{amsmath}
-% \usepackage{placeins}
-% \usepackage{footnote}
 \usepackage[cache=false]{minted}
 \usepackage{setspace}
-% \usepackage{siunitx}
 \usepackage[hidelinks]{hyperref}
+\usepackage{outline}
+\usepackage{enumitem}
+\setlist{nosep}
+
+% \input{lexer/cypher.tex}
+\input{foreste/style.tex}
 
 % Stile di pagina
-\pagestyle{fancy}
+% \pagestyle{fancy}
 \usemintedstyle{colorful}
 
 \definecolor{lightgray}{gray}{0.95}
@@ -47,18 +50,8 @@
 \onehalfspacing
 \begin{document}
 
-\includepdf{./frontespizio/frontespizio.pdf}
-
-% \cleardoublepage
-% \begin{flushright}
-% \thispagestyle{empty}
-% \null\vspace{\stretch {1}}
-% \textit{
-%     “Arguing that you don't care about the right to privacy\break because you have nothing to hide is no different than saying\break you don't care about free speech because you have nothing to say.”
-%     \break --- Edward Snowden.}
-% \vspace{\stretch{2}}\null
-% \end{flushright}
-% \cleardoublepage
+% \includepdf{./frontespizio/frontespizio.pdf}
+\input{frontespizio/frontespizio.tex}
 
 \phantomsection
 \listoffigures
@@ -69,6 +62,7 @@
 \input{intro/intro.tex}
 
 \input{capitoli/1_scelte_progettuali.tex}
+\input{capitoli/2_implementazione.tex}
 
 
 

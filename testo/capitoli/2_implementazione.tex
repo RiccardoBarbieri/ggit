@@ -1,0 +1,243 @@
+\chapter{Implementazione}
+In questo capitolo verrà illustrato il processo di implementazione di \texttt{GGit}, facendo riferimento alle scelte progettuali discusse e ponendo particolare attenzione alle problematiche riscontrate durante lo sviluppo.
+
+Come già accennato, si è scelto di sviluppare \texttt{GGit} utilizzando Python 3.10, decisione derivata dal fatto che Python è un linguaggio molto flessibile e che permette uno sviluppo veloce sin dai primi passi di un progetto; un altro vantaggio non indifferente è la disponibilità di una quantità disarmante di librerie potenti e ben documentate, che semplificano molto alcune fasi dello sviluppo.
+
+Si inizierà con una breve descrizione delle decisioni prese in merito alla suddivisione in package del codice, per poi passare a una analisi più approfondita delle porzioni di codice più interessanti per ogni modulo. Per precisare, in Python, per package si intende un contenitore per moduli e sub-package (solitamente una directory), mentre un modulo è semplicemente un file che contiene codice Python.
+
+\subsubsection{Suddivisione in package}
+
+\input{foreste/overall_tree.tex}
+
+La figura sopra mostra la struttura di package adottata, si evidenziano particolarmente le cartelle \texttt{database}, \texttt{entities}, \texttt{handlers} e \texttt{managers}, che contengono i moduli più importanti per il funzionamento di \texttt{GGit}.
+
+\section{Entità}
+
+Il package \texttt{entities} contiene i moduli che espongono le classi che rappresentano le entità del dominio di \texttt{GGit}. In particolare, si trovano le classi \texttt{Blob}, \texttt{Commit}, \texttt{Tree} e \texttt{User}. Ogni classe è implementata in un file separato.
+
+\input{foreste/entities_tree.tex}
+
+La classe \texttt{ggit.entities.user.User} contiene gli attributi \texttt{name} e \texttt{email} e espone metodi accessor tramite l'uso del docoratore \texttt{property}.
+
+Le classi 
+\begin{itemize}
+    \itemsep0em
+    \item \texttt{ggit.entities.blob.Blob};
+    \item \texttt{ggit.entities.tree.Tree};
+    \item \texttt{ggit.entities.commit.Commit};
+\end{itemize}
+espongono metodi per ottenere l'hash dell'oggetto che rappresentano, così come altri metodi per accedere alle informazioni in esse contenuti (contenuto del file per i blob, autore, committer, data etc. per i commit etc.).
+
+Le proprietà calcolate, come il content per tree e commit o la sua lunghezza, sono state progettate per non essere modificate dall'utente, quindi non è stata implementata la funzione setter decorata con \texttt{\{attribute\}.setter}
+
+\section{Database}
+
+Le classi che governano l'interazione con il database sono contenute nei moduli all'interno del package \texttt{database}.
+\vspace{15pt}
+\input{foreste/database_tree.tex}
+
+\subsection{Connessione al database}
+
+Le connessioni al database sono gestite attraverso l'utilizzo della classe DataSource, contenuta nel modulo \texttt{ggit.database.data\_source}.
+
+Un oggetto di questa classe, quando inizializzato, ottiene dalle impostazioni di configurazione le credenziali del database e salva come suo attributo il driver di connessione, inizializzandolo con l'uri fornito e le credenziali ottenute. L'uri del database può essere passato come parametro all'inizializzazione, se non viene specificato viene utilizzato il valore di default \texttt{"bolt://localhost:7687"}.
+
+La classe espone il metodo \texttt{new\_session()}, creato per restituire un oggetto di tipo \texttt{neo4j.Session} legato al driver creato all'inizializzazione, che può essere utilizzato per interagire con il database; l'utilizzo consigliato di questo metodo è insieme allo statement \texttt{with} per creare un context manager che si occupa di chiudere correttamente la sessione una volta terminate le operazioni.
+È inoltre esposto il metodo \texttt{close()}, che chiude la connessione al database insieme a tutte le sessioni associate.
+
+Questa classe è stata implementata come singleton tramite l'uso di una metaclass chiamata \texttt{SingletonMeta} (dettagliata in seguito), in modo da utilizzare lo stesso driver durante una singola esecuzione per semplificare la gestione delle sessioni.
+
+\subsection{Mapping entità database}
+Per mappare le entità in gioco al database si utilizza una metodologia CRUD (Create, Read, Update, Delete) senza però implementare i metodi di Update, dato che nel VCS non è prevista la modifica di un commit, o dei dati ad esso associati, una volta creato.
+
+Per ogni entità è stata implementata una classe "repository", che espone i metodi necessari per aggiungere, rimuovere e ottenere uno o tutti gli oggetti di quel tipo dal database:
+\begin{itemize}
+    \item \texttt{add\_\{entity\}} per aggiungere un oggetto nel database;
+    \item \texttt{delete\_\{entity\}} per rimuovere un oggetto dal database;
+    \item \texttt{get\_\{entity\}} per ottenere un oggetto dal database;
+    \item \texttt{get\_all\_\{entity\}} per ottenere tutti gli oggetti di un certo tipo dal database.
+\end{itemize}
+
+Queste classi fanno uso della classe \texttt{ggit.database.data\_source.DataSource} per ottenere una sessione con il database e per eseguire le query scritte in Cypher, linguaggio di query di Neo4j.
+
+Cypher è un linguaggio progettato per essere espressivo ed efficiente, permette di esprimere con una sintassi concisa query  anche molto complesse, permette quindi di concentrare l'attenzione sul dominio in considerazione.
+inizialmente è nato come linguaggio ad uso esclusivo dei database Neo4j ma nel 2015 è stato scelto come standard per il progetto openCypher\cite{opencypher}, che mira a creare un linguaggio di query comune a tutti i database a grafi.
+
+Di seguito verranno illustrate alcune delle query e modalità di creazione delle entità nel database.
+
+\subsubsection{Gestione di blob e utenti}
+Le repository che si occupano della gestione dei blob sono le più semplici, in quanto quando vengono create o eliminate non devono prendersi cura delle relazioni con gli altri oggetti, compito lasciato alle repository delle entità composte.
+
+Esempio di query per creare un oggetto blob:
+\begin{minted}[bgcolor=lightgray,framesep=2mm,baselinestretch=1.2,fontsize=\footnotesize]{cypher}
+MERGE (b:Blob {id: $blob_id, content: $content})
+\end{minted}
+Questa query è composta da due sezioni principali: il pattern che segue la parola \texttt{MERGE} e la clausola \texttt{MERGE} che indica come comportarsi con il pattern specificato.
+
+La keyword \texttt{MERGE} indica che se il pattern specificato non è presente nel database, deve essere creato, è anche possibile usarla insieme alle clausole \texttt{ON MATCH} e \texttt{ON CREATE} per specificare come comportarsi nel caso in cui il pattern sia già presente nel database o se deve essere creato, tuttavia in questa query non tornano utili. 
+
+La sintassi dei pattern è progettata per essere simile a come si disegnerebbe un grafo su una lavagna: cerchi per i nodi e freccie per i collegamenti.
+
+Un altro componente della query sono i parametri, indicati con il simbolo \texttt{\$}, che vengono sostituiti con i valori passati come argomento alla funzione che esegue la query.
+
+Per la gestione degli user e dei blob vengono eseguite transazioni autogestite, attraverso l'uso del metodo \texttt{neo4j.Session.run()} che permette di eseguire una query, impostandone opportunamente i parametri, e effettuare automatica il rollback in caso di errore.
+
+\subsubsection{Gestione di commit e tree}
+Le repository che si occupano della gestione dei commit e dei tree sono più complesse, in quanto devono creare anche i nodi relativi agli oggetti che li compongono e le relazioni tra di essi, per questo motivo vengono utilizzate transazioni esplicite, che permettono di gestire manualmente il commit o il rollback delle operazioni: in caso di una qualsiasi eccezione durante l'esecuzione delle query per inserire un oggetto complesso, viene effettuato il rollback.
+
+Il metodo \texttt{add\_tree()}, utilizzato per creare un nuovo oggetto tree nel database, come prima cosa crea il nodo principale che rappresenta il tree, si itera poi sulla lista di item contenuti nel tree, creando opportunamente blob attraverso una istanza di \texttt{BlobRepository} e subtree usando il metodo stesso in modo ricorsivo.
+
+Esempio di query utilizzate per creare la relazione tra un tree e un suo subtree:
+\begin{minted}[bgcolor=lightgray,framesep=2mm,baselinestretch=1.2,fontsize=\footnotesize]{cypher}
+MATCH (t:Tree {hash: $hash}) MATCH (t2:Tree {hash: $hash2})
+MERGE (t)-[:INCLUDES {mode: $mode, name: $name}]->(t2)
+\end{minted}
+Inizialmente vengono identificati i due tree tramite il loro hash nelle clausole \texttt{MATCH}, e successivamente viene utilizzata una \texttt{MERGE} per creare la relazione.
+
+Altre due query interessanti nell'ambito dei tree sono quella per cancellare un tree e per crearne uno nuovo.
+\begin{minted}[bgcolor=lightgray,framesep=2mm,baselinestretch=1.2,fontsize=\footnotesize]{cypher}
+MATCH (tree:Tree {hash: $hash})-[r*1..]->(n)
+DETACH DELETE tree, n
+\end{minted}
+Con questa query viene cancellato un tree: il pattern identifica il tree principale, tutti i percorsi, di lunghezza almeno 1 (sintassi \texttt{r*1..}), in uscita verso un qualsiasi nodo e i nodi terminali, viene poi utilizzata la clausola \texttt{DETACH DELETE} per eliminare i nodi identificati e tutte le relazioni che li collegano.
+\begin{minted}[bgcolor=lightgray,framesep=2mm,baselinestretch=1.2,fontsize=\footnotesize]{cypher}
+MATCH relation = (tree:Tree {hash: $hash})-[:INCLUDES*1..]->(item)
+RETURN tree, relation, item
+\end{minted}
+Questa query, eseguita dal metodo \texttt{get\_tree()}, identifica tutti i percorsi composti da relazioni di tipo \texttt{:INCLUDES} di lunghezza almeno 1 in uscita dal tree e tutti i nodi terminali e li restituisce come risultato.
+Il risultato viene poi utilizzato dal metodo, sotto forma di oggetto \texttt{neo4j.Graph}, per ricostruire l'entità tree.
+
+L'oggetto \texttt{neo4j.Graph} è una funzionalità sperimentale del driver Neo4j per Python che permette di rappresentare un grafo come un oggetto container di oggetti \texttt{neo4j.Node} e \texttt{neo4j.Relationship}, oggetto che viene passato come parametro alla funzione di utility \texttt{parse\_tree()} che si occupa di ricostruire l'entità tree.
+\\~\\
+Per creare nuovi commit invece, si procede con l'apposito metodo \texttt{add\_commit()} che si assicura, tramite una \texttt{UserRepository}, che esistano gli utenti necessari, per poi passare alla creazione del nodo commit, legandolo contemporaneamente ad autore e committer.
+Se il commit ha un parent, viene creata la relazione tra i due commit, viene successivamente aggiunto il main tree del commit usando una \texttt{TreeRepository}, infine viene creata la relazione \texttt{:CONTAINS} tra il commit e il main tree.
+
+L'eliminazione di un commit non è ancora supportata dal sistema, ma è comunque implementato il metodo utile a cancellare il nodo e tutte le relazioni che lo collegano ad altri nodi.
+
+\section{Managers}
+
+Nel package \texttt{managers} sono contenuti i moduli per la gestione dello stato della repository, delle impostazioni di configurazione e del server del database.
+
+\input{foreste/managers_tree.tex}
+
+\subsection{Gestione della configurazione}
+La classe \text{ConfigManager} permette di aggiungere, rimuovere e modificare le impostazioni di configurazione della repository, è stata implementata come singleton, in modo da utilizzare la stessa istanza in tutte le parti del programma.
+
+Quando viene inizializzata vengono caricati i dati dal file \texttt{.ggit/config.json}, se non esiste viene creato un file vuoto.
+
+La classe espone metodi per ottenere il path della repository che sta gestendo e il dizionario di valori che rappresenta la configurazione. Sono inoltre implementati i metodi \texttt{\_\_\{get, set, del\}item\_\_}, per permettere alla classi di comportarsi come un dizionario python per ottenere e modificare i valori della configurazione.
+
+\subsection{Gestione dello stash e delle differenze}
+La classe \texttt{StashManager} permette di gestire lo stash, ovvero effettuare operazioni per aggiungere un file o una directory allo stash, rimuoverlo e spostarlo, così come pulire l'area di stash, operazione utilizzata quando viene effettuato un commit.
+
+Ciascuna operazione ha un metodo pubblico dedicato all'interno della classe, che si occupa di effettuare l'operazione richiesta e di aggiornare il contenuto dei file \texttt{.ggit/tracked\_files.json} e \texttt{.ggit/stash.json} attraverso un dump json delle strutture dati interne alla classe.
+
+Come in molte altre operazioni di questa applicazione, i metodi sono stati implementati in modo ricorsivo, ad esempio il metodo per aggiungere un file allo stash richiede un parametro \texttt{path} che rappresenta il path del file o directory da aggiungere e a seconda della sua natura viene utilizzato il metodo privato \texttt{\_\_stash\_folder()} o \texttt{\_\_stash\_file()}.
+
+Sono inoltre esposti i metodi getter per ottenere il contenuto dello stash, sotto forma di dizionario con chiave le stringhe che rappresentano il path del file e valore l'hash relativo, e la lista dei file tracked, sotto forma di lista di stringhe che rappresentano i path dei file.
+\\~\\
+La classe \texttt{DifferenceManager} è utilizzata per tenere traccia dei cambiamenti effettuati su un file, in modo da poterli visualizzare tramite il comando \texttt{ggit status}. Nella versione corrente dell'applicazione la classe tiene solo traccia di quali file sono stati modificati, non delle modifiche effettuate.
+
+Il funzionamento di questa classe si basa sul file \texttt{.ggit/current\_state.json}, che contiene un dizionario con chiave i path dei file contenuti nella repository e valore il loro hash. Quando la classe viene inizializzata viene caricato il contenuto del file e ogni volta che viene utilizzato il metodo getter \texttt{different\_files} viene creato un dizionario formato come descritto sopra contenente i path dei file che hanno un hash diverso da quello salvato nel file \texttt{.ggit/current\_state.json}.
+
+È possibile aggiornare lo stato attraverso il metodo \texttt{update\_current\_state()}, che viene utilizzato quando viene effettuato un commit, in modo da aggiornare lo stato della repository.
+
+La classe fa uso di un oggetto di tipo \texttt{utils.folder.Folder}, che costituisce una astrazione di una directory con qualche funzionalità aggiunta, descritta nella sezione \ref{sec:utils}.
+
+\subsection{Gestione del server del database}
+Il modulo \texttt{neo4j\_manager} contiene gli strumenti utilizzati per gestire lo stato del database del server, nella versione corrente implementa la funzione che permette di avviare il server del database, \texttt{start\_neo4j\_instance()}. 
+
+Questa funzione si occupa inoltre di salvare il pid del processo del server all'interno del file \texttt{.ggit/neo4j.pid} per poterlo utilizzare in seguito per interigire con il processo, se necessario.
+Questa funzione viene chiamata all'inizio di ogni handler che necessita di interagire con il database, per assicurarsi che il server sia in esecuzione.
+
+\section{Handlers}
+Nel package \texttt{handlers} sono raccolti i moduli che implementano funzioni per la gestione dei comandi eseguiti dagli utenti.
+
+\input{foreste/handlers_tree.tex}
+
+\subsection{init\_handler}
+Questo modulo si occupa di gestire l'inizializzazione della repository: dopo aver controllato che la directory corrente non sia già una repository, viene creata la directory \texttt{.ggit} e vengono creati i file di configurazione e tracking dello stato.
+
+Vengono poi inizializzate le impostazioni di base, ovvero \texttt{repository.path}, \texttt{user.name}, \texttt{user.email} e \texttt{HEAD}. 
+Successivamente viene ricercata la posizione dell'installazione di Neo4j e viene creata una copia del database di default nella directory \texttt{.ggit/neo4j-version}, infine viene assegnato un valore alle impostazioni \texttt{database.path}, \texttt{database.version}, \texttt{database.name}, \texttt{database.username} e \texttt{database.password}.
+
+\subsection{file\_handler}
+Il modulo \texttt{file\_handler} contiene le funzioni per attuare i sottocomandi relativi alla gestione dei file, ovvero \texttt{add}, \texttt{rm} e \texttt{mv}.
+
+Questi metodi fanno uso della funzione di utilità \texttt{parse\_paths()}, che prende in input una lista di argomenti passati al comando e li interpreta come path, controllando che puntino a file esistenti interni alla repository e li restituiscono come oggetti \texttt{pathlib.Path}.
+
+La funzione \texttt{add\_handler()} si occupa di aggiungere i file specificati allo stash; la  funzione \texttt{rm\_handler()} rimuove i file dallo stash (e dal file system) e la funzione \texttt{mv\_handler()} si occupa di spostare i file specificati.
+
+Queste tre funzioni fanno uso dei rispettivi metodi \texttt{stash()}, \texttt{unstash()} e \texttt{move()} del manager \texttt{StashManager}.
+
+\subsection{commit\_handler}
+Il modulo \texttt{commit\_handler} contiene la funzione \texttt{commit\_handler()}, che si occupa di effettuare un commit.
+
+La funzione crea un oggetto commit a partire dallo stato corrente della repository, utilizzando una istanza di \texttt{StashManager}, e elabora i parametri forniti dall'utente, in particolare il messaggio o file di commit, la data e l'autore, se specificati.
+
+Viene utilizzata una istanza della classe \texttt{CommitRepository} per ottenere l'entità \texttt{Commit} padre, partendo dall'hash salvato nella impostazione di configurazione \texttt{HEAD} e per aggiungere il commit creato al database.
+
+Dopo aver aggiunto il commit, viene aggiornato la variabile \texttt{HEAD} con l'hash del commit appena creato e viene aggiornato lo stato della repository, utilizzando una istanza di \texttt{DifferenceManager}, e svuotato lo stash, utilizzando una istanza di \texttt{StashManager}.
+
+\subsection{log\_handler, status\_handler, config\_handler}
+In modo similare agli altri handler vengono implementate le funzioni per gestire i comandi \texttt{log}, \texttt{status} e \texttt{config}.
+
+La funzione \texttt{log\_handler()} si occupa di stampare l'elenco dei commit effettuati, utilizzando una istanza di \texttt{CommitRepository} per ottenere l'entità \texttt{Commit} padre, partendo dall'hash salvato nella impostazione di configurazione \texttt{HEAD} e per ottenere l'elenco di un certo numero di commit padre, quantità specificata attraverso il parametro apposito.
+
+La funzione \texttt{status\_handler()} si occupa di stampare lo stato corrente della repository, utilizzando una istanza di \texttt{DifferenceManager} per ottenere l'elenco dei file modificati, aggiunti e rimossi. 
+
+La funzione \texttt{config\_handler()} esegue tre tipi di azioni, a seconda del parametro specificato, e aggiunge, rimuove o modifica il valore di una impostazione di configurazione. Si occupa anche di stampare la lista di tutte le impostazioni, se viene fornito il parametro apposito.
+
+\section{Moduli di utilità}
+\label{sec:utils}
+Nel package utils, sono contenuti una varietà di moduli contenenti funzioni di utilità e classi di supporto, nonché un file di configurazione per il logger utilizzato dall'applicazione.
+
+\input{foreste/utils_tree.tex}
+
+Si proseguirà ora con una descrizione sommaria dei moduli più importanti.
+
+\subsubsection{\texttt{constants} e \texttt{date\_utils}}
+
+Il modulo \texttt{date\_utils} contiene le funzioni per la gestione delle date, utilizzata dalle classi relative ai commit, fa uso del modulo \texttt{constants} che ospita una serie di costanti utili nell'applicazione, come stringhe di regex e nomi di file.
+
+\subsubsection{\texttt{folder\_utils}}
+
+Questo modulo contiene funzioni per navigare directory, come \texttt{walk\_folder\_flat()} e \texttt{walk\_folder\_rec\_flat()} che permettono di ottenere i file contenuti in una repository, ricorsivamente o no.
+
+È inoltre dichiarata una funzione, \texttt{find\_repo\_root()} per ottenere la root di una repository partendo da un path, che restituisce \texttt{None} nel caso in cui nessuna delle directory superiori sia una repository \texttt{ggit}.
+
+\subsubsection{\texttt{nodes\_utils}}
+
+Il modulo \texttt{nodes\_utils} contiene funzioni per analizzare e filtrare liste di nodi, come \texttt{get\_node()}, che individua un nodo dato un hash.
+
+Contiene inoltre la funzione \texttt{parse\_tree()} che, a partire da una lista di nodi e una di relazioni, come restituite da una query al database, crea un oggetto \texttt{Tree}, partendo dall'hash del nodo radice.
+
+\subsubsection{\texttt{singleton}}
+
+Questo modulo contiene la metaclasse \texttt{SingletonMeta}, che permette di creare classi singleton, per assicurarsi che una classe abbia una sola istanza.
+
+La classe ridefinisce il metodo \texttt{\_\_call\_\_()} per restituire sempre la stessa istanza delle classi marcate con questa metaclasse.
+
+\subsubsection{\texttt{folder}}
+
+La classe \texttt{Folder} è fondamentale per il funzionamento del \texttt{DifferenceManager}.
+
+Quando inizializzata con un path, viene caricata la struttura della directory e i file contenuti, in modo da poter effettuare le operazioni di confronto tra lo stato corrente e quello precedente.
+
+La funzionalità principale che la classe offre è la possibilità di considerare contemporaneamente i contenuti del file \texttt{.ggitignore}, se presente, ignorando i file che corrispondono ai pattern specificati e i contenuti di una whitelist, per poter limitare quali file considerare al momento della creazione di un tree per un commmit.
+
+\section{Package test e git\_utils}
+
+\input{foreste/git_utils_tree.tex}
+
+In questo package sono contenuti i moduli che implementano test per le funzionalità critiche al funzionamento dell'applicazione.
+
+In alcuni test, ad esempio quelli che controllano se la generazione degli hash è corretta, fanno uso del modulo package \texttt{git\_utils}, che contiene classi per interagire con repository \texttt{git} attraverso la sua CLI e per poter astrarre alcune sue entità per confrontare i risultati del calcolo di hash e identificazione del tipo di oggetto.
+
+\section{Main applicazione}
+
+Lo script principale che avvia l'applicazione è contenuto nel modulo \texttt{app}.
+
+In questo modulo è contenuta la classe \texttt{GGitAppParser} che estende la classe \texttt{ArgumentParser} della libreria \texttt{argparse}, usata per creare l'interfaccia da linea di comando. Questa classe permette di aggiungere i sottocomandi e relativi parametri, generando automaticamente messaggi di errore e di help e gestendo l'eventuale mutua esclusione tra i parametri.
+
+Nel main di questo modulo viene effettuato il parse degli argomenti forniti e avviato l'handler corrispondente al comando specificato, passando gli opportunamente gli argomenti come parametri; viene inoltre creato il logger e passato come parametro a tutti gli handler che lo utilizzano.
