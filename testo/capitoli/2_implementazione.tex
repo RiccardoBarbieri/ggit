@@ -7,7 +7,7 @@ Si inizierà con una breve descrizione delle decisioni prese in merito alla sudd
 
 \subsubsection{Suddivisione in package}
 
-\input{foreste/overall_tree.tex}
+\input{foreste/overall_tree}
 
 La figura sopra mostra la struttura di package adottata, si evidenziano particolarmente le cartelle \texttt{database}, \texttt{entities}, \texttt{handlers} e \texttt{managers}, che contengono i moduli più importanti per il funzionamento di \texttt{GGit}.
 
@@ -15,7 +15,7 @@ La figura sopra mostra la struttura di package adottata, si evidenziano particol
 
 Il package \texttt{entities} contiene i moduli che espongono le classi che rappresentano le entità del dominio di \texttt{GGit}. In particolare, si trovano le classi \texttt{Blob}, \texttt{Commit}, \texttt{Tree} e \texttt{User}. Ogni classe è implementata in un file separato.
 
-\input{foreste/entities_tree.tex}
+\input{foreste/entities_tree}
 
 La classe \texttt{ggit.entities.user.User} contiene gli attributi \texttt{name} e \texttt{email} e espone metodi accessor tramite l'uso del docoratore \texttt{property}.
 
@@ -34,7 +34,7 @@ Le proprietà calcolate, come il content per tree e commit o la sua lunghezza, s
 
 Le classi che governano l'interazione con il database sono contenute nei moduli all'interno del package \texttt{database}.
 \vspace{15pt}
-\input{foreste/database_tree.tex}
+\input{foreste/database_tree}
 
 \subsection{Connessione al database}
 
@@ -118,7 +118,7 @@ L'eliminazione di un commit non è ancora supportata dal sistema, ma è comunque
 
 Nel package \texttt{managers} sono contenuti i moduli per la gestione dello stato della repository, delle impostazioni di configurazione e del server del database.
 
-\input{foreste/managers_tree.tex}
+\input{foreste/managers_tree}
 
 \subsection{Gestione della configurazione}
 La classe \text{ConfigManager} permette di aggiungere, rimuovere e modificare le impostazioni di configurazione della repository, è stata implementata come singleton, in modo da utilizzare la stessa istanza in tutte le parti del programma.
@@ -153,7 +153,7 @@ Questa funzione viene chiamata all'inizio di ogni handler che necessita di inter
 \section{Handlers}
 Nel package \texttt{handlers} sono raccolti i moduli che implementano funzioni per la gestione dei comandi eseguiti dagli utenti.
 
-\input{foreste/handlers_tree.tex}
+\input{foreste/handlers_tree}
 
 \subsection{init\_handler}
 Questo modulo si occupa di gestire l'inizializzazione della repository: dopo aver controllato che la directory corrente non sia già una repository, viene creata la directory \texttt{.ggit} e vengono creati i file di configurazione e tracking dello stato.
@@ -192,7 +192,7 @@ La funzione \texttt{config\_handler()} esegue tre tipi di azioni, a seconda del 
 \label{sec:utils}
 Nel package utils, sono contenuti una varietà di moduli contenenti funzioni di utilità e classi di supporto, nonché un file di configurazione per il logger utilizzato dall'applicazione.
 
-\input{foreste/utils_tree.tex}
+\input{foreste/utils_tree}
 
 Si proseguirà ora con una descrizione sommaria dei moduli più importanti.
 
@@ -228,7 +228,7 @@ La funzionalità principale che la classe offre è la possibilità di considerar
 
 \section{Package test e git\_utils}
 
-\input{foreste/git_utils_tree.tex}
+\input{foreste/git_utils_tree}
 
 In questo package sono contenuti i moduli che implementano test per le funzionalità critiche al funzionamento dell'applicazione.
 

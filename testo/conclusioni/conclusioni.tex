@@ -1,0 +1,8 @@
+\chapter*{Sviluppi futuri}
+\addcontentsline{toc}{chapter}{Sviluppi futuri}
+
+Questo progetto di tesi implementa le funzionalità di base di un VCS, tuttavia esistono funzionalità interessanti che in futuro verranno implementate, qui di seguito verranno descritte alcune di queste funzionalità.
+
+\texttt{GGit} in futuro permetterà di effettuare il pull dal database di una versione arbitraria di una repository, per poter visualizzare i cambiamenti apportati da una versione all'altra.
+
+Un'altra caratteristica estremamente utile di un VCS è la possibilità di creare delle cosidette branch, ovvero la crezione di versioni sviluppate in parallelo dello stesso progetto, ad esempio per implementare nuove funzionalità o correggere bug, senza dover modificare il codice sorgente della versione principale del progetto; questa funzionalità verrà implementata da \texttt{GGit}, attraverso l'espansione delle funzionalità della classe \texttt{DifferenceManager}, che verrà estesa con l'ausilio di altre classi per permette di confrontare versioni differenti dello stesso file per unire le modifiche apportate in parallelo una volta terminato lo sviluppo all'interno di una branch.

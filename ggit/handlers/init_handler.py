@@ -72,13 +72,13 @@ def init_repository(path: Path, logger: Logger = logging.getLogger("message")) -
     # path_version = search_neo4j()
     # if path_version[0]:
     #     logger.debug("Neo4j found in %s", path_version[0])
-    #     conf_manager["database.path"] = str(path / ".ggit" / f"neo4j-{path_version[1]}")
+    #     conf_manager["database.path"] = Path(path_version[0])
     #     conf_manager["database.version"] = path_version[1]
     # else:
     #     raise ConfigException("Neo4j installation not found, refer to the documentation. Did you set the NEO4J_HOME environment variable correctly?")
     # conf_manager['database.name'] = 'neo4j'
     # shutil.copytree(path_version[0], path / ".ggit" / f"neo4j-{path_version[1]}")
-    # start_neo4j_instance(Path(path_version[0])) ##!inserire il path alla distro di neo4j
+    # start_neo4j_instance(Path(path_version[0]))
     # conf_manager["database.username"] = "neo4j"
     # conf_manager["database.password"] = "neo4j"
 

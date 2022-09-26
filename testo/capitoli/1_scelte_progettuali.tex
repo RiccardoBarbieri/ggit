@@ -3,7 +3,7 @@
 Analizzando la scelta dei tool disponibili per il versioning, si evince che Git è il VCS più diffuso e più utilizzato\cite{gitmostused} dagli sviluppatori, è facile da utilizzare per i principianti ma allo stesso tempo supporta funzionalità avanzate per gli utenti più esperti. Per questo motivo si è deciso di ispirarsi al suo funzionamento per la realizzazione di \texttt{GGit}, mantenendo l'interfaccia utente esposta da Git, seppur in forma ridotta, per creare un'esperienza di utilizzo familiare.
 \section{Strutture dati di GGit}
 \label{sec:strutture_dati}
-Git è nato come un semplice content-addressable filesystem, ovvero un sistema di storage basato suuna relazione chiave-valore, nel quale è possibile archiviare qualsiasi tipo di contenuto digitale.Essenzialmente, l'azione di base che Git esegue è quella di memorizzare i contenuti di un file associandoli ad un hash calcolato su di essi: questa è la chiave che può essere utilizzata per accedere ai dati salvati.
+Git è nato come un semplice content-addressable filesystem, ovvero un sistema di storage basato su una relazione chiave-valore, nel quale è possibile archiviare qualsiasi tipo di contenuto digitale. Essenzialmente, l'azione di base che Git esegue è quella di memorizzare i contenuti di un file associandoli ad un hash calcolato su di essi: questa è la chiave che può essere utilizzata per accedere ai dati salvati.
 
 L'hash di ogni oggetto (nomenclatura utilizzata per file e altre entità descritte in seguito), è calcolato usando l'algoritmo SHA-1, una funzione di hashing che genera un hash di 20 byte.
 Pur essendo un algoritmo di hashing crittografico, SHA-1 non è sicuro, in quanto è stato provato che è possibile generare collisioni\cite{sha1collision} (ovvero due input che generano lo stesso hash).
@@ -30,6 +30,8 @@ blob <file_length>\0<file_content>
 \end{minted}
 \subsection{Tree}
 Un tree è essenzialmente una collezione di blob e tree, la funzione di un tree è associare a blob e tree un nome e una stringa che esprime i permessi sul file.
+
+
 I permessi sono espressi in modo analogo alla modalità utilizzata dai sistemi UNIX, ovvero tre caratteri ottali che indicano i permessi di lettura, scrittura e esecuzione per il proprietario, il gruppo e gli altri utenti, una cifra ottale che rappresenterebbe i bit setuid, setgid e sticky (ignorati da Git) e altri tre caratteri ottali che indicano la POSIX mode\cite{gitmodes} dell'oggetto:
 \begin{itemize}
     \item 04 per directory;
@@ -77,16 +79,17 @@ Infine l'ultima riga è il messaggio associato al commit, stringa che idealmente
 \label{sec:database}
 I tipi di oggetti in gioco hanno un alto livello di interconnessione tra di loro: ogni commit è relativo a un tree, un tree può contenere molteplici blob e tree e un tree diverso può contenere un sottoinsieme di blob e tree di un altro tree. Data questa caratteristica, si è scelto di utilizzare un database a grafi.
 
-La gamma di diversi tipi di database a grafi è ampia (anche se non come nel caso dei database relazionali), si è scelto di utilizzare per questo progetto Neo4j, un database a grafi scalabile orizzontalmente del quale esiste una community edition totalmente opensource\cite{neo4jgit}. Neo4j è inoltre il database a grafi più utilizzato\cite{db-engines_2022}, con una vasta community di sviluppatori, il che aiuta in fase di sviluppo per trovare soluzioni ad eventuali problemi.
+La gamma di diversi tipi di database a grafi è ampia (anche se non come nel caso dei database relazionali); si è scelto di utilizzare per questo progetto Neo4j, un database a grafi scalabile orizzontalmente del quale esiste una community edition totalmente opensource\cite{neo4jgit}. Neo4j è inoltre il database a grafi più utilizzato\cite{db-engines_2022}, con una vasta community di sviluppatori, il che aiuta in fase di sviluppo per trovare soluzioni ad eventuali problemi.
 
 Un'altra caratteristica che ha portato alla scelta di questo particolare database sono i tool a supporto dello sviluppo, come ad esempio Neo4j Desktop o Browser, che espongono una interfaccia grafica intuitiva per eseguire query e visualizzare rappresentazioni grafiche dei grafi risultanti; è disponibile inoltre Neo4j AuraDB che permette di effettuare il deployment di un database a grafi in cloud, permettendo quindi di creare repository condivise senza necessità di gestire infrastrutture server.
 
 \subsection{Sviluppo del modello di dati}
 \label{sec:datamodel}
-Il modello di dati è stato sviluppato in modo da poter rappresentare in modo completo tutti i tipi di oggetti presenti in GGit e grazie alla caratteristica schema-less dei database a grafi, sarà possibile aggiungere nuovi tipi di oggetti o caratteristiche al modello del dominio senza intaccare maggiormente la struttura preesistente.
+Il modello di dati è stato sviluppato per poter rappresentare in modo completo tutti i tipi di oggetti presenti in GGit e grazie alla caratteristica schema-less dei database a grafi, sarà possibile aggiungere nuovi tipi di oggetti o caratteristiche al modello del dominio senza intaccare maggiormente la struttura preesistente.
 
 Anche se il database scelto è schema-less, è comunque buona pratica definire e documentare in modo preciso il modello dei dati, così da evitare in futuro di fare scelte incompatibili con il modello preesistente.
-Per sviluppare il modello dei dati è possibile sfruttare il modello "whiteboard", che permette di rappresentare le entità in gioco in modo grafico per esprimere ad alto livello le entità e le relazioni in gioco per poi formalizzare il modello senza dover convertire le decisioni prese in tabelle.
+
+Per sviluppare il modello dei dati è possibile sfruttare l'approccio "whiteboard", che permette di rappresentare il modello in modo grafico per esprimere ad alto livello le entità e le relazioni in gioco per poi formalizzare la struttura senza dover convertire le decisioni prese in tabelle.
 \begin{figure}[H]
     \centering
     \includegraphics[width=15cm]{./immagini/whiteboard_sketch.png}
@@ -105,7 +108,7 @@ Come si nota dalla figura precedente si è deciso di assegnare i label (case sen
     \item \texttt{content}: contenuto dell'oggetto, come descritti sopra.
 \end{itemize}
 
-Per le relazioni, in questo sottoinsieme del modello se ne individua soltanto una: il label \texttt{:CONTAINS} indica che oggetto ne contiene un altro. Le relazioni sono ordinate e nel caso di \texttt{:CONTAINS} il nodo di partenza è sempre un \texttt{:Tree} e il nodo di arrivo può essere sia un \texttt{:Tree} che un \texttt{:Blob}.
+Per quanto riguarda le relazioni, in questo sottoinsieme del modello se ne individua soltanto una: il label \texttt{:INCLUDES} indica che un oggetto ne contiene un altro. Le relazioni sono ordinate e nel caso di \texttt{:INCLUDES} il nodo di partenza è sempre un \texttt{:Tree} e il nodo di arrivo può essere sia un \texttt{:Tree} che un \texttt{:Blob}.
 Si denotano inoltre due proprietà per questa relazione:
 \begin{itemize}
     \item \texttt{name}: nome del file o della directory;
@@ -149,7 +152,7 @@ Si è scelto di mantenere l'area di stash e tracking nella repository stessa, in
 
 \subsection{Differenze tra versioni di file}
 \label{subsec:differenze}
-GGit è in grado di riportare quali file sono stati modificati rispetto all'ultima versione, nella versione corrente dell'applicazione questa funzione è utile soltanto ai fini di un particolare comando (descritto successivamente) ma si è deciso di aggiungere questa funzionalità a supporto di future operazioni, come ad esempio la gestione di conflitti.
+GGit è in grado di riportare quali file sono stati modificati rispetto all'ultima versione, nella versione corrente dell'applicazione questa funzione è utile soltanto ai fini di un particolare comando (descritto successivamente) ma si è deciso di aggiungere questa funzionalità a supporto di future operazioni, come ad esempio la gestione di conflitti durante il merge automatico di versione differenti di uno stesso file.
 
 \section{Gestione del server Neo4j}
 Inizialmente si era pensato di includere una distribuzione del server Neo4j all'interno del package dell'applicazione, in modo da non dover richiedere all'utente di installare il server autonomamente, tuttavia si è scelto di istruire l'utente a installare una versione del server Neo4j, la directory dell'installazione andrà poi specificata all'interno di una variabile d'ambiente chiamata \texttt{"NEO4J\_HOME"}, variabile che verrà utilizzata per reperire l'installazione e copiarla all'interno di ciascuna repository; il database copiato viene poi inizializzato.
@@ -175,8 +178,7 @@ L'interfaccia utente di \texttt{GGit} è ispirata a quella di \texttt{Git}, del 
 Questi sono i comandi per gestire la repository.
 
 \subsubsection{Init}
-Il comando \texttt{ggit init} crea una nuova repository, in particolare viene create la directory \texttt{.ggit} all'interno della directory nella quale viene chiamato il comando.
-Si è però deciso di permettere all'utente di specificare la directory da inizializzare con il comando \texttt{ggit init <path>}, in questo modo è possibile creare una repository all'interno di una directory diversa dalla corrente.
+Il comando \texttt{ggit init} crea una nuova repository, in particolare viene create la directory \texttt{.ggit} all'interno della directory nella quale viene chiamato il comando, si è però deciso di permettere all'utente di specificare la directory da inizializzare con il comando \texttt{ggit init <path>}, in questo modo è possibile creare una repository all'interno di una directory diversa dalla corrente.
 
 Dopo aver creato la directory, vengono inizializzati i file di configurazione e dello stato e vengono impostate alcune configurazioni di base, viene inoltre richiesto interattivamente all'utente di inserire username e email, che verranno utilizzati per i commit.
 Viene poi inizializzato lo stato della repository, reperita l'installazione di Neo4j e impostate le impostazioni relative a username, password e nome, versione e posizione del database.
@@ -186,10 +188,10 @@ Il comando \texttt{ggit config} permette di gestire le impostazioni di configura
 
 Questo comando offre i seguenti parametri:
 \begin{itemize}
-    \item \texttt{--list} per visualizzare tutte le impostazioni correnti;
-    \item \texttt{--get <key>} per visualizzare il valore di una impostazione;
-    \item \texttt{--set <key> <value>} per impostare il valora di una impostazione, se non esiste viene aggiunta;
-    \item \texttt{--unset <key>} per rimuovere una impostazione.
+    \item \texttt{-{}-list} per visualizzare tutte le impostazioni correnti;
+    \item \texttt{-{}-get <key>} per visualizzare il valore di una impostazione;
+    \item \texttt{-{}-set <key> <value>} per impostare il valora di una impostazione, se non esiste viene aggiunta;
+    \item \texttt{-{}-unset <key>} per rimuovere una impostazione.
 \end{itemize}
 
 \subsection{Gestione dei file}
@@ -217,10 +219,10 @@ Il comando \texttt{ggit commit} permette di creare un nuovo commit partendo dall
 
 Inizialmente viene creato un nuovo oggetto tree, partendo dallo stash della repository. Dopodiché vengono interpretate le opzioni passate al comando, in particolare è possibile specificare:
 \begin{itemize}
-    \item \texttt{-m} o \texttt{--message}: specifica il messaggio del commit;
-    \item \texttt{-f} o \texttt{--file}: specifica il nome del file dal quale leggere il messaggio di commit, mutualmente esclusivo con \texttt{-m};
-    \item \texttt{--author}: specifica l'autore del commit, nel formato \texttt{nome,email} per effettuare l'override dell'autore di default;
-    \item \texttt{--date}: specifica la data, nel formato \texttt{YYYY-MM-DDTHH:mm:SS+HH:mm} per effettuare l'override della data corrente.
+    \item \texttt{-m} o \texttt{-{}-message}: specifica il messaggio del commit;
+    \item \texttt{-f} o \texttt{-{}-file}: specifica il nome del file dal quale leggere il messaggio di commit, mutualmente esclusivo con \texttt{-m};
+    \item \texttt{-{}-author}: specifica l'autore del commit, nel formato \texttt{nome,email} per effettuare l'override dell'autore di default;
+    \item \texttt{-{}-date}: specifica la data, nel formato \texttt{YYYY-MM-DDTHH:mm:SS+HH:mm} per effettuare l'override della data corrente.
 \end{itemize}
 Dopo aver valutato e interpretato le opzioni, viene recuperato dalle impostazioni di configurazione l'hash dell'ultimo commit, con il quale si ottiene dal database l'oggetto commit associato che viene assegnato al nuovo commit, se questa impostazione è vuota o non presente, significa che il commit che viene effettuato è il primo e non necessita un parent.
 
@@ -230,12 +232,12 @@ Infine viene effettivamente aggiunto il commit al database, aggiornata l'imposta
 \subsubsection{Status}
 Il comando \texttt{ggit status} permette di visualizzare un riassunto dello stato corrente della directory, in particolare vengono mostrate tre liste di file.
 La prima lista elenca i file che sono al momento nell'area di \texttt{stash} e quindi verranno aggiunti al prossimo commit.
-La seconda lista mostra i file che sono stati modificati rispetto al commit precedente, sono stati aggiunti, a un certo punto nella storia della repository, all'area di \texttt{tracking} e non sono ancora nell'area di stash. Infine la terza lista contiene i file che sono stati creati ma non sono mai stati aggiunti all'area di \texttt{stash} e quindi non sono ancora nel tracking della repository.
+La seconda lista mostra i file che sono stati modificati rispetto al commit precedente, sono stati aggiunti, a un certo punto nella storia della repository, all'area di \texttt{tracking} e non sono ancora nell'area di \texttt{stash}. Infine la terza lista contiene i file che sono stati creati ma non sono mai stati aggiunti all'area di \texttt{stash} e quindi non sono ancora nel tracking della repository.
 
 \subsubsection{Log}
 Il comando \texttt{ggit log} permette di visualizzare lo storico dei commit della repository, stampa una lista dei commit più recenti, mostrando il loro hash, l'autore, la data di creazione e il messaggio di commit.
 
-Il comando supporta una opzione \texttt{-d} o \texttt{--depth} che permette di specificare il numero di commit da visualizzare, il valore di default è impostato a 5.
+Il comando supporta una opzione \texttt{-d} o \texttt{-{}-depth} che permette di specificare il numero di commit da visualizzare, il valore di default è impostato a 5.
 
 \section{Impostazioni di configurazione}
 \label{sec:impostazioni}
@@ -257,3 +259,5 @@ Alla versione corrente, le impostazioni di configurazione della repository sono 
     \item \texttt{"database.name"}, contiene il nome di default del database nella community edition;
     \item \texttt{"database.path"}, salva il path alla directory di installazione di Neo4j, ottenuto tramite la variabile d'ambiente \texttt{"NEO4J\_HOME"}.
 \end{itemize}
+
+Le impostazioni del database vengono inizializzate automaticamente ai valori utili per la community edition, per utilizzarne una enterprise è necessario modificare manualmente le variabile\texttt{"database.username"} e \texttt{"database.password"} con le credenziali personalizzate del database, mentre la variabile \texttt{"database.name"} deve essere impostata al nome del database che si vuole utilizzare.
