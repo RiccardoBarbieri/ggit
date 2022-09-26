@@ -32,8 +32,8 @@ class TestFileHandlers(unittest.TestCase):
                 self.assertTrue(str(i) in diff_manager.files)
 
         self.assertEqual(config_manager["repository.path"], str(self.REPO_ROOT))
-        self.assertEqual(config_manager["database_username"], "neo4j")
-        self.assertEqual(config_manager["database_password"], "neo4j")
+        self.assertEqual(config_manager["database.username"], "neo4j")
+        self.assertEqual(config_manager["database.password"], "neo4j")
 
 
 if __name__ == "__main__":

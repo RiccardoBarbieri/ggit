@@ -12,7 +12,7 @@ from ggit.utils.constants import repo_folder
 from ggit.utils.folder import Folder
 
 
-class StashManager(metaclass=SingletonMeta):
+class StashManager():
 
     __root: Path
     __stashed_files: Dict[str, str] = {}

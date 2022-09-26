@@ -8,7 +8,7 @@ from ggit.utils import Folder, SingletonMeta
 from ggit.utils.constants import repo_folder
 
 
-class DifferenceManager(metaclass=SingletonMeta):
+class DifferenceManager():
 
     __folder: Folder
     __root: Path
@@ -23,8 +23,12 @@ class DifferenceManager(metaclass=SingletonMeta):
         if not (self.__root / repo_folder).exists():
             raise ConfigException("Not a ggit repository")
 
-        with open(self.__root / repo_folder / "current_state.json", "r") as f:
-            self.__files = json.load(f)
+        if (self.__root / repo_folder / "current_state.json").exists():
+            try:
+                with open(self.__root / repo_folder / "current_state.json", "r") as f:
+                    self.__files = json.load(f)
+            except json.decoder.JSONDecodeError:
+                pass
 
     def __get_difference(self) -> Dict[str, str]:
         temp_dict: Dict[Path, str] = {}
@@ -51,12 +55,3 @@ class DifferenceManager(metaclass=SingletonMeta):
     def __dump(self) -> None:
         with open(self.__root / repo_folder / "current_state.json", "w") as f:
             json.dump(self.__files, f, indent=4)
-
-    # def __getitem__(self, key: Path) -> str:
-    #     return self.__files[str(key)]
-
-    # def __setitem__(self, key: Path, value: str) -> None:
-    #     self.__files[str(key)] = value
-
-    # def __delitem__(self, key: Path) -> None:
-    #     del self.__files[str(key)]

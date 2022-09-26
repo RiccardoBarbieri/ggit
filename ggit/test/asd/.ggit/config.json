@@ -1,0 +1,8 @@
+{
+    "repository.path": ".",
+    "database.username": "neo4j",
+    "database.password": "neo4j",
+    "user.name": "asd",
+    "user.email": "asd@ri.com",
+    "HEAD": "None"
+}

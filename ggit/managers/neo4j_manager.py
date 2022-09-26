@@ -28,9 +28,10 @@ def start_neo4j_instance(path: Path):
         The path to the base folder of the repository.
     """
 
+    #! add check server already running
     process = subprocess.run(
         ["./neo4j", "start"],
-        cwd=path / ".ggit" / "neo4j-community-4.4.10" / "bin",
+        cwd=path,
         stdout=subprocess.PIPE,
         stderr=subprocess.PIPE,
     )

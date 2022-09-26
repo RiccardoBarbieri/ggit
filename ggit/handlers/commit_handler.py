@@ -8,14 +8,28 @@ from pprint import pprint
 from typing import Dict, List
 from ggit.entities.user import User
 
-from ggit.managers import ConfigManager, StashManager
+from ggit.managers import ConfigManager, StashManager, DifferenceManager
 from ggit.entities import Tree, Blob, Commit
 from ggit.utils import Folder
 from ggit.database import CommitRepository
 
 
 def build_tree(folder: Dict[str, Dict], current_root: Path) -> Tree:
-    """Build a tree object given a :class:"ggit.utils.Folder" internal dictionary"""
+    """
+    Build a tree object given a :class:"ggit.utils.Folder" internal dictionary
+    
+    Parameters
+    ----------
+    folder : Dict[str, Dict]
+        The folder dictionary
+    current_root : Path
+        The current root path
+
+    Returns
+    -------
+    Tree
+        The tree object
+    """
 
     tree = Tree()
 
@@ -43,16 +57,16 @@ def commit_handler(
 
     stash_manager = StashManager(root)
 
+    if len(stash_manager.stashed_files) == 0:
+        logger.info("Nothing to commit")
+        return
+
     if args["message_file"] is not None:
         message = args["message_file"].read()
     else:
         message = args["message"]
 
-    if len(stash_manager.stashed_files) == 0:
-        logger.info("Nothing to commit")
-        return
-
-    conf_manager = ConfigManager(root)
+    conf_manager = ConfigManager()
 
     tree = build_tree(
         Folder(root, whitelist=list(stash_manager.stashed_files.keys())).folder, root
@@ -83,3 +97,5 @@ def commit_handler(
     conf_manager["HEAD"] = commit.hash
 
     stash_manager.clear_stash()
+    diff_manager = DifferenceManager()
+    diff_manager.update_current_state()
