@@ -124,44 +124,6 @@ responsible for parsing the command line arguments and executing the
 requested command.</p>
 <section id="ggitappparser">
 <h2>GGitAppParser<a class="headerlink" href="#ggitappparser" title="Permalink to this heading"></a></h2>
-<dl class="py class">
-<dt class="sig sig-object py" id="ggit.app.app.GGitAppParser">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">ggit.app.app.</span></span><span class="sig-name descname"><span class="pre">GGitAppParser</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#ggit.app.app.GGitAppParser" title="Permalink to this definition"></a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">ArgumentParser</span></code></p>
-<p>This class extends the argparse.ArgumentParser class to provide a custom parser for
-the GGit application.</p>
-<p>The class exposes a method to create all the subparsers and arguments needed to
-parse the command line arguments.</p>
-<dl class="py attribute">
-<dt class="sig sig-object py" id="ggit.app.app.GGitAppParser.subparsers">
-<span class="sig-name descname"><span class="pre">subparsers</span></span><a class="headerlink" href="#ggit.app.app.GGitAppParser.subparsers" title="Permalink to this definition"></a></dt>
-<dd><p>Subparsers object used to create the subparsers.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Type</dt>
-<dd class="field-odd"><p>List[argparse.ArgumentParser]</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="ggit.app.app.GGitAppParser.set_up">
-<span class="sig-name descname"><span class="pre">set_up</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#ggit.app.app.GGitAppParser.set_up" title="Permalink to this definition"></a></dt>
-<dd><p>Method used to create all the subparsers and arguments parsers
-needed to parse the command line arguments.</p>
-</dd></dl>
-
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="ggit.app.app.main">
-<span class="sig-prename descclassname"><span class="pre">ggit.app.app.</span></span><span class="sig-name descname"><span class="pre">main</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#ggit.app.app.main" title="Permalink to this definition"></a></dt>
-<dd><p>The main function of the application.
-Inside this function, that is called in the main block of code, the command line arguments are parsed using
-the <a class="reference internal" href="#ggit.app.app.GGitAppParser" title="ggit.app.app.GGitAppParser"><code class="xref py py-class docutils literal notranslate"><span class="pre">GGitAppParser</span></code></a> class, the logger is configured and loaded
-and the corresponding handler is called depending on the subcommand
-passed as argument.</p>
-</dd></dl>
-
 </section>
 </section>
 

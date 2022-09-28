@@ -1,4 +1,3 @@
-from ast import Tuple
 import json
 from logging import Logger
 import logging
@@ -7,7 +6,7 @@ from pathlib import Path
 import re
 import shutil
 import subprocess
-from typing import Union
+from typing import Union, Tuple
 
 from ggit.managers import ConfigManager, DifferenceManager
 from ggit.exceptions import ConfigException
