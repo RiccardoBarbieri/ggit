@@ -233,14 +233,14 @@ def main() -> None:
     )
     parser.set_up()
     
-    #!_____________________________________
-    args = 'config -h'
-    pattern = re.compile(r'([^\s"\']+)|"([^"]*)"|(\'([^\']*)\')')
+    # #!_____________________________________
+    # args = 'config -h'
+    # pattern = re.compile(r'([^\s"\']+)|"([^"]*)"|(\'([^\']*)\')')
 
-    args = [i.group().strip('"\'') for i in pattern.finditer(args)]
+    # args = [i.group().strip('"\'') for i in pattern.finditer(args)]
     
-    sys.argv += args
-    #!_____________________________________
+    # sys.argv += args
+    # #!_____________________________________
     if len(sys.argv) == 2 and sys.argv[1] == "init":
         sys.argv.append(".")
 
@@ -257,30 +257,29 @@ def main() -> None:
     else:
         logger = logging.getLogger("message")
 
+    if args["subcommand"] == "init":
+        init_repository(Path(args["path"]), logger)
+
     repo_root = find_repo_root(Path.cwd())
     if repo_root is None:
         logger.error("Not a ggit repository, (or any of the parent directories)")
         sys.exit(1)
-    
-    match args["subcommand"]:
-        case "init":
-            init_repository(Path(args["path"]), logger)
-        case "add":
-            add_handler(args["path"], logger)
-        case "mv":
-            mv_handler(args["source"], args["destination"], logger)
-        case "rm":
-            rm_handler(args["path"], logger)
-        case "commit":
-            commit_handler(args["message"], args["message_file"], args["author"], args["date"], logger)
-        case "pull":
-            print(args)        
-        case "log":
-            pass
-        case "status":
-            pass
-        case "config":
-            pass
+    elif args["subcommand"] == "add":
+        add_handler(args["path"], logger)
+    elif args["subcommand"] == "mv":
+        mv_handler(args["source"], args["destination"], logger)
+    elif args["subcommand"] == "rm":
+        rm_handler(args["path"], logger)
+    elif args["subcommand"] == "commit":
+        commit_handler(args["message"], args["message_file"], args["author"], args["date"], logger)
+    elif args["subcommand"] == "pull":
+        print(args)        
+    elif args["subcommand"] == "log":
+        pass
+    elif args["subcommand"] == "status":
+        pass
+    elif args["subcommand"] == "config":
+        pass
 
 
 if __name__ == "__main__":

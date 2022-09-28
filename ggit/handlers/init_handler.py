@@ -1,3 +1,4 @@
+from ast import Tuple
 import json
 from logging import Logger
 import logging
@@ -6,12 +7,13 @@ from pathlib import Path
 import re
 import shutil
 import subprocess
+from typing import Union
 
 from ggit.managers import ConfigManager, DifferenceManager
 from ggit.exceptions import ConfigException
 from ggit.managers.neo4j_manager import start_neo4j_instance
 
-def search_neo4j() -> Path | None:
+def search_neo4j() -> Tuple[Path, str]:
     sub = Path('bin/neo4j.ps1') if os.name == 'nt' else Path('bin/neo4j')
     try:
         path = os.environ['NEO4J_HOME']

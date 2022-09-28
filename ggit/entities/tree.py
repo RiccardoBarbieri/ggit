@@ -1,5 +1,5 @@
 import hashlib
-from typing import List, Tuple
+from typing import List, Tuple, Union
 
 from ggit.entities.blob import Blob
 
@@ -30,12 +30,12 @@ class Tree:
         The number of items in the tree, recursively, counting the tree itself
     """
 
-    __items: List[Tuple['Blob | Tree', str, str]]
+    __items: List[Tuple[Union["Blob", "Tree"], str, str]]
     __hash: str
     __content: bytes
     __length: int
 
-    def __init__(self, __items: List[Tuple['Blob | Tree', str, str]] = []):
+    def __init__(self, __items: List[Tuple[Union["Blob", "Tree"], str, str]] = []):
         self.__items = __items
         self.__hash = self.__calculate_hash()
 
@@ -44,11 +44,11 @@ class Tree:
         return self.__items
 
     @items.setter
-    def items(self, items: List[Tuple['Blob | Tree', str, str]]):
+    def items(self, items: List[Tuple[Union["Blob", "Tree"], str, str]]):
         self.__items = items
         self.__hash = self.__calculate_hash()
 
-    def append_item(self, item: 'Blob | Tree', name: str, mode: str):
+    def append_item(self, item: Union["Blob", "Tree"], name: str, mode: str):
         """
         Append a blob or tree to the tree.
 

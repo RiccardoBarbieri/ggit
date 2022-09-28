@@ -1,7 +1,7 @@
 import hashlib
 from datetime import datetime, timedelta, timezone
 import re
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, Union
 
 if TYPE_CHECKING:
     from ggit.entities import User
@@ -54,7 +54,7 @@ class Commit:
     """
 
     __tree: Tree
-    __parent: "Commit | None"
+    __parent: Union['Commit', None]
     __date_time: datetime
     __author: "User"
     __committer: "User"
@@ -65,7 +65,7 @@ class Commit:
     def __init__(
         self,
         tree: Tree = None,
-        parent: "Commit | None" = None,
+        parent: Union["Commit", None] = None,
         date_time: datetime = None,
         author: "User" = None,
         committer: "User" = None,
@@ -87,11 +87,11 @@ class Commit:
         self.__tree = tree
 
     @property
-    def parent(self) -> "Commit | None":
+    def parent(self) -> Union["Commit", None]:
         return self.__parent
 
     @parent.setter
-    def parent(self, parent: "Commit | None"):
+    def parent(self, parent: Union["Commit", None]):
         self.__parent = parent
 
     @property
