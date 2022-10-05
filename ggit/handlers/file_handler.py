@@ -5,6 +5,7 @@ from typing import List
 
 from ggit.managers import ConfigManager, StashManager, config_manager
 from ggit.exceptions import RepositoryException
+from ggit.utils.folder_utils import is_subpath
 
 
 def paths_parser(
@@ -39,7 +40,7 @@ def paths_parser(
         if not paths[-1].exists():
             logger.error(f"Path {paths[-1]} does not match any file or directory")
             raise RepositoryException(f"Path {paths[-1]} does not match any file or directory")
-        if not paths[-1].is_relative_to(root):
+        if not is_subpath(paths[-1], root):
             logger.error(f"Path {paths[-1]} is not in the repository")
             raise RepositoryException(f"Path {paths[-1]} is not in the repository")
     return paths
@@ -134,7 +135,7 @@ def mv_handler(source: str, dest: str, logger: Logger = logging.getLogger("messa
     source = paths_parser([source], Path.cwd(), logger)[0]
     dest: Path = Path(dest).resolve()
     
-    if not dest.is_relative_to(root):
+    if not is_subpath(root, dest):
         logger.error(f"Path {dest} is not in the repository")
         exit(1)
     dest = Path(dest).resolve()

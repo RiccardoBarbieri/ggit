@@ -25,7 +25,7 @@ class Folder:
         if self.__ignore_file.exists():
             self.__ignore_list = tuple(self.__ignore_file.read_text().splitlines())
         self.__ignore_list += (repo_folder,)
-
+        
         if whitelist is not None:
             self.__whitelist = whitelist
 
@@ -59,7 +59,7 @@ class Folder:
         temp_list: List[Path] = []
         for i in folder:
             if folder[i] is None:
-                temp_list.append(current_root / i)
+                temp_list.append(self.root / current_root / i)
             else:
                 temp_list.extend(self.__get_all_files(folder[i], current_root / i))
         return temp_list
@@ -75,7 +75,7 @@ class Folder:
                 for i in self.__whitelist:
                     if i.startswith(str(path)):
                         return True
-        return False
+        return True
 
     def __match_ignore(self, path: Path) -> bool:
         for i in self.__ignore_list:

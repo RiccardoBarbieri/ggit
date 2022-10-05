@@ -21,6 +21,7 @@ class CommitRepository:
     data_source: "DataSource"
 
     def __init__(self) -> None:
+        from ggit.database import DataSource
         self.data_source = DataSource()
 
     def add_commit(self, commit: Commit) -> bool:
@@ -45,8 +46,8 @@ class CommitRepository:
             try:
                 counters = {}
 
-                user_repo = UserRepository()
-
+                user_repo = UserRepository(self.data_source)
+                
                 user_repo.add_user(commit.author)
                 user_repo.add_user(commit.committer)
 
@@ -80,7 +81,7 @@ class CommitRepository:
                     )
                     counters["relationships_created"] += result.consume().counters.relationships_created
 
-                tree_repo = TreeRepository()
+                tree_repo = TreeRepository(self.data_source)
                 tree_correct = tree_repo.add_tree(commit.tree)[0]
 
                 result = tx.run(
@@ -121,7 +122,7 @@ class CommitRepository:
         """
         with self.data_source.new_session() as session:
             result = session.run(
-                """MATCH (commit:Commit {hash: $hash})-->[:CONTAINS]-(tree:Tree)
+                """MATCH (commit:Commit {hash: $hash})-[:CONTAINS]->(tree:Tree)
                 RETURN commit, tree""",
                 hash=hash,
             )
@@ -169,6 +170,32 @@ class CommitRepository:
             commit.str_date_time = record["commit"]["datetime"]
 
             return commit
+
+    def get_last_commits(self, head: str, number: int) -> List[Commit]:
+        """
+        This method gets the last commits from the database.
+
+        Parameters
+        ----------
+        number : int
+            The number of commits to get.
+
+        Returns
+        -------
+        List[Commit]
+            The last commits from the database.
+        """
+        with self.data_source.new_session() as session:
+            query = "MATCH (commit:Commit {hash: $hash})-[:PARENT*.." + str(number) + "]->(parent:Commit) return parent"
+            result = session.run(
+                query,
+                hash=head,
+            )
+            commits = []
+            commits.append(self.get_commit(head))
+            for record in result:
+                commits.append(self.get_commit(record["commit"]["hash"]))
+            return commits
 
     def get_all_commits(self) -> List[Commit]:
         """

@@ -12,6 +12,7 @@ from typing import Any, List, Sequence
 from ggit.handlers.file_handler import add_handler, mv_handler, rm_handler
 from ggit.handlers.commit_handler import commit_handler
 from ggit.handlers.init_handler import init_repository
+from ggit.handlers.status_handler import status_handler
 from ggit.utils.date_utils import date_iso_8601
 from ggit.utils.folder_utils import find_repo_root
 
@@ -233,14 +234,14 @@ def main() -> None:
     )
     parser.set_up()
     
-    # #!_____________________________________
-    # args = 'config -h'
+    #!_____________________________________
+    # args = 'log'
     # pattern = re.compile(r'([^\s"\']+)|"([^"]*)"|(\'([^\']*)\')')
 
     # args = [i.group().strip('"\'') for i in pattern.finditer(args)]
     
     # sys.argv += args
-    # #!_____________________________________
+    #!_____________________________________
     if len(sys.argv) == 2 and sys.argv[1] == "init":
         sys.argv.append(".")
 
@@ -258,7 +259,7 @@ def main() -> None:
         logger = logging.getLogger("message")
 
     if args["subcommand"] == "init":
-        init_repository(Path(args["path"]), logger)
+        init_repository(Path(args["path"]).resolve(), logger)
 
     repo_root = find_repo_root(Path.cwd())
     if repo_root is None:
@@ -271,13 +272,11 @@ def main() -> None:
     elif args["subcommand"] == "rm":
         rm_handler(args["path"], logger)
     elif args["subcommand"] == "commit":
-        commit_handler(args["message"], args["message_file"], args["author"], args["date"], logger)
-    elif args["subcommand"] == "pull":
-        print(args)        
+        commit_handler(args, logger)
     elif args["subcommand"] == "log":
         pass
     elif args["subcommand"] == "status":
-        pass
+        status_handler(logger)
     elif args["subcommand"] == "config":
         pass
 

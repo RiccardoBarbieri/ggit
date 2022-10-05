@@ -74,7 +74,9 @@ def commit_handler(
 
     if args["author"] is not None:
         author = User(args["author"].split(",")[0], args["author"].split(",")[1])
-    committer = User(ConfigManager()["user.name"], ConfigManager()["user.email"])
+    else:
+        author = User(conf_manager["user.name"], conf_manager["user.email"])
+    committer = User(conf_manager["user.name"], conf_manager["user.email"])
 
     commit_repo = CommitRepository()
 
@@ -94,8 +96,10 @@ def commit_handler(
 
     commit_repo.add_commit(commit)
 
+    commit_repo.data_source.close()
+
     conf_manager["HEAD"] = commit.hash
 
     stash_manager.clear_stash()
-    diff_manager = DifferenceManager()
+    diff_manager = DifferenceManager(root)
     diff_manager.update_current_state()

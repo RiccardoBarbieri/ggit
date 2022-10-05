@@ -80,7 +80,7 @@ def init_repository(path: Path, logger: Logger = logging.getLogger("message")) -
     # conf_manager['database.name'] = 'neo4j'
     # shutil.copytree(path_version[0], path / ".ggit" / f"neo4j-{path_version[1]}")
     # start_neo4j_instance(Path(path_version[0]))
-    # conf_manager["database.username"] = "neo4j"
-    # conf_manager["database.password"] = "neo4j"
+    conf_manager["database.username"] = "neo4j"
+    conf_manager["database.password"] = "riccardo00"
 
     logger.info(f"Initialized empty Ggit repository in {path / '.ggit'}")

@@ -33,6 +33,8 @@ class DifferenceManager():
     def __get_difference(self) -> Dict[str, str]:
         temp_dict: Dict[Path, str] = {}
         for i in self.__folder.get_all_files():
+            if str(i) not in self.__files.keys():
+                continue
             if Blob(i.read_bytes()).hash != self.__files[str(i)]:
                 temp_dict[str(i)] = Blob(i.read_bytes()).hash
         return temp_dict

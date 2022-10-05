@@ -10,6 +10,7 @@ from datetime import datetime, timedelta, timezone
 import traceback
 from typing import Any, NewType
 import typing
+from ggit.database.data_source import DataSource
 
 from ggit.utils.folder_utils import walk_folder_rec_flat, walk_objects
 
@@ -24,17 +25,7 @@ test
 
 # print(hashlib.sha1(b"commit " + str(len(body)).encode("ascii") + b"\0" + body).hexdigest())
 
+date = datetime.fromtimestamp(1662040308, tz=timezone(timedelta(hours=2)))
 
 
-imports = []
-for i in walk_folder_rec_flat(Path('.')):
-    if 'venv' in str(i):
-        continue
-    if i.suffix == '.py':
-        lines = i.read_text().splitlines()
-        for j in lines:
-            if j.startswith('import'):
-                imports.append(j)
-
-imports = list(set(imports))
-print(imports)
+print(date.strftime("%a %b %d %H:%M:%S %Y %z"))

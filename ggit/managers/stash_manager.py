@@ -38,6 +38,8 @@ class StashManager():
                     self.__tracked_files = json.load(f)
             except json.decoder.JSONDecodeError:
                 pass
+        
+        self.folder = Folder(self.__root)
 
     def __dump(self) -> None:
         with open(self.__root / repo_folder / "stash.json", "w+") as f:
@@ -62,9 +64,10 @@ class StashManager():
         self.__dump()
 
     def __stash_file(self, file_path: Path) -> None:
-        self.__stashed_files[str(file_path)] = Blob(file_path.read_bytes()).hash
-        if str(file_path) not in self.__tracked_files:
-            self.__tracked_files.append(str(file_path))
+        if file_path in self.folder.get_all_files():
+            self.__stashed_files[str(file_path)] = Blob(file_path.read_bytes()).hash
+            if str(file_path) not in self.__tracked_files:
+                self.__tracked_files.append(str(file_path))
 
     def __stash_folder(self, folder_path: Path) -> None:
         for i in folder_path.iterdir():
