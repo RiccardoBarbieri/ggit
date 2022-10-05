@@ -14,6 +14,8 @@ def status_handler(logger: Logger = logging.getLogger("message")) -> None:
     stash_manager = StashManager(root)
     difference_manager = DifferenceManager(root)
 
+    difference_manager.update_current_state()
+
     if len(stash_manager.stashed_files) == 0:
         logger.info("Nothing to commit")
     else:

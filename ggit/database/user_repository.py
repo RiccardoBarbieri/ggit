@@ -59,9 +59,10 @@ class UserRepository:
         with self.data_source.new_session() as session:
             result = session.run(
                 "MATCH (user:User {name: $name, email: $email}) RETURN user", name=name, email=email)
-            if result.single() is None:
+            result = result.single()
+            if result is None:
                 return None
-            return User(result.single()['user']['name'], result.single()['user']['email'])
+            return User(result['user']['name'], result['user']['email'])
 
     def get_all_users(self) -> List[User]:
         """

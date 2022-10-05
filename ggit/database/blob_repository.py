@@ -60,9 +60,10 @@ class BlobRepository:
         """
         with self.data_source.new_session() as session:
             result = session.run("MATCH (blob:Blob {hash: $hash}) RETURN blob", hash=hash)
-            if result.single() is None:
+            result = result.single()
+            if result is None:
                 return None
-            return Blob(result.single()['blob']['content'])
+            return Blob(result['blob']['content'])
 
     def get_all_blobs(self) -> List[Blob]:
         """

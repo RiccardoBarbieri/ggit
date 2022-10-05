@@ -129,8 +129,10 @@ class CommitRepository:
             record = result.single()
             if record is None:
                 return None
+            message = record["commit"]["message"]
+            datetime = record["commit"]["datetime"]
 
-            tree = TreeRepository().get_tree(record["tree"]["hash"])
+            tree = TreeRepository(self.data_source).get_tree(record["tree"]["hash"])
             
             result = session.run(
                 """MATCH (commit:Commit {hash: $hash})-[:AUTHORED_BY]->(author:User)
@@ -138,7 +140,7 @@ class CommitRepository:
                 hash=hash,
             )
             record = result.single()
-            author = UserRepository().get_user(record["author"]["name"], record["author"]["email"])
+            author = UserRepository(self.data_source).get_user(record["author"]["name"], record["author"]["email"])
 
             result = session.run(
                 """MATCH (commit:Commit {hash: $hash})-[:COMMITTED_BY]->(committer:User)
@@ -146,7 +148,7 @@ class CommitRepository:
                 hash=hash,
             )
             record = result.single()
-            committer = UserRepository().get_user(record["committer"]["name"], record["committer"]["email"])
+            committer = UserRepository(self.data_source).get_user(record["committer"]["name"], record["committer"]["email"])
 
             result = session.run(
                 """MATCH (commit:Commit {hash: $hash})-[:PARENT]->(parent:Commit)
@@ -165,9 +167,9 @@ class CommitRepository:
                 # date_time=record["commit"]["datetime"],
                 author=author,
                 committer=committer,
-                message=record["commit"]["message"],
+                message=message,
             )
-            commit.str_date_time = record["commit"]["datetime"]
+            commit.str_date_time = datetime
 
             return commit
 
@@ -194,7 +196,7 @@ class CommitRepository:
             commits = []
             commits.append(self.get_commit(head))
             for record in result:
-                commits.append(self.get_commit(record["commit"]["hash"]))
+                commits.append(self.get_commit(record["parent"]["hash"]))
             return commits
 
     def get_all_commits(self) -> List[Commit]:

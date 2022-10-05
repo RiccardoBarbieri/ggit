@@ -13,6 +13,7 @@ from ggit.handlers.file_handler import add_handler, mv_handler, rm_handler
 from ggit.handlers.commit_handler import commit_handler
 from ggit.handlers.init_handler import init_repository
 from ggit.handlers.status_handler import status_handler
+from ggit.handlers.log_handler import log_handler
 from ggit.utils.date_utils import date_iso_8601
 from ggit.utils.folder_utils import find_repo_root
 
@@ -274,7 +275,7 @@ def main() -> None:
     elif args["subcommand"] == "commit":
         commit_handler(args, logger)
     elif args["subcommand"] == "log":
-        pass
+        log_handler(args, logger)
     elif args["subcommand"] == "status":
         status_handler(logger)
     elif args["subcommand"] == "config":

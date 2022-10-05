@@ -55,7 +55,8 @@ class TreeRepository:
                 result = tx.run(
                     "MATCH (tree:Tree {hash: $hash}) RETURN tree", hash=tree.hash
                 )
-                if result.single() is not None:
+                result = result.single()
+                if result is not None:
                     return (False, nodes_created)
 
                 tx.run(
