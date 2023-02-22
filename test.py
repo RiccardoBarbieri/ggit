@@ -29,3 +29,4 @@ date = datetime.fromtimestamp(1662040308, tz=timezone(timedelta(hours=2)))
 
 
 print(date.strftime("%a %b %d %H:%M:%S %Y %z"))
+print('asdasd')
