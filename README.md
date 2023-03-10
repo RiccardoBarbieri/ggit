@@ -13,7 +13,7 @@ This application is not meant to be used as a production tool, it's an academic 
 If you wish to install and test out this tool, you can do it by cloning the repository:
 
 ```Bash
-$ git clone https://RiccardoBarbieri/thesis
+$ git clone https://github.com/RiccardoBarbieri/thesis
 ```
 
 ## Usage
